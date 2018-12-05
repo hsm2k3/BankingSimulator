@@ -126,6 +126,7 @@ public class sqliteDatabase {
     public void insertIntoTransactions(Integer ID, String transactionNote, Integer date, Integer amount){
         String sql = "INSERT INTO Transactions (TransactionID, TransactionNote, Date, Amount) VALUES (?,?,?,?)";
         String url = "jdbc:sqlite:test.db";
+
         try (Connection conn = DriverManager.getConnection(url);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setInt(1, ID);
@@ -138,12 +139,4 @@ public class sqliteDatabase {
         }
     }
 
-    String sql = "CREATE TABLE IF NOT EXISTS Transactions (\n "
-            + "TransactionID INTEGER NOT NULL UNIQUE,\n"
-            + "TransactionNote TEXT,\n"
-            + "Date INTEGER NOT NULL,\n"
-            + "Amount INTEGER NOT NULL,\n"
-            + "PRIMARY KEY(TransactionID)\n"
-            + ");";
 }
-
