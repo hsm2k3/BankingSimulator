@@ -54,10 +54,10 @@ public class sqliteDatabase {
 
         //SQL statement for creating Transactions table
         String sql = "CREATE TABLE IF NOT EXISTS Transactions (\n "
+                + "TransactionID INTEGER NOT NULL UNIQUE,\n"
                 + "TransactionNote TEXT,\n"
                 + "Date INTEGER NOT NULL,\n"
                 + "Amount INTEGER NOT NULL,\n"
-                + "TransactionID INTEGER NOT NULL UNIQUE,\n"
                 + "PRIMARY KEY(TransactionID)\n"
                 + ");";
 
@@ -77,8 +77,8 @@ public class sqliteDatabase {
 
         //SQL statement for creating User Account table
         String sql = "CREATE TABLE IF NOT EXISTS UserAccounts (\n "
-                + "CustomerName TEXT NOT NULL,\n"
                 + "AccountID INTEGER NOT NULL UNIQUE ,\n"
+                + "CustomerName TEXT NOT NULL,\n"
                 + "AccountCreationDate INTEGER NOT NULL,\n"
                 + "DOB INTEGER NOT NULL,\n"
                 + "PRIMARY KEY(AccountID)\n"
@@ -96,6 +96,20 @@ public class sqliteDatabase {
     }
 
     public void insertIntoCheckingAccount(Integer accountID, Double balance){
+        String sql = "INSERT INTO CheckingAccount (checkingAccountID, balance) VALUES (?, ?)";
+        String url = "jdbc:sqlite:test.db";
+        try (Connection conn = DriverManager.getConnection(url);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, accountID);
+            pstmt.setDouble(2, balance);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+}
+
+    public void insertIntoUserAccount(Integer accountID, Double balance){
         String sql = "INSERT INTO CheckingAccount (checkingAccountID, balance) VALUES (?, ?)";
         String url = "jdbc:sqlite:test.db";
         try (Connection conn = DriverManager.getConnection(url);
