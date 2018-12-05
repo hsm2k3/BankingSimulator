@@ -107,15 +107,17 @@ public class sqliteDatabase {
             System.out.println(e.getMessage());
         }
     }
-}
 
-    public void insertIntoUserAccount(Integer accountID, Double balance){
+
+    public void insertIntoUserAccount(Integer ID, String name, Integer date, Integer dob){
         String sql = "INSERT INTO CheckingAccount (checkingAccountID, balance) VALUES (?, ?)";
         String url = "jdbc:sqlite:test.db";
         try (Connection conn = DriverManager.getConnection(url);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setInt(1, accountID);
-            pstmt.setDouble(2, balance);
+            pstmt.setInt(1, ID);
+            pstmt.setString(2, name);
+            pstmt.setInt(3, date);
+            pstmt.setInt(4, dob);
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
