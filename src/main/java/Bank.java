@@ -26,7 +26,7 @@ public class Bank {
         System.out.println("Enter checking balance: ");
         checkingBalance = scan.nextDouble();
 
-        //database.connect();
+        database.connect();
         database.createsNewCheckingAccountTable();
         database.createsNewUserAccountsTable();
         database.createsNewTransactionsTable();
