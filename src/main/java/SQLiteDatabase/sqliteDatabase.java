@@ -3,15 +3,13 @@ package SQLiteDatabase;
 import java.sql.*;
 
 public class sqliteDatabase {
-
+    private static final String url = "jdbc:sqlite:Bank.db";
 
 
 
     public static void connect() {
         Connection conn = null;
         try {
-            // db parameters
-            String url = "jdbc:sqlite:test.db";
             // create a connection to the database
             conn = DriverManager.getConnection(url);
 
@@ -29,7 +27,6 @@ public class sqliteDatabase {
     }
 
     public static void createsNewCheckingAccountTable(){
-        String url = "jdbc:sqlite:test.db";
 
         //SQL statement for creating Checking Account table
         String sql = "CREATE TABLE IF NOT EXISTS CheckingAccount (\n "
@@ -50,8 +47,6 @@ public class sqliteDatabase {
     }
 
     public static void createsNewTransactionsTable(){
-        String url = "jdbc:sqlite:test.db";
-
         //SQL statement for creating Transactions table
         String sql = "CREATE TABLE IF NOT EXISTS Transactions (\n "
                 + "TransactionID INTEGER NOT NULL UNIQUE,\n"
@@ -73,8 +68,6 @@ public class sqliteDatabase {
     }
 
     public static void createsNewUserAccountsTable(){
-        String url = "jdbc:sqlite:test.db";
-
         //SQL statement for creating User Account table
         String sql = "CREATE TABLE IF NOT EXISTS UserAccounts (\n "
                 + "AccountID INTEGER NOT NULL UNIQUE ,\n"
@@ -97,7 +90,6 @@ public class sqliteDatabase {
 
     public void insertIntoCheckingAccount(Integer accountID, Double balance){
         String sql = "INSERT INTO CheckingAccount (checkingAccountID, balance) VALUES (?, ?)";
-        String url = "jdbc:sqlite:test.db";
         try (Connection conn = DriverManager.getConnection(url);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setInt(1, accountID);
@@ -111,7 +103,6 @@ public class sqliteDatabase {
 
     public void insertIntoUserAccount(Integer ID, String name, Integer date, Integer dob){
         String sql = "INSERT INTO UserAccounts (CustomerName, AccountID, AccountCreationDate, DOB) VALUES (?,?,?,?)";
-        String url = "jdbc:sqlite:test.db";
         try (Connection conn = DriverManager.getConnection(url);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setInt(1, ID);
@@ -125,8 +116,6 @@ public class sqliteDatabase {
     }
     public void insertIntoTransactions(Integer ID, String transactionNote, Integer date, Integer amount){
         String sql = "INSERT INTO Transactions (TransactionID, TransactionNote, Date, Amount) VALUES (?,?,?,?)";
-        String url = "jdbc:sqlite:test.db";
-
         try (Connection conn = DriverManager.getConnection(url);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setInt(1, ID);
