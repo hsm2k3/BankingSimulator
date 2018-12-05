@@ -20,11 +20,11 @@ public class Bank {
     //this is just a test right now, it's creating the database and tables here
     public void connectToDatabase(){
         sqliteDatabase database = new sqliteDatabase();
-        Scanner scan = new Scanner(System.in);
-        System.out.println("Enter checking account ID: ");
-        checkingAccountID = scan.nextInt();
-        System.out.println("Enter checking balance: ");
-        checkingBalance = scan.nextDouble();
+//        Scanner scan = new Scanner(System.in);
+//        System.out.println("Enter checking account ID: ");
+//        checkingAccountID = scan.nextInt();
+//        System.out.println("Enter checking balance: ");
+//        checkingBalance = scan.nextDouble();
 
         database.connect();
         database.createsNewCheckingAccountTable();

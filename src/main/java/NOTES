@@ -2,3 +2,5 @@ Simulation:
 Assume a customer arrives at the bank. They can go to a teller or financial advisor.
 The teller and financial advisor will offer a customer to make a new account or provide
 their respective services to the customer for an existing account.
+Both teller and financial advisor will go through the Bank manager to implement any changes
+to the customer account.

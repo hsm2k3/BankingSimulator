@@ -88,11 +88,11 @@ public class sqliteDatabase {
         }
     }
 
-    public void insertIntoCheckingAccount(Integer accountID, Double balance){
+    public void insertIntoCheckingAccount(Integer ID, Double balance){
         String sql = "INSERT INTO CheckingAccount (checkingAccountID, balance) VALUES (?, ?)";
         try (Connection conn = DriverManager.getConnection(url);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setInt(1, accountID);
+            pstmt.setInt(1, ID);
             pstmt.setDouble(2, balance);
             pstmt.executeUpdate();
         } catch (SQLException e) {
