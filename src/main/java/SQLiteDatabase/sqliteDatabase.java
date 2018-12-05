@@ -146,3 +146,4 @@ public class sqliteDatabase {
             + "PRIMARY KEY(TransactionID)\n"
             + ");";
 }
+
