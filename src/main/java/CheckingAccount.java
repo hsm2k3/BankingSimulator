@@ -1,17 +1,21 @@
+package Accounts;
+import Transactions.TransactionList;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDateTime;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
-public class CheckingAccount {
+public abstract class CheckingAccount {
     private Double balance;
     private Double initialBalance;
     private LocalDateTime accountCreationDate;
-    List<Transaction> transactionHistory = new ArrayList();
+    private TransactionList transactionList;
+    private UUID accountNumber = UUID.randomUUID();
+
 
     public void CheckingAccount(Double initialBalance, DateTime accountCreationDate, List transactionHistory) {
-        CheckingAccount personalChecking = new CheckingAccount();
+        //----------------------CheckingAccount personalChecking = new CheckingAccount();
         this.accountCreationDate = getCurrentDate();
         //  this.balance = getInitialBalance(initialBalance);
     }
@@ -20,15 +24,12 @@ public class CheckingAccount {
         LocalDateTime currentDate = new LocalDateTime();
         return currentDate;
     }
-/*
-    public Double getInitialBalance(Double initialBalance) {
-        // if(accountCreationDate.get)
-        //}
-    }*/
 
-    //How would I go about passing the money from the account holder
-    //as a transaction to the Banker
-    public void withdrawal(Double amount){
+    //Here we do date manipulation to return required amount from customer
+    public abstract Double getInitialBalance(Double initialBalance);
 
-    }
+    public abstract void requestDeposit(Transactions.Transaction deposit);
+
+    public abstract void requestWithdrawal(Transactions.Transaction withdrawal);
+
 }
