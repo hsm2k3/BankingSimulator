@@ -88,6 +88,27 @@ public class sqliteDatabase {
         }
     }
 
+    public static void createsNewLoansTable(){
+    //SQL statement for creating User Account table
+        String sql = "CREATE TABLE IF NOT EXISTS Loans (\n "
+                + "TotalAvailableFunds INTEGER NOT NULL UNIQUE ,\n"
+                + "CustomerName TEXT NOT NULL,\n"
+                + "AccountCreationDate INTEGER NOT NULL,\n"
+                + "DOB INTEGER NOT NULL,\n"
+                + "PRIMARY KEY(AccountID)\n"
+                + ");";
+
+        try (Connection conn = DriverManager.getConnection(url);
+             Statement stmt = conn.createStatement())
+        {
+            stmt.execute(sql);
+        }
+        catch (SQLException e)
+        {
+            System.out.println(e.getMessage());
+        }
+    }
+
     public void insertIntoCheckingAccount(Integer ID, Double balance){
         String sql = "INSERT INTO CheckingAccount (checkingAccountID, balance) VALUES (?, ?)";
         try (Connection conn = DriverManager.getConnection(url);
