@@ -3,7 +3,7 @@ import java.util.Scanner;
 
 public class Teller {
 
-
+    private BranchManager branchManager = new BranchManager();
 
     //display menu when user visits the teller
     //we should make some methods that will check if a customer exist
@@ -30,5 +30,9 @@ public class Teller {
                 validSelection = true;
         }while (!validSelection);
         return selection;
+    }
+
+    public void createsNewCheckingAccount(){
+
     }
 }

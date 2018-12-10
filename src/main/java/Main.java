@@ -66,6 +66,7 @@ public class Main {
                     default:
                         break;
                 }
+                break;
             case FINANCIAL_ADVISOR:
                 financialAdvisorSelection = financialAdvisor.displayFinancialAdvisorMenu(scanner,CUSTOMER_NAME);
                 switch(financialAdvisorSelection){

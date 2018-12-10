@@ -6,7 +6,7 @@ import org.joda.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
-public abstract class CheckingAccount {
+public class CheckingAccount {
     private Double balance;
     private Double initialBalance;
     private LocalDateTime accountCreationDate;
@@ -26,7 +26,9 @@ public abstract class CheckingAccount {
     }
 
     //Here we do date manipulation to return required amount from customer
-    public abstract Double getInitialBalance(Double initialBalance);
+    public Double getInitialBalance(Double initialBalance){
+        return 0.0;
+    }
 
 //    public abstract void requestDeposit(Transactions.Transaction deposit);
 

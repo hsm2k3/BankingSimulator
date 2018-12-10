@@ -6,7 +6,6 @@ import org.joda.time.Period;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Scanner;
 
 //we should make the unique ID for the customer in this class as well.
@@ -48,10 +47,10 @@ public class Customer {
     }
     public DateTime setDateOfBirth(Integer year, Integer month, Integer day) {
         DateTime DOB = new DateTime(year, month, day, 0,0 );
-        setIsUnder18(DOB);
+        isUnder18(DOB);
         return this.DOB = DOB;
     }
-    private void setIsUnder18(DateTime dateOfBirth){
+    private boolean isUnder18(DateTime dateOfBirth){
         //Setting time and checking the difference in years
         DateTime currentDate = new DateTime();
         currentDate.getChronology();
@@ -59,9 +58,9 @@ public class Customer {
 
         //Basing availability of accounts on age
         if((period.getYears()<= 18))
-            this.isUnder18 = false;
+            return this.isUnder18 = false;
         else
-            this.isUnder18 = true;
+            return this.isUnder18 = true;
     }
 
 
@@ -72,6 +71,8 @@ public class Customer {
         System.out.println();
         return customerName;
     }
+    //this method will set the dob provided by user input in the MM/DD/YYYY format.
+    //If it's not in that format it will throw an exception. Lets figure out how to handle that.
     public static String setCustomerDOB(Scanner scanner, DateFormat dateFormat) throws ParseException {
         String DOB;
         System.out.println("Please provide your DOB (MM/DD/YYYY): ");
