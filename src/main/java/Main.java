@@ -1,6 +1,9 @@
 import org.joda.time.*;
 
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Scanner;
 
 public class Main {
@@ -9,9 +12,11 @@ public class Main {
     //we might need to have other classes access these data types
     protected static String CUSTOMER_NAME = null;
     protected static String CUSTOMER_DOB = null;
-    public static void main(String args[]) {
+
+    public static void main(String args[]) throws ParseException {
         int selection = 0;
         Bank bank = new Bank();
+        DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
         LocalDate todaysDate = new LocalDate();
         DateTime firstDate = new DateTime(1996, 4, 9, 0, 0);
         DateTime secondDate = new DateTime();
@@ -27,7 +32,7 @@ public class Main {
 //        System.out.println(secondDate.getDayOfMonth());
 //        System.out.println(period.getYears());
         bank.connectToDatabase();
-        setUserData(scanner);
+        setUserData(scanner, dateFormat);
         selection = displayMenu(scanner);
 
         switch (selection) {
@@ -38,12 +43,19 @@ public class Main {
 
 
     }
-    public static void setUserData(Scanner scanner){
+    public static void setUserData(Scanner scanner, DateFormat dateFormat) throws ParseException{
         System.out.println("Please provide your name: ");
         CUSTOMER_NAME = scanner.nextLine();
         System.out.println();
-        System.out.println("Please provide your DOB: ");
-        CUSTOMER_DOB = scanner.next();
+        System.out.println("Please provide your DOB (MM/DD/YYYY): ");
+        CUSTOMER_DOB = scanner.nextLine();
+        System.out.println();
+        try {
+            dateFormat.parse(CUSTOMER_DOB);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            setUserData(scanner,dateFormat);
+        }
         System.out.println();
 
     }

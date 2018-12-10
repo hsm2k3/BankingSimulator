@@ -1,5 +1,5 @@
 package Accounts;
-import Transactions.TransactionList;
+//import Transactions.TransactionList;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDateTime;
 
@@ -10,7 +10,7 @@ public abstract class CheckingAccount {
     private Double balance;
     private Double initialBalance;
     private LocalDateTime accountCreationDate;
-    private TransactionList transactionList;
+//    private TransactionList transactionList;
     private UUID accountNumber = UUID.randomUUID();
 
 
@@ -28,9 +28,9 @@ public abstract class CheckingAccount {
     //Here we do date manipulation to return required amount from customer
     public abstract Double getInitialBalance(Double initialBalance);
 
-    public abstract void requestDeposit(Transactions.Transaction deposit);
+//    public abstract void requestDeposit(Transactions.Transaction deposit);
 
-    public abstract void requestWithdrawal(Transactions.Transaction withdrawal);
+//    public abstract void requestWithdrawal(Transactions.Transaction withdrawal);
 
     ///aSdasdasdasd
 }
