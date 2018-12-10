@@ -24,9 +24,11 @@ public class Bank {
 
         sqliteDatabase.connect();
         sqliteDatabase.createsNewCheckingAccountTable();
+        sqliteDatabase.createsNewJuniorCheckingAccountTable();
         sqliteDatabase.createsNewUserAccountsTable();
         sqliteDatabase.createsNewTransactionsTable();
         sqliteDatabase.createsNewSavingsAccount();
+        sqliteDatabase.createsNewJuniorSavingsAccount();
         sqliteDatabase.createsNewAvailableFundsTable();
         sqliteDatabase.insertIntoAvailableFunds(BANK_FUNDS);
 //        database.insertIntoCheckingAccount(checkingAccountID,checkingBalance);
