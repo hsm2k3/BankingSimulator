@@ -1,4 +1,4 @@
-package BankReports;
+package reports;
 
 public class Report {
 }

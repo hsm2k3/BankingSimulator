@@ -1,8 +1,8 @@
-package SQLiteDatabase;
+package sqliteDatabase;
 
 import java.sql.*;
 
-public class sqliteDatabase {
+public class SQLiteDatabase {
     private static final String url = "jdbc:sqlite:Bank.db";
 
 

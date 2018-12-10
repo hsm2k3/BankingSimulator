@@ -1,4 +1,4 @@
-package Customer;
+package customer;
 
 import org.joda.time.DateTime;
 import org.joda.time.Period;
@@ -81,7 +81,9 @@ public class Customer {
         try {
             dateFormat.parse(DOB);
         } catch (ParseException e) {
-            e.printStackTrace();
+            e.printStackTrace();//prints the exception
+            System.out.println("Invalid DOB format must be MM/DD/YYYY. Please try again");
+            System.out.println();
             setCustomerDOB(scanner,dateFormat);
         }
         System.out.println();

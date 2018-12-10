@@ -1,4 +1,4 @@
-package BankingExceptions;
+package bankingExceptions;
 
 public class IncorrectAmountException extends RuntimeException{
 
