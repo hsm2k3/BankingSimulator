@@ -13,12 +13,16 @@ public class Main {
     private static final int EXIT = 0;
     private static final int TELLER = 1;
     private static final int FINANCIAL_ADVISOR = 2;
+    private static final int MAKE_CHECKING_ACCOUNT = 1;
+    private static final int MAKE_SAVINGS_ACCOUNT = 2;
+    private static final int DEPOSIT_CHECKING = 3;
+    private static final int DEPOSIT_SAVINGS = 4;
     //we might need to have other classes access these data types
     protected static String CUSTOMER_NAME = null;
     protected static String CUSTOMER_DOB = null;
 
     public static void main(String args[]) throws ParseException {
-        int selection = 0;
+        int selection = 0, tellerSelection = 0, financialAdvisorSelection = 0;
         Bank bank = new Bank();
         Teller teller = new Teller();
         FinancialAdvisor financialAdvisor = new FinancialAdvisor();
@@ -45,9 +49,28 @@ public class Main {
 
         switch (selection) {
             case TELLER:
-                teller.displayTellerMenu(scanner, CUSTOMER_NAME);
+                tellerSelection = teller.displayTellerMenu(scanner, CUSTOMER_NAME);
+                switch(tellerSelection) {
+                    case MAKE_CHECKING_ACCOUNT:
+                        //call on the bank manager to make a new account
+                        break;
+                    case MAKE_SAVINGS_ACCOUNT:
+                        //call on the bank manager to make a new account
+                        break;
+                    case DEPOSIT_CHECKING:
+                        //call on bank manager to deposit
+                        break;
+                    case DEPOSIT_SAVINGS:
+                        //call on bank manager to deposit
+                        break;
+                    default:
+                        break;
+                }
             case FINANCIAL_ADVISOR:
-                financialAdvisor.displayFinancialAdvisorMenu(scanner,CUSTOMER_NAME);
+                financialAdvisorSelection = financialAdvisor.displayFinancialAdvisorMenu(scanner,CUSTOMER_NAME);
+                switch(financialAdvisorSelection){
+
+                }
                 break;
             default:
                 System.out.println("oops something went wrong!");
