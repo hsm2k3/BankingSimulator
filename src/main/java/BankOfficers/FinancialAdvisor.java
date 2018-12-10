@@ -11,7 +11,7 @@ public class FinancialAdvisor {
         System.out.println("----------------------------------------");
         System.out.println("1. Apply for a loan.");
         System.out.println("2. Invest into money market.");
-        System.out.println("3. Leave teller.");
+        System.out.println("3. Leave financial advisor.");
         System.out.println("----------------------------------------");
 
         selection = scanner.nextInt();
