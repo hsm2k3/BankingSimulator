@@ -25,6 +25,10 @@ public class Main {
     private static final int MAKE_SAVINGS_ACCOUNT = 2;
     private static final int DEPOSIT_CHECKING = 3;
     private static final int DEPOSIT_SAVINGS = 4;
+    private static final int WITHDRAW_CHECKING = 5;
+    private static final int WITHDRAW_SAVINGS = 6;
+    private static final int LEAVE_TELLER = 7;
+
     //we might need to have other classes access these data types
     protected static String CUSTOMER_NAME = null;
     protected static String CUSTOMER_DOB = null;
@@ -55,7 +59,6 @@ public class Main {
         bank.connectToDatabase();
         CUSTOMER_NAME = customer.setCustomerName(scanner);
         CUSTOMER_DOB = customer.setCustomerDOB(scanner,dateFormat);
-        while(selection > 3 || selection < 1)
         selection = displayMenu(scanner);
 
         switch (selection) {
@@ -74,6 +77,12 @@ public class Main {
                     case DEPOSIT_SAVINGS:
                         //call on bank manager to deposit
                         break;
+                    case WITHDRAW_CHECKING:
+                        break;
+                    case WITHDRAW_SAVINGS:
+                        break;
+                    case LEAVE_TELLER:
+                        break;
                     default:
                         break;
                 }
@@ -81,7 +90,7 @@ public class Main {
             case FINANCIAL_ADVISOR:
                 financialAdvisorSelection = financialAdvisor.displayFinancialAdvisorMenu(scanner,CUSTOMER_NAME);
                 switch(financialAdvisorSelection){
-                //Financial advisor methods used here
+                    //Financial advisor methods used here
                 }
                 break;
             case EXIT:
@@ -91,9 +100,6 @@ public class Main {
                 System.out.println("oops something went wrong!");
                 break;
         }
-
-
-
     }
 
     //display main menu when user enters the bank
@@ -129,8 +135,5 @@ public class Main {
         }while(!validEntry);
         return selection;
     }
-
-
-
 
 }
