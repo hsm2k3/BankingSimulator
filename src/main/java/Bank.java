@@ -4,8 +4,8 @@ import java.util.Scanner;
 
 public class Bank {
     //these variables are just for testing the insertIntoCheckingAccount method for the database
-    private static Integer checkingAccountID = 1;
-    private static Double checkingBalance = 500.00;
+//    private static Integer checkingAccountID = 1;
+//    private static Double checkingBalance = 500.00;
     Double balance = 5000000.0;
     Integer numberOfPatrons;
     Integer numberOfTransactions;
@@ -30,7 +30,7 @@ public class Bank {
         database.createsNewCheckingAccountTable();
         database.createsNewUserAccountsTable();
         database.createsNewTransactionsTable();
-        database.insertIntoCheckingAccount(checkingAccountID,checkingBalance);
+//        database.insertIntoCheckingAccount(checkingAccountID,checkingBalance);
     }
 
 }

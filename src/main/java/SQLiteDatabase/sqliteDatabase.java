@@ -91,12 +91,7 @@ public class sqliteDatabase {
     public static void createsNewLoansTable(){
     //SQL statement for creating User Account table
         String sql = "CREATE TABLE IF NOT EXISTS Loans (\n "
-                + "TotalAvailableFunds INTEGER NOT NULL UNIQUE ,\n"
-                + "CustomerName TEXT NOT NULL,\n"
-                + "AccountCreationDate INTEGER NOT NULL,\n"
-                + "DOB INTEGER NOT NULL,\n"
-                + "PRIMARY KEY(AccountID)\n"
-                + ");";
+                + "TotalAvailableFunds INTEGER NOT NULL UNIQUE);";
 
         try (Connection conn = DriverManager.getConnection(url);
              Statement stmt = conn.createStatement())
@@ -135,7 +130,7 @@ public class sqliteDatabase {
             System.out.println(e.getMessage());
         }
     }
-    public void insertIntoTransactions(Integer ID, String transactionNote, Integer date, Integer amount){
+    public boolean insertIntoTransactions(Integer ID, String transactionNote, Integer date, Integer amount){
         String sql = "INSERT INTO Transactions (TransactionID, TransactionNote, Date, Amount) VALUES (?,?,?,?)";
         try (Connection conn = DriverManager.getConnection(url);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -144,8 +139,10 @@ public class sqliteDatabase {
             pstmt.setInt(3, date);
             pstmt.setInt(4, amount);
             pstmt.executeUpdate();
+            return true;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+            return false;
         }
     }
 
