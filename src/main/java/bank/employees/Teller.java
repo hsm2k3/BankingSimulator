@@ -21,12 +21,12 @@ public class Teller {
             System.out.println("2. Make a new savings account.");
             System.out.println("3. Deposit money into checking account.");
             System.out.println("4. Deposit money into savings account.");
-            System.out.println("4. Withdraw money from checking account.");
-            System.out.println("4. Withdraw money from savings account.");
-            System.out.println("5. Leave teller.");
+            System.out.println("5. Withdraw money from checking account.");
+            System.out.println("6. Withdraw money from savings account.");
+            System.out.println("7. Leave teller.");
             System.out.println("----------------------------------------");
             selection = scanner.nextInt();
-            if(selection > 5 || selection < 1)
+            if(selection > 7 || selection < 1)
                 validSelection = false;
             else
                 validSelection = true;
