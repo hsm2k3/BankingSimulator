@@ -55,7 +55,7 @@ public class Main {
         bank.connectToDatabase();
         CUSTOMER_NAME = customer.setCustomerName(scanner);
         CUSTOMER_DOB = customer.setCustomerDOB(scanner,dateFormat);
-        while(selection > 7 || selection < 1)
+        while(selection > 3 || selection < 1)
         selection = displayMenu(scanner);
 
         switch (selection) {
