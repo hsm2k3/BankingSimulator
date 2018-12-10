@@ -30,7 +30,6 @@
     <index id="12" parent="6" name="sqlite_autoindex_CheckingAccount_1">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>CheckingAccountID</ColNames>
-      <ColumnCollations></ColumnCollations>
       <Unique>1</Unique>
     </index>
     <key id="13" parent="6">
@@ -64,7 +63,6 @@
     <index id="19" parent="7" name="sqlite_autoindex_Transactions_1">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>TransactionID</ColNames>
-      <ColumnCollations></ColumnCollations>
       <Unique>1</Unique>
     </index>
     <key id="20" parent="7">
@@ -99,7 +97,6 @@
     <index id="26" parent="8" name="sqlite_autoindex_UserAccounts_1">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>AccountID</ColNames>
-      <ColumnCollations></ColumnCollations>
       <Unique>1</Unique>
     </index>
     <key id="27" parent="8">
