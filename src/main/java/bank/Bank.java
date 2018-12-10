@@ -4,6 +4,7 @@ import sqliteDatabase.SQLiteDatabase;
 
 public class Bank {
     private SQLiteDatabase sqliteDatabase;
+    private static int BANK_FUNDS = 1000000;
     //Operation Times
     //Days Open
 
@@ -12,7 +13,7 @@ public class Bank {
         this.sqliteDatabase = sqliteDatabase;
     }
 
-    //this is just a test right now, it's creating the database and tables here
+    //This method will create our database in the local folder
     public void connectToDatabase(){
 
 //        Scanner scan = new Scanner(System.in);
@@ -25,6 +26,9 @@ public class Bank {
         sqliteDatabase.createsNewCheckingAccountTable();
         sqliteDatabase.createsNewUserAccountsTable();
         sqliteDatabase.createsNewTransactionsTable();
+        sqliteDatabase.createsNewSavingsAccount();
+        sqliteDatabase.createsNewAvailableFundsTable();
+        sqliteDatabase.insertIntoAvailableFunds(BANK_FUNDS);
 //        database.insertIntoCheckingAccount(checkingAccountID,checkingBalance);
     }
 

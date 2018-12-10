@@ -70,6 +70,7 @@ public class SQLiteDatabase {
     public static void createsNewUserAccountsTable(){
         //SQL statement for creating User Account table
         String sql = "CREATE TABLE IF NOT EXISTS UserAccounts (\n "
+                // AccountID will use the UUID
                 + "AccountID INTEGER NOT NULL UNIQUE ,\n"
                 + "CustomerName TEXT NOT NULL,\n"
                 + "AccountCreationDate INTEGER NOT NULL,\n"
@@ -88,9 +89,9 @@ public class SQLiteDatabase {
         }
     }
 
-    public static void createsNewLoansTable(){
+    public static void createsNewAvailableFundsTable(){
     //SQL statement for creating User Account table
-        String sql = "CREATE TABLE IF NOT EXISTS Loans (\n "
+        String sql = "CREATE TABLE IF NOT EXISTS AvailableFunds (\n "
                 + "TotalAvailableFunds INTEGER NOT NULL UNIQUE);";
 
         try (Connection conn = DriverManager.getConnection(url);
@@ -100,6 +101,38 @@ public class SQLiteDatabase {
         }
         catch (SQLException e)
         {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public static void createsNewSavingsAccount(){
+        //SQL statement for creating User Savings Account table
+        String sql = "CREATE TABLE IF NOT EXISTS SavingsAccount (\n"
+                // AccountID will use the UUID
+                + "SavingsAccountID INTEGER NOT NULL UNIQUE ,\n"
+                + "CustomerName TEXT NOT NULL,\n"
+                + "SavingsBalancae INTEGER NOT NULL ,\n"
+                + "PRIMARY KEY (SavingsAccountID)\n"
+                + ");";
+        try (Connection conn = DriverManager.getConnection(url);
+             Statement stmt = conn.createStatement())
+        {
+            stmt.execute(sql);
+        }
+        catch (SQLException e)
+        {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void insertIntoAvailableFunds(Integer availableFunds){
+        //SQL statement for creating the Bank's total of available funds table
+        String sql = "INSERT INTO AvailableFunds (TotalAvailableFunds) VALUES (?)";
+        try (Connection conn = DriverManager.getConnection(url);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, availableFunds);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }

@@ -80,11 +80,12 @@ public class Main {
             case FINANCIAL_ADVISOR:
                 financialAdvisorSelection = financialAdvisor.displayFinancialAdvisorMenu(scanner,CUSTOMER_NAME);
                 switch(financialAdvisorSelection){
-
+                //Financial advisor methods used here
                 }
                 break;
             case EXIT:
                 System.exit(0);
+                break;
             default:
                 System.out.println("oops something went wrong!");
                 break;
