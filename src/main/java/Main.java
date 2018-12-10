@@ -3,9 +3,9 @@
 //Muhammad Khalil
 //
 
-import employees.BranchManager;
-import employees.FinancialAdvisor;
-import employees.Teller;
+import bank.employees.BranchManager;
+import bank.employees.FinancialAdvisor;
+import bank.employees.Teller;
 import customer.Customer;
 import org.joda.time.*;
 
@@ -83,6 +83,8 @@ public class Main {
 
                 }
                 break;
+            case EXIT:
+                System.exit(0);
             default:
                 System.out.println("oops something went wrong!");
                 break;

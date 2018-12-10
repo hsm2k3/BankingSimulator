@@ -1,5 +1,4 @@
-package employees;
-import bank.Bank;
+package bank.employees;
 
 import java.util.Scanner;
 
