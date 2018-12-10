@@ -1,3 +1,8 @@
+//Authors:
+//Alex Braverman
+//Muhammad Khalil
+//
+
 import employees.BranchManager;
 import employees.FinancialAdvisor;
 import employees.Teller;
@@ -10,6 +15,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Scanner;
 import bank.Bank;
+import sqliteDatabase.SQLiteDatabase;
 
 public class Main {
     private static final int EXIT = 0;
@@ -25,10 +31,11 @@ public class Main {
 
     public static void main(String args[]) throws ParseException {
         int selection = 0, tellerSelection = 0, financialAdvisorSelection = 0;
-        Bank bank = new Bank();
-        Teller teller = new Teller();
-        FinancialAdvisor financialAdvisor = new FinancialAdvisor();
+        SQLiteDatabase sqLiteDatabase = new SQLiteDatabase();
+        Bank bank = new Bank(sqLiteDatabase);
         BranchManager branchManager = new BranchManager(bank);
+        Teller teller = new Teller(branchManager);
+        FinancialAdvisor financialAdvisor = new FinancialAdvisor(branchManager);
         Customer customer = new Customer();
         DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
         LocalDate todaysDate = new LocalDate();

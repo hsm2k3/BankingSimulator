@@ -1,10 +1,13 @@
 package employees;
+import bank.Bank;
+
 import java.util.Scanner;
 
 public class Teller {
-
-    private BranchManager branchManager = new BranchManager();
-
+    private BranchManager branchManager;
+    public Teller(BranchManager branchManager){
+        this.branchManager = branchManager;
+    }
     //display menu when user visits the teller
     //we should make some methods that will check if a customer exist
     //if they are already in the system we give them one type of menu
