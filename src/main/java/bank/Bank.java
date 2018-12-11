@@ -4,7 +4,7 @@ import sqliteDatabase.SQLiteDatabase;
 
 public class Bank {
     private SQLiteDatabase sqliteDatabase;
-    private static int BANK_FUNDS = 1000000;
+    private static double BANK_FUNDS = 1000000.00;
     //Operation Times
     //Days Open
 
@@ -30,7 +30,7 @@ public class Bank {
         sqliteDatabase.createsNewSavingsAccount();
         sqliteDatabase.createsNewJuniorSavingsAccount();
         sqliteDatabase.createsNewAvailableFundsTable();
-        sqliteDatabase.insertIntoAvailableFunds(BANK_FUNDS);
+//        sqliteDatabase.insertIntoAvailableFunds(BANK_FUNDS);
 //        database.insertIntoCheckingAccount(checkingAccountID,checkingBalance);
     }
 
