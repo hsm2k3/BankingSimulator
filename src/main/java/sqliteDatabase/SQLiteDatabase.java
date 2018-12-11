@@ -165,12 +165,12 @@ public class SQLiteDatabase {
     }
 
 
-    public void insertIntoAvailableFunds(Integer availableFunds){
+    public void insertIntoAvailableFunds(Double availableFunds){
         //SQL statement for creating the Bank's total of available funds table
         String sql = "INSERT INTO AvailableFunds (TotalAvailableFunds) VALUES (?)";
         try (Connection conn = DriverManager.getConnection(url);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setInt(1, availableFunds);
+            pstmt.setDouble(1, availableFunds);
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -191,27 +191,27 @@ public class SQLiteDatabase {
     }
 
 
-    public void insertIntoUserAccount(String ID, String customerName, Integer date, Integer dob){
+    public void insertIntoUserAccount(String ID, String customerName, String date, String dob){
         String sql = "INSERT INTO UserAccounts (UUID, CustomerName, AccountCreationDate, DOB) VALUES (?,?,?,?)";
         try (Connection conn = DriverManager.getConnection(url);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, ID);
             pstmt.setString(2, customerName);
-            pstmt.setInt(3, date);
-            pstmt.setInt(4, dob);
+            pstmt.setString(3, date);
+            pstmt.setString(4, dob);
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }
-    public boolean insertIntoTransactions(String ID, String transactionNote, String customerName, Integer date, Integer amount){
+    public boolean insertIntoTransactions(String ID, String transactionNote, String customerName, String date, Integer amount){
         String sql = "INSERT INTO Transactions (UUID, CustomerName, TransactionNote, Date, Amount) VALUES (?,?,?,?,?)";
         try (Connection conn = DriverManager.getConnection(url);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, ID);
             pstmt.setString(2,customerName);
             pstmt.setString(3, transactionNote);
-            pstmt.setInt(4, date);
+            pstmt.setString(4, date);
             pstmt.setInt(5, amount);
             pstmt.executeUpdate();
             return true;
