@@ -4,9 +4,6 @@ import java.sql.*;
 
 public class SQLiteDatabase {
     private static final String url = "jdbc:sqlite:Bank.db";
-
-
-
     public static void connect() {
         Connection conn = null;
         try {
@@ -30,10 +27,10 @@ public class SQLiteDatabase {
 
         //SQL statement for creating Checking Account table
         String sql = "CREATE TABLE IF NOT EXISTS CheckingAccount (\n "
-                + "CheckingAccountID INTEGER NOT NULL UNIQUE, \n"
+                + "UUID INTEGER NOT NULL UNIQUE, \n"
                 + "CustomerName TEXT NOT NULL,\n"
                 + "Balance REAL NOT NULL,\n"
-                + "PRIMARY KEY(CheckingAccountID)\n"
+                + "PRIMARY KEY(UUID)\n"
                 + ");";
 
         try (Connection conn = DriverManager.getConnection(url);
@@ -51,10 +48,10 @@ public class SQLiteDatabase {
 
         //SQL statement for creating Checking Account table
         String sql = "CREATE TABLE IF NOT EXISTS JuniorCheckingAccount (\n "
-                + "CheckingAccountID INTEGER NOT NULL UNIQUE, \n"
+                + "UUID INTEGER NOT NULL UNIQUE, \n"
                 + "CustomerName TEXT NOT NULL,\n"
                 + "Balance REAL NOT NULL,\n"
-                + "PRIMARY KEY(CheckingAccountID)\n"
+                + "PRIMARY KEY(UUID)\n"
                 + ");";
 
         try (Connection conn = DriverManager.getConnection(url);
@@ -71,12 +68,12 @@ public class SQLiteDatabase {
     public static void createsNewTransactionsTable(){
         //SQL statement for creating Transactions table
         String sql = "CREATE TABLE IF NOT EXISTS Transactions (\n "
-                + "TransactionID INTEGER NOT NULL UNIQUE,\n"
+                + "UUID INTEGER NOT NULL UNIQUE,\n"
                 + "CustomerName TEXT NOT NULL,\n"
                 + "TransactionNote TEXT,\n"
-                + "Date INTEGER NOT NULL,\n"
+                + "Date TEXT NOT NULL,\n"
                 + "Amount INTEGER NOT NULL,\n"
-                + "PRIMARY KEY(TransactionID)\n"
+                + "PRIMARY KEY(UUID)\n"
                 + ");";
 
         try (Connection conn = DriverManager.getConnection(url);
@@ -94,11 +91,11 @@ public class SQLiteDatabase {
         //SQL statement for creating User Account table
         String sql = "CREATE TABLE IF NOT EXISTS UserAccounts (\n "
                 // AccountID will use the UUID
-                + "AccountID INTEGER NOT NULL UNIQUE ,\n"
+                + "UUID INTEGER NOT NULL UNIQUE ,\n"
                 + "CustomerName TEXT NOT NULL,\n"
                 + "AccountCreationDate INTEGER NOT NULL,\n"
                 + "DOB INTEGER NOT NULL,\n"
-                + "PRIMARY KEY(AccountID)\n"
+                + "PRIMARY KEY(UUID)\n"
                 + ");";
 
         try (Connection conn = DriverManager.getConnection(url);
@@ -132,10 +129,10 @@ public class SQLiteDatabase {
         //SQL statement for creating User Savings Account table
         String sql = "CREATE TABLE IF NOT EXISTS SavingsAccount (\n"
                 // AccountID will use the UUID
-                + "SavingsAccountID INTEGER NOT NULL UNIQUE ,\n"
+                + "UUID INTEGER NOT NULL UNIQUE ,\n"
                 + "CustomerName TEXT NOT NULL,\n"
                 + "SavingsBalancae INTEGER NOT NULL ,\n"
-                + "PRIMARY KEY (SavingsAccountID)\n"
+                + "PRIMARY KEY (UUID)\n"
                 + ");";
         try (Connection conn = DriverManager.getConnection(url);
              Statement stmt = conn.createStatement())
@@ -151,10 +148,10 @@ public class SQLiteDatabase {
         //SQL statement for creating User Savings Account table
         String sql = "CREATE TABLE IF NOT EXISTS JuniorSavingsAccount (\n"
                 // AccountID will use the UUID
-                + "SavingsAccountID INTEGER NOT NULL UNIQUE ,\n"
+                + "UUID INTEGER NOT NULL UNIQUE ,\n"
                 + "CustomerName TEXT NOT NULL,\n"
-                + "SavingsBalancae INTEGER NOT NULL ,\n"
-                + "PRIMARY KEY (SavingsAccountID)\n"
+                + "JuniorSavingsBalancae INTEGER NOT NULL ,\n"
+                + "PRIMARY KEY (UUID)\n"
                 + ");";
         try (Connection conn = DriverManager.getConnection(url);
              Statement stmt = conn.createStatement())
@@ -181,11 +178,12 @@ public class SQLiteDatabase {
     }
 
     public void insertIntoCheckingAccount(Integer ID, Double balance, String customerName){
-        String sql = "INSERT INTO CheckingAccount (checkingAccountID, balance) VALUES (?, ?)";
+        String sql = "INSERT INTO CheckingAccount (UUID, customerName, balance) VALUES (?,?,?)";
         try (Connection conn = DriverManager.getConnection(url);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setInt(1, ID);
-            pstmt.setDouble(2, balance);
+            pstmt.setString(2, customerName);
+            pstmt.setDouble(3,balance);
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -194,7 +192,7 @@ public class SQLiteDatabase {
 
 
     public void insertIntoUserAccount(Integer ID, String customerName, Integer date, Integer dob){
-        String sql = "INSERT INTO UserAccounts (CustomerName, AccountID, AccountCreationDate, DOB) VALUES (?,?,?,?)";
+        String sql = "INSERT INTO UserAccounts (CustomerName, UUID, AccountCreationDate, DOB) VALUES (?,?,?,?)";
         try (Connection conn = DriverManager.getConnection(url);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setInt(1, ID);
@@ -228,10 +226,10 @@ public class SQLiteDatabase {
 //    public static void createsNewTransactionsTable(){
 //        //SQL statement for creating Transactions table
 //        String sql = "CREATE TABLE IF NOT EXISTS Transactions (\n "
-//                + "TransactionID INTEGER NOT NULL UNIQUE,\n"
+//                + "UUID INTEGER NOT NULL UNIQUE,\n"
 //                + "CustomerName TEXT NOT NULL,\n"
 //                + "TransactionNote TEXT,\n"
-//                + "Date INTEGER NOT NULL,\n"
+//                + "Date TEXT NOT NULL,\n"
 //                + "Amount INTEGER NOT NULL,\n"
-//                + "PRIMARY KEY(TransactionID)\n"
+//                + "PRIMARY KEY(UUID)\n"
 //                + ");";
