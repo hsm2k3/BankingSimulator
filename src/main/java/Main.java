@@ -59,11 +59,12 @@ public class Main {
         bank.connectToDatabase();
         CUSTOMER_NAME = customer.setCustomerName(scanner);
         CUSTOMER_DOB = customer.setCustomerDOB(scanner,dateFormat);
+        while(selection != EXIT)
         selection = displayMenu(scanner);
 
         switch (selection) {
             case TELLER:
-                tellerSelection = teller.displayTellerMenu(scanner, CUSTOMER_NAME);
+                tellerSelection = displayTellerMenu(scanner, CUSTOMER_NAME);
                 switch(tellerSelection) {
                     case MAKE_CHECKING_ACCOUNT:
                         //call on the bank manager to make a new account
@@ -88,7 +89,7 @@ public class Main {
                 }
                 break;
             case FINANCIAL_ADVISOR:
-                financialAdvisorSelection = financialAdvisor.displayFinancialAdvisorMenu(scanner,CUSTOMER_NAME);
+                financialAdvisorSelection = displayFinancialAdvisorMenu(scanner,CUSTOMER_NAME);
                 switch(financialAdvisorSelection){
                     //Financial advisor methods used here
                 }
@@ -136,4 +137,42 @@ public class Main {
         return selection;
     }
 
+    public static int displayTellerMenu(Scanner scanner, String customerName){
+        int selection = 0;
+        boolean validSelection = true;
+        do {
+            System.out.println("Welcome, " + customerName + ", how may I help you today?");
+            System.out.println("----------------------------------------");
+            System.out.println("1. Make a new checking account.");
+            System.out.println("2. Make a new savings account.");
+            System.out.println("3. Deposit money into checking account.");
+            System.out.println("4. Deposit money into savings account.");
+            System.out.println("5. Withdraw money from checking account.");
+            System.out.println("6. Withdraw money from savings account.");
+            System.out.println("7. Leave teller.");
+            System.out.println("----------------------------------------");
+            selection = scanner.nextInt();
+            if(selection > 7 || selection < 1)
+                validSelection = false;
+            else
+                validSelection = true;
+        }while (!validSelection);
+        return selection;
+    }
+
+    public static int displayFinancialAdvisorMenu(Scanner scanner, String customerName){
+        int selection = 0;
+
+        System.out.println("Welcome, " + customerName + ", how may I help you today?");
+        System.out.println("----------------------------------------");
+        System.out.println("1. Apply for a loan.");
+        System.out.println("2. Invest into money market.");
+        System.out.println("3. Leave financial advisor.");
+        System.out.println("----------------------------------------");
+
+        selection = scanner.nextInt();
+
+        return selection;
+
+    }
 }
