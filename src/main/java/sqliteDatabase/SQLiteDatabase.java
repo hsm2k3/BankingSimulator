@@ -27,7 +27,7 @@ public class SQLiteDatabase {
 
         //SQL statement for creating Checking Account table
         String sql = "CREATE TABLE IF NOT EXISTS CheckingAccount (\n "
-                + "UUID INTEGER NOT NULL UNIQUE, \n"
+                + "UUID TEXT NOT NULL UNIQUE, \n"
                 + "CustomerName TEXT NOT NULL,\n"
                 + "Balance REAL NOT NULL,\n"
                 + "PRIMARY KEY(UUID)\n"
@@ -48,7 +48,7 @@ public class SQLiteDatabase {
 
         //SQL statement for creating Checking Account table
         String sql = "CREATE TABLE IF NOT EXISTS JuniorCheckingAccount (\n "
-                + "UUID INTEGER NOT NULL UNIQUE, \n"
+                + "UUID TEXT NOT NULL UNIQUE, \n"
                 + "CustomerName TEXT NOT NULL,\n"
                 + "Balance REAL NOT NULL,\n"
                 + "PRIMARY KEY(UUID)\n"
@@ -68,7 +68,7 @@ public class SQLiteDatabase {
     public static void createsNewTransactionsTable(){
         //SQL statement for creating Transactions table
         String sql = "CREATE TABLE IF NOT EXISTS Transactions (\n "
-                + "UUID INTEGER NOT NULL UNIQUE,\n"
+                + "UUID TEXT NOT NULL UNIQUE, \n"
                 + "CustomerName TEXT NOT NULL,\n"
                 + "TransactionNote TEXT,\n"
                 + "Date TEXT NOT NULL,\n"
@@ -91,10 +91,10 @@ public class SQLiteDatabase {
         //SQL statement for creating User Account table
         String sql = "CREATE TABLE IF NOT EXISTS UserAccounts (\n "
                 // AccountID will use the UUID
-                + "UUID INTEGER NOT NULL UNIQUE ,\n"
+                + "UUID TEXT NOT NULL UNIQUE ,\n"
                 + "CustomerName TEXT NOT NULL,\n"
-                + "AccountCreationDate INTEGER NOT NULL,\n"
-                + "DOB INTEGER NOT NULL,\n"
+                + "AccountCreationDate TEXT NOT NULL,\n"
+                + "DOB TEXT NOT NULL,\n"
                 + "PRIMARY KEY(UUID)\n"
                 + ");";
 
@@ -129,7 +129,7 @@ public class SQLiteDatabase {
         //SQL statement for creating User Savings Account table
         String sql = "CREATE TABLE IF NOT EXISTS SavingsAccount (\n"
                 // AccountID will use the UUID
-                + "UUID INTEGER NOT NULL UNIQUE ,\n"
+                + "UUID TEXT NOT NULL UNIQUE ,\n"
                 + "CustomerName TEXT NOT NULL,\n"
                 + "SavingsBalancae INTEGER NOT NULL ,\n"
                 + "PRIMARY KEY (UUID)\n"
@@ -148,7 +148,7 @@ public class SQLiteDatabase {
         //SQL statement for creating User Savings Account table
         String sql = "CREATE TABLE IF NOT EXISTS JuniorSavingsAccount (\n"
                 // AccountID will use the UUID
-                + "UUID INTEGER NOT NULL UNIQUE ,\n"
+                + "UUID TEXT NOT NULL UNIQUE ,\n"
                 + "CustomerName TEXT NOT NULL,\n"
                 + "JuniorSavingsBalancae INTEGER NOT NULL ,\n"
                 + "PRIMARY KEY (UUID)\n"
@@ -177,11 +177,11 @@ public class SQLiteDatabase {
         }
     }
 
-    public void insertIntoCheckingAccount(Integer ID, Double balance, String customerName){
+    public void insertIntoCheckingAccount(String ID, Double balance, String customerName){
         String sql = "INSERT INTO CheckingAccount (UUID, customerName, balance) VALUES (?,?,?)";
         try (Connection conn = DriverManager.getConnection(url);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setInt(1, ID);
+            pstmt.setString(1, ID);
             pstmt.setString(2, customerName);
             pstmt.setDouble(3,balance);
             pstmt.executeUpdate();
@@ -191,11 +191,11 @@ public class SQLiteDatabase {
     }
 
 
-    public void insertIntoUserAccount(Integer ID, String customerName, Integer date, Integer dob){
-        String sql = "INSERT INTO UserAccounts (CustomerName, UUID, AccountCreationDate, DOB) VALUES (?,?,?,?)";
+    public void insertIntoUserAccount(String ID, String customerName, Integer date, Integer dob){
+        String sql = "INSERT INTO UserAccounts (UUID, CustomerName, AccountCreationDate, DOB) VALUES (?,?,?,?)";
         try (Connection conn = DriverManager.getConnection(url);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setInt(1, ID);
+            pstmt.setString(1, ID);
             pstmt.setString(2, customerName);
             pstmt.setInt(3, date);
             pstmt.setInt(4, dob);
@@ -204,11 +204,11 @@ public class SQLiteDatabase {
             System.out.println(e.getMessage());
         }
     }
-    public boolean insertIntoTransactions(Integer ID, String transactionNote, String customerName, Integer date, Integer amount){
-        String sql = "INSERT INTO Transactions (TransactionID, CustomerName, TransactionNote, Date, Amount) VALUES (?,?,?,?,?)";
+    public boolean insertIntoTransactions(String ID, String transactionNote, String customerName, Integer date, Integer amount){
+        String sql = "INSERT INTO Transactions (UUID, CustomerName, TransactionNote, Date, Amount) VALUES (?,?,?,?,?)";
         try (Connection conn = DriverManager.getConnection(url);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setInt(1, ID);
+            pstmt.setString(1, ID);
             pstmt.setString(2,customerName);
             pstmt.setString(3, transactionNote);
             pstmt.setInt(4, date);
@@ -222,14 +222,3 @@ public class SQLiteDatabase {
     }
 
 }
-
-//    public static void createsNewTransactionsTable(){
-//        //SQL statement for creating Transactions table
-//        String sql = "CREATE TABLE IF NOT EXISTS Transactions (\n "
-//                + "UUID INTEGER NOT NULL UNIQUE,\n"
-//                + "CustomerName TEXT NOT NULL,\n"
-//                + "TransactionNote TEXT,\n"
-//                + "Date TEXT NOT NULL,\n"
-//                + "Amount INTEGER NOT NULL,\n"
-//                + "PRIMARY KEY(UUID)\n"
-//                + ");";
