@@ -64,7 +64,7 @@ public class Main {
 
         switch (selection) {
             case TELLER:
-                tellerSelection = displayTellerMenu(scanner, CUSTOMER_NAME);
+                tellerSelection = displayTellerMenu(scanner);
                 switch(tellerSelection) {
                     case MAKE_CHECKING_ACCOUNT:
                         //call on the bank manager to make a new account
@@ -89,7 +89,7 @@ public class Main {
                 }
                 break;
             case FINANCIAL_ADVISOR:
-                financialAdvisorSelection = displayFinancialAdvisorMenu(scanner,CUSTOMER_NAME);
+                financialAdvisorSelection = displayFinancialAdvisorMenu(scanner);
                 switch(financialAdvisorSelection){
                     //Financial advisor methods used here
                 }
@@ -137,11 +137,11 @@ public class Main {
         return selection;
     }
 
-    public static int displayTellerMenu(Scanner scanner, String customerName){
+    public static int displayTellerMenu(Scanner scanner){
         int selection = 0;
         boolean validSelection = true;
         do {
-            System.out.println("Welcome, " + customerName + ", how may I help you today?");
+            System.out.println("Welcome, " + CUSTOMER_NAME + ", how may I help you today?");
             System.out.println("----------------------------------------");
             System.out.println("1. Make a new checking account.");
             System.out.println("2. Make a new savings account.");
@@ -160,10 +160,10 @@ public class Main {
         return selection;
     }
 
-    public static int displayFinancialAdvisorMenu(Scanner scanner, String customerName){
+    public static int displayFinancialAdvisorMenu(Scanner scanner){
         int selection = 0;
 
-        System.out.println("Welcome, " + customerName + ", how may I help you today?");
+        System.out.println("Welcome, " + CUSTOMER_NAME + ", how may I help you today?");
         System.out.println("----------------------------------------");
         System.out.println("1. Apply for a loan.");
         System.out.println("2. Invest into money market.");
