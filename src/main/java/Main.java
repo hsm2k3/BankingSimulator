@@ -18,7 +18,7 @@ import bank.Bank;
 import sqliteDatabase.SQLiteDatabase;
 
 public class Main {
-    private static final int EXIT = 0;
+    private static final int EXIT = 3;
     private static final int TELLER = 1;
     private static final int FINANCIAL_ADVISOR = 2;
     private static final int MAKE_CHECKING_ACCOUNT = 1;
@@ -28,6 +28,8 @@ public class Main {
     private static final int WITHDRAW_CHECKING = 5;
     private static final int WITHDRAW_SAVINGS = 6;
     private static final int LEAVE_TELLER = 7;
+    private static final int INVEST_MONEY = 1;
+    private static final int LEAVE_FINANCIAL_ADVISOR = 2;
 
     //we might need to have other classes access these data types
     protected static String CUSTOMER_NAME = null;
@@ -59,48 +61,23 @@ public class Main {
         bank.connectToDatabase();
         CUSTOMER_NAME = customer.setCustomerName(scanner);
         CUSTOMER_DOB = customer.setCustomerDOB(scanner,dateFormat);
-        while(selection != EXIT)
-        selection = displayMenu(scanner);
+        do {
+            selection = displayMenu(scanner);
+            switch(selection) {
+                case TELLER:
+                    displayTellerMenu(scanner);
+                    break;
+                case FINANCIAL_ADVISOR:
+                    displayFinancialAdvisorMenu(scanner);
+                    break;
+                case EXIT:
+                    break;
+                default:
+                    System.out.println("Oops! Something went wrong.");
+                    break;
+            }
+        }while(selection != EXIT);
 
-        switch (selection) {
-            case TELLER:
-                tellerSelection = displayTellerMenu(scanner);
-                switch(tellerSelection) {
-                    case MAKE_CHECKING_ACCOUNT:
-                        //call on the bank manager to make a new account
-                        break;
-                    case MAKE_SAVINGS_ACCOUNT:
-                        //call on the bank manager to make a new account
-                        break;
-                    case DEPOSIT_CHECKING:
-                        //call on bank manager to deposit
-                        break;
-                    case DEPOSIT_SAVINGS:
-                        //call on bank manager to deposit
-                        break;
-                    case WITHDRAW_CHECKING:
-                        break;
-                    case WITHDRAW_SAVINGS:
-                        break;
-                    case LEAVE_TELLER:
-                        break;
-                    default:
-                        break;
-                }
-                break;
-            case FINANCIAL_ADVISOR:
-                financialAdvisorSelection = displayFinancialAdvisorMenu(scanner);
-                switch(financialAdvisorSelection){
-                    //Financial advisor methods used here
-                }
-                break;
-            case EXIT:
-                System.exit(0);
-                break;
-            default:
-                System.out.println("oops something went wrong!");
-                break;
-        }
     }
 
     //display main menu when user enters the bank
@@ -149,7 +126,7 @@ public class Main {
             System.out.println("4. Deposit money into savings account.");
             System.out.println("5. Withdraw money from checking account.");
             System.out.println("6. Withdraw money from savings account.");
-            System.out.println("7. Leave teller.");
+            System.out.println("7. Return to main menu.");
             System.out.println("----------------------------------------");
             selection = scanner.nextInt();
             if(selection > 7 || selection < 1)
@@ -157,22 +134,65 @@ public class Main {
             else
                 validSelection = true;
         }while (!validSelection);
+
+        switch(selection){
+            case MAKE_CHECKING_ACCOUNT:
+                break;
+            case MAKE_SAVINGS_ACCOUNT:
+                break;
+            case DEPOSIT_CHECKING:
+                break;
+            case DEPOSIT_SAVINGS:
+                break;
+            case WITHDRAW_CHECKING:
+                break;
+            case WITHDRAW_SAVINGS:
+                break;
+            case LEAVE_TELLER:
+                break;
+            default:
+                break;
+        }
+
         return selection;
     }
 
     public static int displayFinancialAdvisorMenu(Scanner scanner){
         int selection = 0;
-
+        boolean validSelection = true;
+        do{
         System.out.println("Welcome, " + CUSTOMER_NAME + ", how may I help you today?");
         System.out.println("----------------------------------------");
-        System.out.println("1. Apply for a loan.");
-        System.out.println("2. Invest into money market.");
-        System.out.println("3. Leave financial advisor.");
+        System.out.println("1. Invest into money market.");
+        System.out.println("2. Return to main menu.");
         System.out.println("----------------------------------------");
-
         selection = scanner.nextInt();
+        if(selection > 7 || selection < 1)
+            validSelection = false;
+        else
+            validSelection = true;
+    }while (!validSelection);
+
+        switch(selection){
+            case INVEST_MONEY:
+                break;
+            case LEAVE_FINANCIAL_ADVISOR:
+                break;
+            default:
+                break;
+        }
 
         return selection;
 
     }
+
+//    public static int inputSelection(Scanner scanner, int selection){
+//        switch (selection) {
+//            case TELLER:
+//                break;
+//            case FINANCIAL_ADVISOR:
+//                break;
+//            default:
+//                break;
+//    }
 }
