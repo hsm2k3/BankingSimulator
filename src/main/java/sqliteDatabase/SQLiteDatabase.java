@@ -72,7 +72,7 @@ public class SQLiteDatabase {
                 + "CustomerName TEXT NOT NULL,\n"
                 + "TransactionNote TEXT,\n"
                 + "Date TEXT NOT NULL,\n"
-                + "Amount INTEGER NOT NULL,\n"
+                + "Amount REAL NOT NULL,\n"
                 + "PRIMARY KEY(UUID)\n"
                 + ");";
 
@@ -112,7 +112,7 @@ public class SQLiteDatabase {
     public static void createsNewAvailableFundsTable(){
     //SQL statement for creating User Account table
         String sql = "CREATE TABLE IF NOT EXISTS AvailableFunds (\n "
-                + "TotalAvailableFunds INTEGER NOT NULL UNIQUE);";
+                + "TotalAvailableFunds REAL NOT NULL UNIQUE);";
 
         try (Connection conn = DriverManager.getConnection(url);
              Statement stmt = conn.createStatement())
@@ -131,7 +131,7 @@ public class SQLiteDatabase {
                 // AccountID will use the UUID
                 + "UUID TEXT NOT NULL UNIQUE ,\n"
                 + "CustomerName TEXT NOT NULL,\n"
-                + "SavingsBalancae INTEGER NOT NULL ,\n"
+                + "SavingsBalancae REAL NOT NULL ,\n"
                 + "PRIMARY KEY (UUID)\n"
                 + ");";
         try (Connection conn = DriverManager.getConnection(url);
@@ -150,7 +150,7 @@ public class SQLiteDatabase {
                 // AccountID will use the UUID
                 + "UUID TEXT NOT NULL UNIQUE ,\n"
                 + "CustomerName TEXT NOT NULL,\n"
-                + "JuniorSavingsBalancae INTEGER NOT NULL ,\n"
+                + "JuniorSavingsBalancae REAL NOT NULL ,\n"
                 + "PRIMARY KEY (UUID)\n"
                 + ");";
         try (Connection conn = DriverManager.getConnection(url);
