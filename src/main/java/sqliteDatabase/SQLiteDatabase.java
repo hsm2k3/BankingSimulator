@@ -3,7 +3,7 @@ package sqliteDatabase;
 import java.sql.*;
 
 public class SQLiteDatabase {
-    private static final String url = "jdbc:sqlite:Bank.db";
+    private static final String url = "jdbc:sqlite:bank.db";
     public static void connect() {
         Connection conn = null;
         try {
@@ -93,8 +93,8 @@ public class SQLiteDatabase {
                 // AccountID will use the UUID
                 + "UUID TEXT NOT NULL UNIQUE ,\n"
                 + "CustomerName TEXT NOT NULL,\n"
-                + "AccountCreationDate TEXT NOT NULL,\n"
-                + "DOB TEXT NOT NULL,\n"
+                + "AccountCreationDate DATE NOT NULL,\n"
+                + "DOB DATE NOT NULL,\n"
                 + "PRIMARY KEY(UUID)\n"
                 + ");";
 
@@ -166,7 +166,7 @@ public class SQLiteDatabase {
 
 
     public void insertIntoAvailableFunds(Double availableFunds){
-        //SQL statement for creating the Bank's total of available funds table
+        //SQL statement for creating the bank's total of available funds table
         String sql = "INSERT INTO AvailableFunds (TotalAvailableFunds) VALUES (?)";
         try (Connection conn = DriverManager.getConnection(url);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
