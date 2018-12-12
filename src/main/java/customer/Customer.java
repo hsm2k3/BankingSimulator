@@ -17,32 +17,12 @@ public class Customer {
     private DateTime dateOfBirth;
     private Boolean isMinor;
     private Double inWallet;
-    private UUID patronID;
+    protected UUID uuid;
     private DateTime DOB;
 
-    public void Customer(String firstName, String lastName, DateTime dateOfBirth)throws IOException {
-        Customer bankPatron = new Customer();
-        /* this.firstName = firstName;
-        this.lastName = lastName;
-        this.dateOfBirth = dateOfBirth;
-        this.isMinor = setIsUnder18(dateOfBirth);
-        this.inWallet = inWallet;
-        patronID = UUID.randomUUID();*/
+    public void Customer(UUID uuid) {
+        this.uuid = uuid;
     }
-
-//    public String setFirstName(String firstName) throws IOException {
-//        if(checkOnlyCharacters(firstName))
-//            return firstName;
-//        else
-//            throw new IOException(){};
-//    }
-//
-//    public String setLastName(String firstName) throws IOException {
-//        if(checkOnlyCharacters(firstName))
-//            return firstName;
-//        else
-//            throw new IOException(){};
-//    }
 
     //Sanitizing user input -- returns false is !characters only
     private Boolean checkOnlyCharacters(String name){
