@@ -4,9 +4,6 @@ import java.sql.*;
 
 public class SQLiteDatabase {
     private static final String url = "jdbc:sqlite:Bank.db";
-
-
-
     public static void connect() {
         Connection conn = null;
         try {
@@ -30,10 +27,10 @@ public class SQLiteDatabase {
 
         //SQL statement for creating Checking Account table
         String sql = "CREATE TABLE IF NOT EXISTS CheckingAccount (\n "
-                + "CheckingAccountID INTEGER NOT NULL UNIQUE, \n"
+                + "UUID TEXT NOT NULL UNIQUE, \n"
                 + "CustomerName TEXT NOT NULL,\n"
                 + "Balance REAL NOT NULL,\n"
-                + "PRIMARY KEY(CheckingAccountID)\n"
+                + "PRIMARY KEY(UUID)\n"
                 + ");";
 
         try (Connection conn = DriverManager.getConnection(url);
@@ -51,10 +48,10 @@ public class SQLiteDatabase {
 
         //SQL statement for creating Checking Account table
         String sql = "CREATE TABLE IF NOT EXISTS JuniorCheckingAccount (\n "
-                + "CheckingAccountID INTEGER NOT NULL UNIQUE, \n"
+                + "UUID TEXT NOT NULL UNIQUE, \n"
                 + "CustomerName TEXT NOT NULL,\n"
                 + "Balance REAL NOT NULL,\n"
-                + "PRIMARY KEY(CheckingAccountID)\n"
+                + "PRIMARY KEY(UUID)\n"
                 + ");";
 
         try (Connection conn = DriverManager.getConnection(url);
@@ -71,12 +68,12 @@ public class SQLiteDatabase {
     public static void createsNewTransactionsTable(){
         //SQL statement for creating Transactions table
         String sql = "CREATE TABLE IF NOT EXISTS Transactions (\n "
-                + "TransactionID INTEGER NOT NULL UNIQUE,\n"
+                + "UUID TEXT NOT NULL UNIQUE, \n"
                 + "CustomerName TEXT NOT NULL,\n"
                 + "TransactionNote TEXT,\n"
-                + "Date INTEGER NOT NULL,\n"
-                + "Amount INTEGER NOT NULL,\n"
-                + "PRIMARY KEY(TransactionID)\n"
+                + "Date TEXT NOT NULL,\n"
+                + "Amount REAL NOT NULL,\n"
+                + "PRIMARY KEY(UUID)\n"
                 + ");";
 
         try (Connection conn = DriverManager.getConnection(url);
@@ -94,11 +91,11 @@ public class SQLiteDatabase {
         //SQL statement for creating User Account table
         String sql = "CREATE TABLE IF NOT EXISTS UserAccounts (\n "
                 // AccountID will use the UUID
-                + "AccountID INTEGER NOT NULL UNIQUE ,\n"
+                + "UUID TEXT NOT NULL UNIQUE ,\n"
                 + "CustomerName TEXT NOT NULL,\n"
-                + "AccountCreationDate INTEGER NOT NULL,\n"
-                + "DOB INTEGER NOT NULL,\n"
-                + "PRIMARY KEY(AccountID)\n"
+                + "AccountCreationDate TEXT NOT NULL,\n"
+                + "DOB TEXT NOT NULL,\n"
+                + "PRIMARY KEY(UUID)\n"
                 + ");";
 
         try (Connection conn = DriverManager.getConnection(url);
@@ -115,7 +112,7 @@ public class SQLiteDatabase {
     public static void createsNewAvailableFundsTable(){
     //SQL statement for creating User Account table
         String sql = "CREATE TABLE IF NOT EXISTS AvailableFunds (\n "
-                + "TotalAvailableFunds INTEGER NOT NULL UNIQUE);";
+                + "TotalAvailableFunds REAL NOT NULL UNIQUE);";
 
         try (Connection conn = DriverManager.getConnection(url);
              Statement stmt = conn.createStatement())
@@ -132,10 +129,10 @@ public class SQLiteDatabase {
         //SQL statement for creating User Savings Account table
         String sql = "CREATE TABLE IF NOT EXISTS SavingsAccount (\n"
                 // AccountID will use the UUID
-                + "SavingsAccountID INTEGER NOT NULL UNIQUE ,\n"
+                + "UUID TEXT NOT NULL UNIQUE ,\n"
                 + "CustomerName TEXT NOT NULL,\n"
-                + "SavingsBalancae INTEGER NOT NULL ,\n"
-                + "PRIMARY KEY (SavingsAccountID)\n"
+                + "SavingsBalancae REAL NOT NULL ,\n"
+                + "PRIMARY KEY (UUID)\n"
                 + ");";
         try (Connection conn = DriverManager.getConnection(url);
              Statement stmt = conn.createStatement())
@@ -151,10 +148,10 @@ public class SQLiteDatabase {
         //SQL statement for creating User Savings Account table
         String sql = "CREATE TABLE IF NOT EXISTS JuniorSavingsAccount (\n"
                 // AccountID will use the UUID
-                + "SavingsAccountID INTEGER NOT NULL UNIQUE ,\n"
+                + "UUID TEXT NOT NULL UNIQUE ,\n"
                 + "CustomerName TEXT NOT NULL,\n"
-                + "SavingsBalancae INTEGER NOT NULL ,\n"
-                + "PRIMARY KEY (SavingsAccountID)\n"
+                + "JuniorSavingsBalancae REAL NOT NULL ,\n"
+                + "PRIMARY KEY (UUID)\n"
                 + ");";
         try (Connection conn = DriverManager.getConnection(url);
              Statement stmt = conn.createStatement())
@@ -168,52 +165,53 @@ public class SQLiteDatabase {
     }
 
 
-    public void insertIntoAvailableFunds(Integer availableFunds){
+    public void insertIntoAvailableFunds(Double availableFunds){
         //SQL statement for creating the Bank's total of available funds table
         String sql = "INSERT INTO AvailableFunds (TotalAvailableFunds) VALUES (?)";
         try (Connection conn = DriverManager.getConnection(url);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setInt(1, availableFunds);
+            pstmt.setDouble(1, availableFunds);
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }
 
-    public void insertIntoCheckingAccount(Integer ID, Double balance, String customerName){
-        String sql = "INSERT INTO CheckingAccount (checkingAccountID, balance) VALUES (?, ?)";
+    public void insertIntoCheckingAccount(String ID, Double balance, String customerName){
+        String sql = "INSERT INTO CheckingAccount (UUID, customerName, balance) VALUES (?,?,?)";
         try (Connection conn = DriverManager.getConnection(url);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setInt(1, ID);
-            pstmt.setDouble(2, balance);
-            pstmt.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-
-    public void insertIntoUserAccount(Integer ID, String customerName, Integer date, Integer dob){
-        String sql = "INSERT INTO UserAccounts (CustomerName, AccountID, AccountCreationDate, DOB) VALUES (?,?,?,?)";
-        try (Connection conn = DriverManager.getConnection(url);
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setInt(1, ID);
+            pstmt.setString(1, ID);
             pstmt.setString(2, customerName);
-            pstmt.setInt(3, date);
-            pstmt.setInt(4, dob);
+            pstmt.setDouble(3,balance);
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }
-    public boolean insertIntoTransactions(Integer ID, String transactionNote, String customerName, Integer date, Integer amount){
-        String sql = "INSERT INTO Transactions (TransactionID, CustomerName, TransactionNote, Date, Amount) VALUES (?,?,?,?,?)";
+
+
+    public void insertIntoUserAccount(String ID, String customerName, String date, String dob){
+        String sql = "INSERT INTO UserAccounts (UUID, CustomerName, AccountCreationDate, DOB) VALUES (?,?,?,?)";
         try (Connection conn = DriverManager.getConnection(url);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setInt(1, ID);
+            pstmt.setString(1, ID);
+            pstmt.setString(2, customerName);
+            pstmt.setString(3, date);
+            pstmt.setString(4, dob);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    public boolean insertIntoTransactions(String ID, String transactionNote, String customerName, String date, Integer amount){
+        String sql = "INSERT INTO Transactions (UUID, CustomerName, TransactionNote, Date, Amount) VALUES (?,?,?,?,?)";
+        try (Connection conn = DriverManager.getConnection(url);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, ID);
             pstmt.setString(2,customerName);
             pstmt.setString(3, transactionNote);
-            pstmt.setInt(4, date);
+            pstmt.setString(4, date);
             pstmt.setInt(5, amount);
             pstmt.executeUpdate();
             return true;
@@ -224,14 +222,3 @@ public class SQLiteDatabase {
     }
 
 }
-
-//    public static void createsNewTransactionsTable(){
-//        //SQL statement for creating Transactions table
-//        String sql = "CREATE TABLE IF NOT EXISTS Transactions (\n "
-//                + "TransactionID INTEGER NOT NULL UNIQUE,\n"
-//                + "CustomerName TEXT NOT NULL,\n"
-//                + "TransactionNote TEXT,\n"
-//                + "Date INTEGER NOT NULL,\n"
-//                + "Amount INTEGER NOT NULL,\n"
-//                + "PRIMARY KEY(TransactionID)\n"
-//                + ");";
