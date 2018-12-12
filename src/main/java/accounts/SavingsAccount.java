@@ -1,4 +1,6 @@
 package accounts;
 
-public class SavingsAccount {
+public abstract class SavingsAccount {
+    Double interestRate;
+
 }

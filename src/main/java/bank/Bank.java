@@ -16,6 +16,9 @@ public class Bank {
     //This method will create our database in the local folder
     public void connectToDatabase(){
 
+
+
+
 //        Scanner scan = new Scanner(System.in);
 //        System.out.println("Enter checking account ID: ");
 //        checkingAccountID = scan.nextInt();

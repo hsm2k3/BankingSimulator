@@ -10,7 +10,12 @@ public class FinancialAdvisor {
         this.branchManager = branchManager;
     }
 
-    public int displayFinancialAdvisorMenu(Scanner scanner, String customerName){
+  /*
+
+   -------PLACE IN MAIN---------------------------------------
+
+
+   public int displayFinancialAdvisorMenu(Scanner scanner, String customerName){
         int selection = 0;
 
         System.out.println("Welcome, " + customerName + ", how may I help you today?");
@@ -24,5 +29,5 @@ public class FinancialAdvisor {
 
         return selection;
 
-    }
+    }*/
 }

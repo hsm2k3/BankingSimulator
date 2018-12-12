@@ -1,8 +1,18 @@
 package bank.employees;
 
+import accounts.JuniorAccount;
+import customer.Customer;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Teller {
+
+    String Name;
+    Boolean isAvailable;
+    List<Customer> customerList = new ArrayList<Customer>();
+
     private BranchManager branchManager;
     public Teller(BranchManager branchManager){
         this.branchManager = branchManager;
@@ -11,6 +21,35 @@ public class Teller {
     //we should make some methods that will check if a customer exist
     //if they are already in the system we give them one type of menu
     //if they don't exist we give them another type of menu
+
+    public void createsNewCheckingAccount(){
+
+    }
+
+    public Teller (){
+    }
+
+    public void setAvailable(Boolean available) {
+        isAvailable = available;
+    }
+
+    public accounts.Account createNewJuniorAccount(Customer customer){
+        accounts.Account newJuniorAccount = new JuniorAccount(calculateInitialBalanace(customer.getInWallet()));
+        return newJuniorAccount;
+    }
+
+    public Double calculateInitialBalanace(Double customerAmountInWallet){
+        return customerAmountInWallet*.8;
+    }
+    public void recieveCustomerList(List customerList){
+        this.customerList = customerList;
+    }
+}
+
+/*
+
+        -------PLACE IN MAIN---------------------------------------
+
     public int displayTellerMenu(Scanner scanner, String customerName){
         int selection = 0;
         boolean validSelection = true;
@@ -32,9 +71,4 @@ public class Teller {
                 validSelection = true;
         }while (!validSelection);
         return selection;
-    }
-
-    public void createsNewCheckingAccount(){
-
-    }
-}
+    }*/

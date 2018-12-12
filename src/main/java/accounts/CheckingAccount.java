@@ -1,38 +1,38 @@
 package accounts;
-//import Transactions.TransactionList;
-import org.joda.time.DateTime;
+
+import Transactions.TransactionList;
 import org.joda.time.LocalDateTime;
 
 import java.util.List;
 import java.util.UUID;
 
-public class CheckingAccount {
+public abstract class CheckingAccount implements Account {
     private Double balance;
-    private Double initialBalance;
     private LocalDateTime accountCreationDate;
-//    private TransactionList transactionList;
+    private TransactionList transactionList;
     private UUID accountNumber = UUID.randomUUID();
 
 
-    public void CheckingAccount(Double initialBalance, DateTime accountCreationDate, List transactionHistory) {
-        //----------------------CheckingAccount personalChecking = new CheckingAccount();
-        this.accountCreationDate = getCurrentDate();
-        //  this.balance = getInitialBalance(initialBalance);
+    public CheckingAccount(Double initialBalance) {
+        this.balance = initialBalance;
+
+        LocalDateTime currentDate = new LocalDateTime();
+        this.accountCreationDate = currentDate;
     }
 
-    private LocalDateTime getCurrentDate() {
-        LocalDateTime currentDate = new LocalDateTime();
-        return currentDate;
+
+
+    public UUID getAccountNumber() {
+        return accountNumber;
     }
 
     //Here we do date manipulation to return required amount from customer
-    public Double getInitialBalance(Double initialBalance){
-        return 0.0;
-    }
+    public abstract Double getInitialBalance(Double initialBalance);
 
-//    public abstract void requestDeposit(Transactions.Transaction deposit);
+    public abstract void requestDeposit(Transactions.Transaction deposit);
 
-//    public abstract void requestWithdrawal(Transactions.Transaction withdrawal);
+    public abstract void requestWithdrawal(Transactions.Transaction withdrawal);
 
-    ///aSdasdasdasd
+
+
 }

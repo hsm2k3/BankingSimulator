@@ -1,37 +1,38 @@
-import bankingExceptions.IncorrectAmountException;
-import org.joda.time.DateTime;
 import org.joda.time.LocalDateTime;
 
+import java.util.UUID;
+
 public class Transaction {
-    Double amount;
-    String note;
-    private LocalDateTime transactionDate;
+    public Double amount;
+    public String note;
+    public LocalDateTime transactionDate;
+    public UUID transactionNumber;
 
-
-    public void Transaction(Double amount, String note, DateTime transactionDate){
-        Transaction newTransaction = new Transaction();
-        this.amount = getAmount(amount);
-        this.note = getNote(note);
+    public Transaction(Double amount, String note) {
+        this.amount = amount;
+        this.note = note;
         this.transactionDate = getCurrentDate();
+        this.transactionNumber = UUID.randomUUID();
     }
 
-    public Double getAmount(Double amount){
-        if(amount > 0.0)
-          return amount;
-        else
-            throw new IncorrectAmountException("Yo don't be doing that dog"){};
+    public Double getAmount() {
+        return this.amount;
     }
 
-    public String getNote(String note){
-        if((note == null) || (note.isEmpty()))
+    public String getNote() {
+        if ((note == null) || (note.isEmpty()))
             return "No note included for this transaction";
         else
             return note;
-        }
+    }
 
-        private LocalDateTime getCurrentDate(){
-            LocalDateTime currentDate = new LocalDateTime();
-            return currentDate;
-        };
+    public LocalDateTime getCurrentDate() {
+        LocalDateTime currentDate = new LocalDateTime();
+        return currentDate;
+    }
+
+    public UUID getTransactionNumber() {
+        return this.transactionNumber;
+    }
 
 }
