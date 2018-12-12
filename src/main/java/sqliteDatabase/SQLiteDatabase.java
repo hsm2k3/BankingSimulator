@@ -71,7 +71,7 @@ public class SQLiteDatabase {
                 + "UUID TEXT NOT NULL UNIQUE, \n"
                 + "CustomerName TEXT NOT NULL,\n"
                 + "TransactionNote TEXT,\n"
-                + "Date TEXT NOT NULL,\n"
+                + "Date DATE NOT NULL,\n"
                 + "Amount REAL NOT NULL,\n"
                 + "PRIMARY KEY(UUID)\n"
                 + ");";
