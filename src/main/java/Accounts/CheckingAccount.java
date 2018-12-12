@@ -1,4 +1,4 @@
-package accounts;
+package Accounts;
 
 import Transactions.TransactionList;
 import org.joda.time.LocalDateTime;
@@ -26,7 +26,7 @@ public abstract class CheckingAccount implements Account {
         return accountNumber;
     }
 
-    //Here we do date manipulation to return required amount from customer
+    //Here we do date manipulation to return required amount from Customer
     public abstract Double getInitialBalance(Double initialBalance);
 
     public abstract void requestDeposit(Transactions.Transaction deposit);

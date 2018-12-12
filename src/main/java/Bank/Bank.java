@@ -1,4 +1,4 @@
-package bank;
+package Bank;
 
 import sqliteDatabase.SQLiteDatabase;
 

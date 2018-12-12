@@ -1,4 +1,4 @@
-package accounts;
+package Accounts;
 
 import Transactions.TransactionList;
 import org.joda.time.LocalDateTime;

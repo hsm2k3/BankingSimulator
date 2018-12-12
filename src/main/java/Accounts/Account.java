@@ -1,4 +1,4 @@
-package accounts;
+package Accounts;
 
 import java.util.UUID;
 

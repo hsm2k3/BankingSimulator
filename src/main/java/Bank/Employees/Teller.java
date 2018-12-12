@@ -1,6 +1,4 @@
-package bank.employees;
-
-import java.util.Scanner;
+package Bank.Employees;
 
 public class Teller {
     private BranchManager branchManager;

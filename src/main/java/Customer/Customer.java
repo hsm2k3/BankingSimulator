@@ -1,4 +1,4 @@
-package customer;
+package Customer;
 
 import org.joda.time.DateTime;
 import org.joda.time.Period;
@@ -9,7 +9,7 @@ import java.text.ParseException;
 import java.util.Scanner;
 import java.util.UUID;
 
-//we should make the unique ID for the customer in this class as well.
+//we should make the unique ID for the Customer in this class as well.
 
 public class Customer {
     private String firstName;
@@ -66,7 +66,7 @@ public class Customer {
         currentDate.getChronology();
         Period period = new Period(dateOfBirth, currentDate);
 
-        //Basing availability of accounts on age
+        //Basing availability of Accounts on age
         if((period.getYears()<= 18))
             return this.isMinor = false;
         else
@@ -151,7 +151,7 @@ public class Customer {
         currentDate.getChronology();
         Period period = new Period(dateOfBirth, currentDate);
 
-        //Basing availability of accounts on age
+        //Basing availability of Accounts on age
         if(period.getYears() > 18)
             return false;
         else
@@ -204,7 +204,7 @@ public class Customer {
     }
 
 
-    //Adding a new customer
+    //Adding a new Customer
 
 
     // public Boolean isTellerFree(){}

@@ -1,6 +1,4 @@
-package bank.employees;
-
-import java.util.Scanner;
+package Bank.Employees;
 
 public class FinancialAdvisor {
     private BranchManager branchManager;

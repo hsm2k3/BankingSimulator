@@ -1,5 +1,5 @@
-package bank.employees;
-import bank.Bank;
+package Bank.Employees;
+import Bank.Bank;
 
 public class BranchManager {
     private Bank bank;

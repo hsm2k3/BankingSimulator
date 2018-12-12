@@ -3,10 +3,10 @@
 //Muhammad Khalil
 //
 
-import bank.employees.BranchManager;
-import bank.employees.FinancialAdvisor;
-import bank.employees.Teller;
-import customer.Customer;
+import Bank.Employees.BranchManager;
+import Bank.Employees.FinancialAdvisor;
+import Bank.Employees.Teller;
+import Customer.Customer;
 import org.joda.time.*;
 
 
@@ -14,7 +14,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Scanner;
-import bank.Bank;
+import Bank.Bank;
 import sqliteDatabase.SQLiteDatabase;
 
 public class Main {
@@ -80,14 +80,14 @@ public class Main {
 
     }
 
-    //display main menu when user enters the bank
+    //display main menu when user enters the Bank
     public static int displayMenu(Scanner scanner){
         int selection = 0;
         boolean validEntry = true;
 
         do {
             //user is prompted to visit the teller or financial advisor
-            System.out.println("Welcome, " + CUSTOMER_NAME + ", to CSI bank simulator.");
+            System.out.println("Welcome, " + CUSTOMER_NAME + ", to CSI Bank simulator.");
             System.out.println("----------------------------------------");
             System.out.println("Please make a selection from the menu:");
             System.out.println("1. Go to teller.");
