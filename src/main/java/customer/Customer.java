@@ -4,11 +4,9 @@ import org.joda.time.DateTime;
 import org.joda.time.Period;
 
 import java.io.IOException;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Scanner;
 import java.util.UUID;
 
 //we should make the unique ID for the customer in this class as well.
@@ -59,10 +57,10 @@ public class Customer {
     }
     public DateTime setDateOfBirth(Integer year, Integer month, Integer day) {
         DateTime DOB = new DateTime(year, month, day, 0,0 );
-        isUnder18(DOB);
+        isMinor(DOB);
         return this.DOB = DOB;
     }
-    private boolean isUnder18(DateTime dateOfBirth){
+    private boolean isMinor(DateTime dateOfBirth){
         //Setting time and checking the difference in years
         DateTime currentDate = new DateTime();
         currentDate.getChronology();
