@@ -3,10 +3,10 @@
 //Muhammad Khalil
 //
 
-import Bank.Employees.BranchManager;
-import Bank.Employees.FinancialAdvisor;
-import Bank.Employees.Teller;
-import Customer.Customer;
+import bank.employees.BranchManager;
+import bank.employees.FinancialAdvisor;
+import bank.employees.Teller;
+import customer.Customer;
 import org.joda.time.*;
 
 
@@ -14,7 +14,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Scanner;
-import Bank.Bank;
+import bank.Bank;
 import sqliteDatabase.SQLiteDatabase;
 
 public class Main {
@@ -43,11 +43,13 @@ public class Main {
         Teller teller = new Teller(branchManager);
         FinancialAdvisor financialAdvisor = new FinancialAdvisor(branchManager);
         Customer customer = new Customer();
-        DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+        SimpleDateFormat DOB = new SimpleDateFormat("MM/dd/yyyy");
         LocalDate todaysDate = new LocalDate();
         DateTime firstDate = new DateTime(1996, 4, 9, 0, 0);
         DateTime secondDate = new DateTime();
         Scanner scanner = new Scanner(System.in);
+
+
         secondDate.getChronology();
 
         LocalDateTime currentTime = new LocalDateTime();
@@ -59,8 +61,12 @@ public class Main {
 //        System.out.println(secondDate.getDayOfMonth());
 //        System.out.println(period.getYears());
         bank.connectToDatabase();
-        CUSTOMER_NAME = customer.setCustomerName(scanner);
-        CUSTOMER_DOB = customer.setCustomerDOB(scanner,dateFormat);
+
+        CUSTOMER_NAME = getCustomerName(scanner);
+        customer.setCustomerName(CUSTOMER_NAME);
+        CUSTOMER_DOB = getCustomerDOB(scanner);
+        customer.setCustomerDOB(CUSTOMER_DOB);
+
         do {
             selection = displayMenu(scanner);
             switch(selection) {
@@ -80,14 +86,14 @@ public class Main {
 
     }
 
-    //display main menu when user enters the Bank
+    //display main menu when user enters the bank
     public static int displayMenu(Scanner scanner){
         int selection = 0;
         boolean validEntry = true;
 
         do {
             //user is prompted to visit the teller or financial advisor
-            System.out.println("Welcome, " + CUSTOMER_NAME + ", to CSI Bank simulator.");
+            System.out.println("Welcome, " + CUSTOMER_NAME + ", to CSI bank simulator.");
             System.out.println("----------------------------------------");
             System.out.println("Please make a selection from the menu:");
             System.out.println("1. Go to teller.");
@@ -181,18 +187,23 @@ public class Main {
             default:
                 break;
         }
-
         return selection;
-
     }
 
-//    public static int inputSelection(Scanner scanner, int selection){
-//        switch (selection) {
-//            case TELLER:
-//                break;
-//            case FINANCIAL_ADVISOR:
-//                break;
-//            default:
-//                break;
-//    }
+    public static String getCustomerName(Scanner scanner){
+        String customerName;
+        System.out.println("Please provide your name: " );
+        customerName = scanner.nextLine();
+        System.out.println();
+        return customerName;
+    }
+
+    public static String getCustomerDOB(Scanner scanner){
+        String DOB;
+        System.out.println("Please provide your DOB (MM/DD/YYYY): ");
+        DOB = scanner.nextLine();
+        System.out.println();
+        return DOB;
+
+    }
 }
