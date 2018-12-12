@@ -1,4 +1,4 @@
-package Customer;
+package customer;
 
 import org.joda.time.DateTime;
 import org.joda.time.Period;
@@ -6,14 +6,16 @@ import org.joda.time.Period;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Scanner;
 import java.util.UUID;
 
-//we should make the unique ID for the Customer in this class as well.
+//we should make the unique ID for the customer in this class as well.
 
 public class Customer {
-    private String firstName;
-    private String lastName;
+    private String customerName;
+    private String customerDOB;
     private DateTime dateOfBirth;
     private Boolean isMinor;
     private Double inWallet;
@@ -30,19 +32,19 @@ public class Customer {
         patronID = UUID.randomUUID();*/
     }
 
-    public String setFirstName(String firstName) throws IOException {
-        if(checkOnlyCharacters(firstName))
-            return firstName;
-        else
-            throw new IOException(){};
-    }
-
-    public String setLastName(String firstName) throws IOException {
-        if(checkOnlyCharacters(firstName))
-            return firstName;
-        else
-            throw new IOException(){};
-    }
+//    public String setFirstName(String firstName) throws IOException {
+//        if(checkOnlyCharacters(firstName))
+//            return firstName;
+//        else
+//            throw new IOException(){};
+//    }
+//
+//    public String setLastName(String firstName) throws IOException {
+//        if(checkOnlyCharacters(firstName))
+//            return firstName;
+//        else
+//            throw new IOException(){};
+//    }
 
     //Sanitizing user input -- returns false is !characters only
     private Boolean checkOnlyCharacters(String name){
@@ -66,7 +68,7 @@ public class Customer {
         currentDate.getChronology();
         Period period = new Period(dateOfBirth, currentDate);
 
-        //Basing availability of Accounts on age
+        //Basing availability of accounts on age
         if((period.getYears()<= 18))
             return this.isMinor = false;
         else
@@ -74,30 +76,19 @@ public class Customer {
     }
 
 
-    public static String setCustomerName(Scanner scanner){
-        String customerName;
-        System.out.println("Please provide your name: " );
-        customerName = scanner.nextLine();
-        System.out.println();
-        return customerName;
+    public String setCustomerName(String customerName){
+
+        return this.customerName = customerName;
     }
-    //this method will set the dob provided by user input in the MM/DD/YYYY format.
-    //If it's not in that format it will throw an exception. Lets figure out how to handle that.
-    public static String setCustomerDOB(Scanner scanner, DateFormat dateFormat) throws ParseException {
-        String DOB;
-        System.out.println("Please provide your DOB (MM/DD/YYYY): ");
-        DOB = scanner.nextLine();
-        System.out.println();
-        try {
-            dateFormat.parse(DOB);
-        } catch (ParseException e) {
-            e.printStackTrace();//prints the exception
-            System.out.println("Invalid DOB format must be MM/DD/YYYY. Please try again");
-            System.out.println();
-            setCustomerDOB(scanner,dateFormat);
-        }
-        System.out.println();
-        return DOB;
+
+    public String setCustomerDOB(String customerDOB){
+        return this.customerDOB = customerDOB;
+    }
+
+    public Date convertToDate() throws ParseException {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+        System.out.println(("convertToDate : " + this.customerDOB));
+        return dateFormat.parse(this.customerDOB);
     }
 
 
@@ -115,7 +106,7 @@ import org.joda.time.Period;
 import java.io.IOException;
 import java.util.UUID;
 
-public class Customer {
+public class customer {
     private String firstName;
     private String lastName;
     private DateTime dateOfBirth;
@@ -151,7 +142,7 @@ public class Customer {
         currentDate.getChronology();
         Period period = new Period(dateOfBirth, currentDate);
 
-        //Basing availability of Accounts on age
+        //Basing availability of accounts on age
         if(period.getYears() > 18)
             return false;
         else
@@ -204,7 +195,7 @@ public class Customer {
     }
 
 
-    //Adding a new Customer
+    //Adding a new customer
 
 
     // public Boolean isTellerFree(){}
