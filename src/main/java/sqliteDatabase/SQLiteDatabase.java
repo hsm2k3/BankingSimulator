@@ -4,6 +4,7 @@ import java.sql.*;
 
 public class SQLiteDatabase {
     private static final String url = "jdbc:sqlite:bank.db";
+    private Date customerDOB;
     public static void connect() {
         Connection conn = null;
         try {
@@ -191,27 +192,27 @@ public class SQLiteDatabase {
     }
 
 
-    public void insertIntoUserAccount(String ID, String customerName, String date, String dob){
+    public void insertIntoUserAccount(String ID, String customerName, Date date, Date dob){
         String sql = "INSERT INTO UserAccounts (UUID, CustomerName, AccountCreationDate, DOB) VALUES (?,?,?,?)";
         try (Connection conn = DriverManager.getConnection(url);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, ID);
             pstmt.setString(2, customerName);
-            pstmt.setString(3, date);
-            pstmt.setString(4, dob);
+            pstmt.setDate(3, date);
+            pstmt.setDate(4, dob);
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }
-    public boolean insertIntoTransactions(String ID, String transactionNote, String customerName, String date, Integer amount){
+    public boolean insertIntoTransactions(String ID, String transactionNote, String customerName, Date date, Integer amount){
         String sql = "INSERT INTO Transactions (UUID, CustomerName, TransactionNote, Date, Amount) VALUES (?,?,?,?,?)";
         try (Connection conn = DriverManager.getConnection(url);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, ID);
             pstmt.setString(2,customerName);
             pstmt.setString(3, transactionNote);
-            pstmt.setString(4, date);
+            pstmt.setDate(4, date);
             pstmt.setInt(5, amount);
             pstmt.executeUpdate();
             return true;
