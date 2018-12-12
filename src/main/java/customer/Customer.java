@@ -13,11 +13,12 @@ import java.util.UUID;
 
 public class Customer {
     private String customerName;
-    private String customerDOB;
+    protected String customerDOB;
     private DateTime dateOfBirth;
     private Boolean isMinor;
     private Double inWallet;
-    protected UUID uuid;
+    private UUID uuid = UUID.randomUUID();
+    protected String randomUUIDString = uuid.toString();
     private DateTime DOB;
 
     public void Customer(UUID uuid) {
@@ -35,11 +36,13 @@ public class Customer {
         }
         return true;
     }
+
     public DateTime setDateOfBirth(Integer year, Integer month, Integer day) {
         DateTime DOB = new DateTime(year, month, day, 0,0 );
         isMinor(DOB);
         return this.DOB = DOB;
     }
+
     private boolean isMinor(DateTime dateOfBirth){
         //Setting time and checking the difference in years
         DateTime currentDate = new DateTime();
@@ -59,8 +62,19 @@ public class Customer {
         return this.customerName = customerName;
     }
 
+    public String getCustomerName(){
+        return this.customerName;
+    }
+
     public String setCustomerDOB(String customerDOB){
         return this.customerDOB = customerDOB;
+    }
+
+    public String getCustomerDOB(){
+        return this.customerDOB;
+    }
+    public String setCustomerUUID(String randomUUIDString){
+        return null;
     }
 
     public Date convertToDate() throws ParseException {
