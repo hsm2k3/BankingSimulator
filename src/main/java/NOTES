@@ -1,8 +1,8 @@
 Simulation:
-Assume a Customer arrives at the Bank. They can go to a teller or financial advisor.
-The teller and financial advisor will offer a Customer to make a new account or provide
-their respective services to the Customer for an existing account.
+Assume a customer.Customer arrives at the Bank. They can go to a teller or financial advisor.
+The teller and financial advisor will offer a customer.Customer to make a new account or provide
+their respective services to the customer.Customer for an existing account.
 Both teller and financial advisor will go through the Bank manager to implement any changes
-to the Customer account.
+to the customer.Customer account.
 The Bank will have it's own balance to start with and loans will be calculated based off the available
 funds plus interest.

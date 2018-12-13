@@ -9,7 +9,6 @@ public class JuniorAccount implements Account {
 
     private Double balance;
     private LocalDateTime accountCreationDate;
-    private TransactionList transactionList;
     private UUID accountNumber = UUID.randomUUID();
 
     public JuniorAccount(Double moneyInWallet){

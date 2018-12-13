@@ -9,7 +9,6 @@ import java.util.UUID;
 public abstract class CheckingAccount implements Account {
     private Double balance;
     private LocalDateTime accountCreationDate;
-    private TransactionList transactionList;
     private UUID accountNumber = UUID.randomUUID();
 
 
@@ -20,13 +19,11 @@ public abstract class CheckingAccount implements Account {
         this.accountCreationDate = currentDate;
     }
 
-
-
     public UUID getAccountNumber() {
         return accountNumber;
     }
 
-    //Here we do date manipulation to return required amount from Customer
+    //Here we do date manipulation to return required amount from customer.Customer
     public abstract Double getInitialBalance(Double initialBalance);
 
     public abstract void requestDeposit(Transactions.Transaction deposit);

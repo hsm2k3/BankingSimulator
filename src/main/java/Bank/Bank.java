@@ -14,9 +14,10 @@ public class Bank {
     }
 
     //This method will create our database in the local folder
-    public void connectToDatabase(){
+    //--- Set this as a boolean to turn true if connected
+    public Boolean connectToDatabase() {
 
-
+    }
 
 
 //        Scanner scan = new Scanner(System.in);

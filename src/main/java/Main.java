@@ -3,6 +3,8 @@
 //Muhammad Khalil
 //
 
+import Bank.Employees.BranchManager;
+import Bank.Employees.Teller;
 import bank.employees.BranchManager;
 import bank.employees.FinancialAdvisor;
 import bank.employees.Teller;
@@ -10,7 +12,6 @@ import customer.Customer;
 import org.joda.time.*;
 
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Scanner;
@@ -49,6 +50,8 @@ public class Main {
         DateTime secondDate = new DateTime();
         Scanner scanner = new Scanner(System.in);
 
+        if(teller.checkAcctExists())
+        makeNewCustomer();
 
         secondDate.getChronology();
 
@@ -206,4 +209,46 @@ public class Main {
         return DOB;
 
     }
+
+    public static Customer makeNewCustomer(){
+        Scanner scan = new Scanner(System.in);
+
+        System.out.println("Please enter your name: ");
+        String name = scan.nextLine();
+
+        //Taking in and setting up the DOB
+        Integer birthYear = -1;
+        while(((birthYear >= 1920)) && (birthYear <= 2019)) {
+            System.out.println("Please enter your birth year: ");
+            birthYear = scan.nextInt();
+        }
+
+        Integer birthMonth = -1;
+        while((birthMonth >= 1) && (birthMonth <= 12)) {
+            System.out.print("Please enter your birth month: ");
+            birthMonth = scan.nextInt();
+        }
+
+        Integer birthDay = -1;
+        while((birthDay >= 1) && (birthDay <=31)) {
+            System.out.println("Please enter your birth day: ");
+            birthDay = scan.nextInt();
+        }
+
+        DateTime dob = new DateTime(birthYear, birthMonth, birthDay, 0, 0);
+
+        System.out.println("How much money are you currently holding?");
+        Double inWallet = -1.0;
+        while(inWallet <= 0){
+            inWallet = scan.nextDouble();
+        }
+
+        Customer newCustomerEntry = new Customer(dob, name, inWallet);
+
+        scan.close();
+        return newCustomerEntry;
+    }
+
+
+
 }
