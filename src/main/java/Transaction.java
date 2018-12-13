@@ -1,38 +1,33 @@
+import org.joda.time.DateTime;
 import org.joda.time.LocalDateTime;
 
+import java.util.Date;
 import java.util.UUID;
 
 public class Transaction {
-    public Double amount;
-    public String note;
-    public LocalDateTime transactionDate;
-    public UUID transactionNumber;
+    private UUID transactionID = UUID.randomUUID();
+    private String customerNote;
+    private DateTime transactionDate;
+    private Double amount;
 
-    public Transaction(Double amount, String note) {
+    public Transaction(String customerNote, Double amount){
+        this.customerNote = customerNote;
         this.amount = amount;
-        this.note = note;
-        this.transactionDate = getCurrentDate();
-        this.transactionNumber = UUID.randomUUID();
+        this.transactionDate = DateTime.now();
     }
 
-    public Double getAmount() {
-        return this.amount;
-    }
+    //Amount
+    public Double getAmount(){return this.amount;}
 
-    public String getNote() {
-        if ((note == null) || (note.isEmpty()))
-            return "No note included for this transaction";
-        else
-            return note;
-    }
+    //DateTime
+    public DateTime getTransactionDate(){return this.transactionDate;}
+    public String getTransactionDateasString(){return this.transactionDate.toString();}
 
-    public LocalDateTime getCurrentDate() {
-        LocalDateTime currentDate = new LocalDateTime();
-        return currentDate;
-    }
+    //Transaction ID
+    public UUID getTransactionID(){return this.transactionID; }
+    public String getTransactionIDasString(){return this.transactionID.toString();}
 
-    public UUID getTransactionNumber() {
-        return this.transactionNumber;
-    }
+    //Note
+    public String getCustomerNote(){return this.customerNote;}
 
 }
