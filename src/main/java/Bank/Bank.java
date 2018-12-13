@@ -37,5 +37,4 @@ public class Bank {
 //        sqliteDatabase.insertIntoAvailableFunds(BANK_FUNDS);
 //        database.insertIntoCheckingAccount(checkingAccountID,checkingBalance);
     }
-
 }
