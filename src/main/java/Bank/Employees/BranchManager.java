@@ -13,4 +13,9 @@ public class BranchManager {
 
     }
 
+
+    public Customer getUserAccount(String name, String dateOfBirth){
+        //does a search
+        return customer;
+    }
 }
