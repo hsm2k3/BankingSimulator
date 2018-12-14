@@ -7,9 +7,9 @@ import Bank.Bank;
 import Bank.Employees.BranchManager;
 import Bank.Employees.FinancialAdvisor;
 import Bank.Employees.Teller;
-import bank.employees.BranchManager;
-import bank.employees.FinancialAdvisor;
-import bank.employees.Teller;
+//import bank.employees.BranchManager;
+//import bank.employees.FinancialAdvisor;
+//import bank.employees.Teller;
 import customer.Customer;
 import org.joda.time.*;
 
@@ -17,7 +17,7 @@ import org.joda.time.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Scanner;
-import bank.Bank;
+//import bank.Bank;
 import sqliteDatabase.SQLiteDatabase;
 
 public class Main {
@@ -38,7 +38,7 @@ public class Main {
     protected static String CUSTOMER_NAME = null;
     protected static String CUSTOMER_DOB = null;
 
-    public static void main(String args[]) throws ParseException {
+    public static void main(String args[]) throws ParseException {/*
         int selection = 0, tellerSelection = 0, financialAdvisorSelection = 0;
         SQLiteDatabase sqLiteDatabase = new SQLiteDatabase();
         Bank bank = new Bank(sqLiteDatabase);
@@ -250,7 +250,7 @@ public class Main {
         scan.close();
         return newCustomerEntry;
     }
+*/
 
 
-
-}
+}}

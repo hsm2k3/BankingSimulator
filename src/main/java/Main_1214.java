@@ -34,9 +34,8 @@ public class Main_1214 {
 
         //Now the teller checks if the customer exists within the database
         if (teller.checkAccountExists(customerName, customerDOB.toString())) ;
-            //Here we set the customer to the teller's current customer
-            teller.getCustomerAccount(customerName, customerDOB.toString());
-
+        //Here we set the customer to the teller's current customer
+        teller.getCustomerAccount(customerName, customerDOB.toString());
 
 
         //base menu
@@ -58,6 +57,7 @@ public class Main_1214 {
         scanner.close();
         return name;
     }
+
     public static DateTime initialDateMenu() {
         //Taking in and setting up the DOB
         Scanner scan = new Scanner(System.in);
@@ -114,7 +114,9 @@ public class Main_1214 {
         return initialSavingsAccountDeposit;
     }
 
-    public static void fullTellerMenu{
+    //public static void fullTellerMenu;
+
+    {
         Scanner scan = new Scanner(System.in);
         int selection = 0;
         boolean validSelection = true;
@@ -126,13 +128,13 @@ public class Main_1214 {
             System.out.println("4. Return to main menu.");
             System.out.println("----------------------------------------");
             selection = scan.nextInt();
-            if(selection > 7 || selection < 1)
+            if (selection > 7 || selection < 1)
                 validSelection = false;
             else
                 validSelection = true;
-        }while (!validSelection);
+        } while (!validSelection);
 
-        switch(selection){
+        switch (selection) {
             case 1:
                 break;
             case 2:
@@ -145,15 +147,15 @@ public class Main_1214 {
                 break;
         }
 
-
     }
 
-    public static Boolean depositMoney(){
+
+   // public static Boolean depositMoney() {
         //Here a new transaction is made
         //then passed onto the specific account
-    }
-
+    //}
 }
+
 
 
 
