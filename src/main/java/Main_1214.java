@@ -125,7 +125,8 @@ public class Main_1214 {
             System.out.println("1. Deposit money into checking account.");
             System.out.println("2. Deposit money into savings account.");
             System.out.println("3. Withdraw money from checking account.");
-            System.out.println("4. Return to main menu.");
+            System.out.println("4. Generate reports");
+            System.out.println("5. Return to main menu.");
             System.out.println("----------------------------------------");
             selection = scan.nextInt();
             if (selection > 7 || selection < 1)
