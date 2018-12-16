@@ -11,11 +11,9 @@ import Bank.Employees.Teller;
 //import bank.employees.FinancialAdvisor;
 //import bank.employees.Teller;
 import customer.Customer;
-import org.joda.time.*;
 
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Scanner;
 //import bank.Bank;
 import sqliteDatabase.SQLiteDatabase;
@@ -24,21 +22,23 @@ public class Main {
     private static final int EXIT = 3;
     private static final int TELLER = 1;
     private static final int FINANCIAL_ADVISOR = 2;
-    private static final int MAKE_CHECKING_ACCOUNT = 1;
-    private static final int MAKE_SAVINGS_ACCOUNT = 2;
+    private static final int TELLER_MAKE_CHECKING_ACCOUNT = 1;
+    private static final int TELLER_MAKE_SAVINGS_ACCOUNT = 2;
     private static final int DEPOSIT_CHECKING = 3;
     private static final int DEPOSIT_SAVINGS = 4;
     private static final int WITHDRAW_CHECKING = 5;
     private static final int WITHDRAW_SAVINGS = 6;
+    private static final int
     private static final int LEAVE_TELLER = 7;
-    private static final int INVEST_MONEY = 1;
-    private static final int LEAVE_FINANCIAL_ADVISOR = 2;
+    private static final int FINANCIAL_ADVISOR_NEW_ACCOUNT = 1;
+    private static final int FINANCIAL_ADVISOR_INVEST_MONEY = 2;
+    private static final int LEAVE_FINANCIAL_ADVISOR = 3;
 
     //we might need to have other classes access these data types
     protected static String CUSTOMER_NAME = null;
     protected static String CUSTOMER_DOB = null;
 
-    public static void main(String args[]) throws ParseException {/*
+    public static void main(String args[]) throws ParseException {
         int selection = 0, tellerSelection = 0, financialAdvisorSelection = 0;
         SQLiteDatabase sqLiteDatabase = new SQLiteDatabase();
         Bank bank = new Bank(sqLiteDatabase);
@@ -46,48 +46,35 @@ public class Main {
         Teller teller = new Teller(branchManager);
         FinancialAdvisor financialAdvisor = new FinancialAdvisor(branchManager);
         Customer customer = new Customer();
-        SimpleDateFormat DOB = new SimpleDateFormat("MM/dd/yyyy");
-        LocalDate todaysDate = new LocalDate();
-        DateTime firstDate = new DateTime(1996, 4, 9, 0, 0);
-        DateTime secondDate = new DateTime();
         Scanner scanner = new Scanner(System.in);
 
-        if(teller.checkAcctExists())
-        makeNewCustomer();
 
-        secondDate.getChronology();
-
-        LocalDateTime currentTime = new LocalDateTime();
-
-
-
-        Period period = new Period(firstDate, secondDate);
-//        System.out.println(currentTime);
-//        System.out.println(secondDate.getDayOfMonth());
-//        System.out.println(period.getYears());
-        bank.connectToDatabase();
 
         CUSTOMER_NAME = getCustomerName(scanner);
-        customer.setCustomerName(CUSTOMER_NAME);
         CUSTOMER_DOB = getCustomerDOB(scanner);
+        customer.setCustomerName(CUSTOMER_NAME);
         customer.setCustomerDOB(CUSTOMER_DOB);
+        if(branchManager.isBankOpen()) {
+            do {
+                selection = displayMenu(scanner);
+                switch (selection) {
+                    case TELLER:
+                        displayTellerMenu(scanner, teller);
+                        break;
+                    case FINANCIAL_ADVISOR:
+                        displayFinancialAdvisorMenu(scanner);
+                        break;
+                    case EXIT:
+                        break;
+                    default:
+                        System.out.println("Oops! Something went wrong.");
+                        break;
+                }
+            } while (selection != EXIT);
+        }
+        else
+            System.out.println("The bank is closed. Come back next time.");
 
-        do {
-            selection = displayMenu(scanner);
-            switch(selection) {
-                case TELLER:
-                    displayTellerMenu(scanner);
-                    break;
-                case FINANCIAL_ADVISOR:
-                    displayFinancialAdvisorMenu(scanner);
-                    break;
-                case EXIT:
-                    break;
-                default:
-                    System.out.println("Oops! Something went wrong.");
-                    break;
-            }
-        }while(selection != EXIT);
 
     }
 
@@ -125,7 +112,7 @@ public class Main {
         return selection;
     }
 
-    public static int displayTellerMenu(Scanner scanner){
+    public static int displayTellerMenu(Scanner scanner, Teller teller){
         int selection = 0;
         boolean validSelection = true;
         do {
@@ -137,7 +124,8 @@ public class Main {
             System.out.println("4. Deposit money into savings account.");
             System.out.println("5. Withdraw money from checking account.");
             System.out.println("6. Withdraw money from savings account.");
-            System.out.println("7. Return to main menu.");
+            System.out.println("7. Check account transactions.");
+            System.out.println("8. Return to main menu.");
             System.out.println("----------------------------------------");
             selection = scanner.nextInt();
             if(selection > 7 || selection < 1)
@@ -147,9 +135,14 @@ public class Main {
         }while (!validSelection);
 
         switch(selection){
-            case MAKE_CHECKING_ACCOUNT:
+            case TELLER_MAKE_CHECKING_ACCOUNT:
+                teller.setUUID();
+                if(!teller.doesUserAccountExists(CUSTOMER_NAME,CUSTOMER_DOB))
+                    teller.addUserAccout(CUSTOMER_NAME,CUSTOMER_DOB);
+                else
+                    System.out.println(CUSTOMER_NAME + " already has an account. Returning to main menu.");
                 break;
-            case MAKE_SAVINGS_ACCOUNT:
+            case TELLER_MAKE_SAVINGS_ACCOUNT:
                 break;
             case DEPOSIT_CHECKING:
                 break;
@@ -174,8 +167,9 @@ public class Main {
         do{
         System.out.println("Welcome, " + CUSTOMER_NAME + ", how may I help you today?");
         System.out.println("----------------------------------------");
-        System.out.println("1. Invest into money market.");
-        System.out.println("2. Return to main menu.");
+        System.out.println("1. Create an account.");
+        System.out.println("2. Invest into money market.");
+        System.out.println("3. Return to main menu.");
         System.out.println("----------------------------------------");
         selection = scanner.nextInt();
         if(selection > 7 || selection < 1)
@@ -185,7 +179,9 @@ public class Main {
     }while (!validSelection);
 
         switch(selection){
-            case INVEST_MONEY:
+            case FINANCIAL_ADVISOR_NEW_ACCOUNT:
+                break;
+            case FINANCIAL_ADVISOR_INVEST_MONEY:
                 break;
             case LEAVE_FINANCIAL_ADVISOR:
                 break;
@@ -212,45 +208,7 @@ public class Main {
 
     }
 
-    public static Customer makeNewCustomer(){
-        Scanner scan = new Scanner(System.in);
-
-        System.out.println("Please enter your name: ");
-        String name = scan.nextLine();
-
-        //Taking in and setting up the DOB
-        Integer birthYear = -1;
-        while(((birthYear >= 1920)) && (birthYear <= 2019)) {
-            System.out.println("Please enter your birth year: ");
-            birthYear = scan.nextInt();
-        }
-
-        Integer birthMonth = -1;
-        while((birthMonth >= 1) && (birthMonth <= 12)) {
-            System.out.print("Please enter your birth month: ");
-            birthMonth = scan.nextInt();
-        }
-
-        Integer birthDay = -1;
-        while((birthDay >= 1) && (birthDay <=31)) {
-            System.out.println("Please enter your birth day: ");
-            birthDay = scan.nextInt();
-        }
-
-        DateTime dob = new DateTime(birthYear, birthMonth, birthDay, 0, 0);
-
-        System.out.println("How much money are you currently holding?");
-        Double inWallet = -1.0;
-        while(inWallet <= 0){
-            inWallet = scan.nextDouble();
-        }
-
-        Customer newCustomerEntry = new Customer(dob, name, inWallet);
-
-        scan.close();
-        return newCustomerEntry;
-    }
-*/
 
 
-}}
+
+}

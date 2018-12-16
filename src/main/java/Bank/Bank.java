@@ -1,29 +1,36 @@
 package Bank;
 
+import Accounts.CheckingAccount;
+import Accounts.JuniorCheckingAccount;
+import Accounts.SavingsAccount;
+import Accounts.UserAccounts;
 import sqliteDatabase.SQLiteDatabase;
 
 public class Bank {
     private SQLiteDatabase sqliteDatabase;
     private static double BANK_FUNDS = 1000000.00;
+    private CheckingAccount checkingAccount;
+    private SavingsAccount savingsAccount;
+    private JuniorCheckingAccount juniorCheckingAccount;
     //Operation Times
     //Days Open
 
     //public void Bank()
     public Bank (SQLiteDatabase sqliteDatabase){
         this.sqliteDatabase = sqliteDatabase;
+        UserAccounts userAccounts = new UserAccounts();
+        CheckingAccount checkingAccount = new CheckingAccount();
+        SavingsAccount savingsAccount = new SavingsAccount();
+        JuniorCheckingAccount juniorCheckingAccount = new JuniorCheckingAccount();
     }
 
     //This method will create our database in the local folder
     //--- Set this as a boolean to turn true if connected
-    public void connectToDatabase() {
-
-//        Scanner scan = new Scanner(System.in);
-//        System.out.println("Enter checking account ID: ");
-//        checkingAccountID = scan.nextInt();
-//        System.out.println("Enter checking balance: ");
-//        checkingBalance = scan.nextDouble();
-
-        sqliteDatabase.connect();
+    public Boolean connectToDatabase() {
+        boolean connectedToDB = false;
+        if(sqliteDatabase.connect()) {
+            connectedToDB = true;
+        }
         sqliteDatabase.createsNewCheckingAccountTable();
         sqliteDatabase.createsNewJuniorCheckingAccountTable();
         sqliteDatabase.createsNewUserAccountsTable();
@@ -31,7 +38,52 @@ public class Bank {
         sqliteDatabase.createsNewSavingsAccount();
         sqliteDatabase.createsNewJuniorSavingsAccount();
         sqliteDatabase.createsNewAvailableFundsTable();
-//        sqliteDatabase.insertIntoAvailableFunds(BANK_FUNDS);
-//        database.insertIntoCheckingAccount(checkingAccountID,checkingBalance);
+        sqliteDatabase.getUserAccounts();
+        return connectedToDB;
+    }
+
+    public boolean getUserAccounts(){
+        if(sqliteDatabase.getUserAccounts())
+            return true;
+        else
+            return false;
+    }
+
+    public boolean getCheckingAccounts(){
+            if(sqliteDatabase.getCheckingAccounts())
+                return true;
+            else
+                return false;
+    }
+    public boolean getSavingsAccounts(){
+            if(sqliteDatabase.getSavingsAccounts())
+                return true;
+            else
+                return false;
+    }
+
+    public boolean getJuniorCheckingAccounts(){
+        if(sqliteDatabase.getJuniorCheckingAccount())
+            return true;
+        else
+            return false;
+    }
+
+    public boolean getJuniorSavingsAccounts(){
+        if(sqliteDatabase.getJuniorSavingsAccount())
+            return true;
+        else
+            return false;
+    }
+
+    public boolean doesUserAccountExist(String customerName, String DOB){
+        if(sqliteDatabase.doesUserAccountExist(customerName,DOB))
+            return true;
+        else
+            return false;
+    }
+
+    public void addUserAccount(String UUID, String customerName, String accountCreationDate, String DOB){
+        sqliteDatabase.insertIntoUserAccount(UUID,customerName,accountCreationDate,DOB);
     }
 }

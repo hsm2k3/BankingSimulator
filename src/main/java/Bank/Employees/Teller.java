@@ -10,7 +10,7 @@ public class Teller {
     //This is so that the teller can directly interact with the instance. I'm not sure if this
     //makes sense currently but we can always return the instance to update.
     private BranchManager branchManager;
-    private Customer currentCustomer;
+    protected String uuid;
 
     public Teller(BranchManager branchManager){
         this.branchManager = branchManager;
@@ -18,26 +18,25 @@ public class Teller {
 
     //    public Boolean passDeposit()
 
-    public UUID assisgnCustomerID(){
+    public String setUUID(){
         UUID customerID = UUID.randomUUID();
-        return customerID;
+        return this.uuid = customerID.toString();
     }
 
-    public Customer getCustomerAccount(String name, String dateOfBirth){
-        setCurrentCustomer(branchManager.getUserAccount(name, dateOfBirth));
-        return branchManager.getUserAccount(name, dateOfBirth);
+//    public Customer getCustomerAccount(String UUID, String customerName, String accountCreationDate, String DOB){
+//        setCurrentCustomer(branchManager.addUserAccount(UUID,customerName, accountCreationDate, DOB));
+//        return branchManager.getUserAccount(name, dateOfBirth);
+//    }
+
+    public boolean doesUserAccountExists(String name, String dob){
+        if(branchManager.doesUserAccountExist(name,dob))
+            return true;
+        else
+            return false;
     }
 
-    public Boolean checkAccountExists(String name, String DateTime){
-        //Does some kind of search, not sure how this would work within the Bank and SQL
-    }
-
-    public void setCurrentCustomer(Customer currentCustomer){
-        this.currentCustomer = currentCustomer;
-    }
-
-    public String getCustomerName(){
-        return this.currentCustomer.getCustomerName();
+    public void addUserAccout(String name, String dob){
+        branchManager.addUserAccount(this.uuid,name,dob);
     }
 
 }

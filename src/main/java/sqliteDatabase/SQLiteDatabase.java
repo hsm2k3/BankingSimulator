@@ -1,16 +1,23 @@
 package sqliteDatabase;
 
+import Accounts.*;
+
 import java.sql.*;
 
 public class SQLiteDatabase {
     private static final String url = "jdbc:sqlite:bank.db";
+    private UserAccounts userAccounts = new UserAccounts();
+    private CheckingAccount checkingAccount = new CheckingAccount();
+    private SavingsAccount savingsAccount = new SavingsAccount();
+    private JuniorCheckingAccount juniorCheckingAccount = new JuniorCheckingAccount();
+    private JuniorSavingsAccount juniorSavingsAccount = new JuniorSavingsAccount();
     private Date customerDOB;
     public static boolean connect() {
-        Connection conn = null;
+        Connection connection = null;
         boolean connected = false;
         try {
             // create a connection to the database
-            conn = DriverManager.getConnection(url);
+            connection = DriverManager.getConnection(url);
              connected = true;
 
         }
@@ -20,8 +27,8 @@ public class SQLiteDatabase {
         }
 //        finally {
 //            try {
-//                if (conn != null) {
-//                    conn.close();
+//                if (connection != null) {
+//                    connection.close();
 //                    connected = false;
 //                }
 //            } catch (SQLException ex) {
@@ -201,14 +208,14 @@ public class SQLiteDatabase {
     }
 
 
-    public void insertIntoUserAccount(String ID, String customerName, Date date, Date dob){
+    public void insertIntoUserAccount(String ID, String customerName, String accountCreationDate, String dob){
         String sql = "INSERT INTO UserAccounts (UUID, CustomerName, AccountCreationDate, DOB) VALUES (?,?,?,?)";
         try (Connection conn = DriverManager.getConnection(url);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, ID);
             pstmt.setString(2, customerName);
-            pstmt.setDate(3, date);
-            pstmt.setDate(4, dob);
+            pstmt.setString(3, accountCreationDate);
+            pstmt.setString(4, dob);
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -231,22 +238,112 @@ public class SQLiteDatabase {
         }
     }
 
-    public boolean loadUserAccounts(){
+    public boolean getUserAccounts(){
+        int index = 0;
         String sql = "SELECT UUID, CustomerName, AccountCreationDate, DOB FROM UserAccounts";
         try (Connection conn = DriverManager.getConnection(url);
              Statement stmt  = conn.createStatement();
              ResultSet resultSet = stmt.executeQuery(sql)) {
             while(resultSet.next()){
-                System.out.println(resultSet.getString("UUID"));
-                System.out.println(resultSet.getString("CustomerName"));
-                System.out.println(resultSet.getString("AccountCreationDate"));
-                System.out.println(resultSet.getString("DOB"));
+                String UUID = resultSet.getString("UUID");
+                String customerName =resultSet.getString("CustomerName");
+                String accountCreationDate = resultSet.getString("AccountCreationDate");
+                String dob = resultSet.getString("DOB");
+                userAccounts.getUserAccounts(UUID,customerName,accountCreationDate,dob,index);
+                index++;
             }
             return true;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             return false;
         }
+    }
+
+    public boolean getCheckingAccounts(){
+        int index = 0;
+        String sql = "SELECT UUID, CustomerName, Balance FROM CheckingAccount";
+        try (Connection conn = DriverManager.getConnection(url);
+             Statement stmt  = conn.createStatement();
+             ResultSet resultSet = stmt.executeQuery(sql)) {
+            while(resultSet.next()){
+                String UUID = resultSet.getString("UUID");
+                String customerName =resultSet.getString("CustomerName");
+                Double balance = resultSet.getDouble("Balance");
+                checkingAccount.getCheckingAccounts(UUID,customerName,balance,index);
+                index++;
+            }
+            return true;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean getSavingsAccounts(){
+        int index = 0;
+        String sql = "SELECT UUID, CustomerName, Balance FROM SavingsAccount";
+        try (Connection conn = DriverManager.getConnection(url);
+             Statement stmt  = conn.createStatement();
+             ResultSet resultSet = stmt.executeQuery(sql)) {
+            while(resultSet.next()){
+                String UUID = resultSet.getString("UUID");
+                String customerName =resultSet.getString("CustomerName");
+                Double balance = resultSet.getDouble("Balance");
+                savingsAccount.getSavingsAccounts(UUID,customerName,balance,index);
+                index++;
+            }
+            return true;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean getJuniorCheckingAccount(){
+        int index = 0;
+        String sql = "SELECT UUID, CustomerName, Balance FROM SavingsAccount";
+        try (Connection conn = DriverManager.getConnection(url);
+             Statement stmt  = conn.createStatement();
+             ResultSet resultSet = stmt.executeQuery(sql)) {
+            while(resultSet.next()){
+                String UUID = resultSet.getString("UUID");
+                String customerName =resultSet.getString("CustomerName");
+                Double balance = resultSet.getDouble("Balance");
+                juniorCheckingAccount.getJuniorCheckingAccount(UUID,customerName,balance,index);
+                index++;
+            }
+            return true;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean getJuniorSavingsAccount(){
+        int index = 0;
+        String sql = "SELECT UUID, CustomerName, Balance FROM SavingsAccount";
+        try (Connection conn = DriverManager.getConnection(url);
+             Statement stmt  = conn.createStatement();
+             ResultSet resultSet = stmt.executeQuery(sql)) {
+            while(resultSet.next()){
+                String UUID = resultSet.getString("UUID");
+                String customerName =resultSet.getString("CustomerName");
+                Double balance = resultSet.getDouble("Balance");
+                juniorSavingsAccount.getJuniorSavingsAccount(UUID,customerName,balance,index);
+                index++;
+            }
+            return true;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean doesUserAccountExist(String customerName, String DOB){
+        if (userAccounts.doesUserAccountExist(customerName,DOB))
+            return true;
+        else
+            return false;
     }
 
 }

@@ -5,12 +5,13 @@ import java.util.Date;
 import java.util.UUID;
 
 public class Transaction {
-    private UUID transactionID = UUID.randomUUID();
+    private String transactionID;
     private String customerNote;
     private DateTime transactionDate;
     private Double amount;
 
-    public Transaction(String customerNote, Double amount){
+    public Transaction(String customerNote, String UUID, Double amount){
+        this.transactionID = UUID;
         this.customerNote = customerNote;
         this.amount = amount;
         this.transactionDate = DateTime.now();
@@ -24,7 +25,6 @@ public class Transaction {
     public String getTransactionDateasString(){return this.transactionDate.toString();}
 
     //Transaction ID
-    public UUID getTransactionID(){return this.transactionID; }
     public String getTransactionIDasString(){return this.transactionID.toString();}
 
     //Note

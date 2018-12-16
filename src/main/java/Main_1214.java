@@ -33,7 +33,7 @@ public class Main_1214 {
         DateTime customerDOB = initialDateMenu();
 
         //Now the teller checks if the customer exists within the database
-        if (teller.checkAccountExists(customerName, customerDOB.toString())) ;
+        if (teller.doesUserAccountExists(customerName, customerDOB.toString())) ;
         //Here we set the customer to the teller's current customer
         teller.getCustomerAccount(customerName, customerDOB.toString());
 

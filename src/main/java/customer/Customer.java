@@ -3,6 +3,12 @@ package customer;
 import org.joda.time.DateTime;
 import org.joda.time.Period;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import java.util.Scanner;
 import java.util.UUID;
 
 //HAD to move to main to allow the constructor to work;
@@ -12,53 +18,50 @@ import java.util.UUID;
 public class Customer {
     //Fields
     private String customerName;
-    private DateTime dateOfBirth;
-    private DateTime accountCreationDate;
+    private String customerDOB;
+    private String accountCreationDate;
 
     //Tells the user
     private Boolean isMinor;
 
-    //Unique ID provided by customer
-    UUID customerID = null;
-
     //Constructor
-    public Customer(DateTime dob, String customerName) {
-        this.dateOfBirth = dob;
-        this.customerName = customerName;
-        this.isMinor = setIsMinor(dob);
-        this.accountCreationDate = DateTime.now();
+    public Customer() {
     }
 
-    public void setCustomerID(UUID newID){
-        this.customerID = newID;
-    }
+
 
     //Functions for name
-    public String getCustomerName() {
-        return this.customerName;
+    public String setCustomerName(String name) {
+        return this.customerName = name;
     }
 
     //Functions for returning date of birth
-    public String getDateofBirthasString() {
-        return this.dateOfBirth.toString();
-    }
 
-    public DateTime getCustomerDOB() {
-        return this.dateOfBirth;
+
+    public String setCustomerDOB(String DOB) {
+        return this.customerDOB = DOB;
+
     }
 
     //Getters and Setters for isMinor
-    private Boolean setIsMinor(DateTime dateOfBirth) {
-        //Setting time and checking the difference in years
-        DateTime currentDate = new DateTime();
-        currentDate.getChronology();
+    private Boolean isMinor(String DOB) throws ParseException {
+        String now = LocalDateTime.now().format(DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy");
+        SimpleDateFormat customerDOB = new SimpleDateFormat("MM/dd/yyyy");
+//        this will throw a ParseException if the date format is wrong
+        Date today = simpleDateFormat.parse(now);
+        Date dob = customerDOB.parse(DOB);
+        DateTime dateOfBirth = new DateTime(dob);
+        DateTime currentDate = new DateTime(today);
+
+
         Period period = new Period(dateOfBirth, currentDate);
 
         //Basing availability of accounts on age
-        if ((period.getYears() <= 18))
-            return this.isMinor = false;
-        else
+        if ((period.getYears() < 18))
             return this.isMinor = true;
+        else
+            return this.isMinor = false;
     }
 
     public Boolean getisMinor() {
