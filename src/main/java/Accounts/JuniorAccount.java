@@ -1,6 +1,4 @@
 package Accounts;
-
-import Transactions.TransactionList;
 import org.joda.time.LocalDateTime;
 
 import java.util.UUID;

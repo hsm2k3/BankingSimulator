@@ -16,11 +16,49 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <build>
+        <plugins>
+            <plugin>
+                <!-- The following is required for JUnit 5 to play nicely with Maven -->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.22.1</version>
+            </plugin>
+        </plugins>
+    </build>
+
+
     <dependencies>
+
+        <!-- We opted to use joda Time because it offers more flexibility and functioanlity than
+        the standard library provided in Java. Especially when it comes to doing calculations with dates-->
         <dependency>
             <groupId>joda-time</groupId>
             <artifactId>joda-time</artifactId>
             <version>2.10.1</version>
+        </dependency>
+
+        <!-- Since we wanted to make sure that the Financial Advisor was as self destructive as possible,
+        we opted to use an open source library to pull random number and not depend on the one available
+        in java-->
+        <dependency>
+            <groupId>com.tyro.oss</groupId>
+            <artifactId>random-data</artifactId>
+            <version>0.0.2</version>
+        </dependency>
+
+        <!-- This library allows us to generate .pdf files to output reports-->
+        <dependency>
+            <groupId>org.apache.pdfbox</groupId>
+            <artifactId>pdfbox</artifactId>
+            <version>2.0.13</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>5.1.0</version>
+            <scope>test</scope>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.xerial/sqlite-jdbc -->
@@ -29,5 +67,15 @@
             <artifactId>sqlite-jdbc</artifactId>
             <version>3.25.2</version>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.mockito/mockito-all -->
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+            <version>1.9.5</version>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
+
 </project>

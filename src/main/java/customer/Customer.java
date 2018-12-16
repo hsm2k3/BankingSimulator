@@ -17,16 +17,14 @@ public class Customer {
 
     //Tells the user
     private Boolean isMinor;
-    private Double inWallet;
 
     //Unique ID provided by customer
     UUID customerID = null;
 
     //Constructor
-    public Customer(DateTime dob, String customerName, Double inWallet) {
+    public Customer(DateTime dob, String customerName) {
         this.dateOfBirth = dob;
         this.customerName = customerName;
-        this.inWallet = inWallet;
         this.isMinor = setIsMinor(dob);
         this.accountCreationDate = DateTime.now();
     }
@@ -66,9 +64,5 @@ public class Customer {
     public Boolean getisMinor() {
         return this.isMinor;
     }
-
-    //inWallet
-    public Double getInWallet(){return this.inWallet;}
-    public Double setInWallet(Double changeAmount){return this.inWallet + changeAmount;}
 
 }

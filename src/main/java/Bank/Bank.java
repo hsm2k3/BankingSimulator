@@ -15,10 +15,7 @@ public class Bank {
 
     //This method will create our database in the local folder
     //--- Set this as a boolean to turn true if connected
-    public Boolean connectToDatabase() {
-
-    }
-
+    public void connectToDatabase() {
 
 //        Scanner scan = new Scanner(System.in);
 //        System.out.println("Enter checking account ID: ");
