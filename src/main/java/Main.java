@@ -139,8 +139,8 @@ public class Main {
             else
                 validSelection = true;
         }while (!validSelection);
-        teller.addUserAccount(CUSTOMER_NAME, CUSTOMER_SSN, CUSTOMER_DOB);
         teller.setUUID();
+        teller.addUserAccount(CUSTOMER_NAME, CUSTOMER_SSN, CUSTOMER_DOB);
         switch(selection){
             case TELLER_MAKE_CHECKING_ACCOUNT:
                     teller.addCheckingAccount(CUSTOMER_NAME, CUSTOMER_SSN,CUSTOMER_BALANCE);
@@ -157,12 +157,19 @@ public class Main {
                 Double deposit;
                 deposit = scanner.nextDouble();
                 teller.depositToCheckingAccount(CUSTOMER_NAME, CUSTOMER_SSN,deposit);
-                System.out.println(CUSTOMER_NAME+ " we deposited $" +deposit+ " into your account.");
+                System.out.println(CUSTOMER_NAME+ " we deposited $" +deposit+ " into a checking account.");
                 displayTellerMenu(scanner, teller);
                 break;
             case TELLER_DEPOSIT_SAVINGS:
+                System.out.println("How much would you like to deposit?");
+                Double depositSavings;
+                depositSavings = scanner.nextDouble();
+                teller.depositToSavingsAccount(CUSTOMER_NAME, CUSTOMER_SSN,depositSavings);
+                System.out.println(CUSTOMER_NAME+ " we deposited $" +depositSavings+ " into a savings account.");
+                displayTellerMenu(scanner, teller);
                 break;
             case TELLER_WITHDRAW_CHECKING:
+
                 break;
             case TELLER_WITHDRAW_SAVINGS:
                 break;

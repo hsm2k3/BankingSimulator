@@ -151,7 +151,8 @@ public class SQLiteDatabase {
                 // AccountID will use the UUID
                 + "UUID TEXT NOT NULL UNIQUE ,\n"
                 + "CustomerName TEXT NOT NULL,\n"
-                + "SavingsBalancae REAL NOT NULL ,\n"
+                + "SSN TEXT NOT NULL,\n"
+                + "SavingsBalance REAL NOT NULL ,\n"
                 + "PRIMARY KEY (UUID)\n"
                 + ");";
         try (Connection conn = DriverManager.getConnection(url);
@@ -197,14 +198,28 @@ public class SQLiteDatabase {
         }
     }
 
-    public void insertIntoCheckingAccount(String ID, Double balance,String SSN, String customerName){
+    public void insertIntoCheckingAccount(String ID, Double deposit,String SSN, String customerName){
         String sql = "INSERT INTO CheckingAccount (UUID, customerName, SSN, balance) VALUES (?,?,?,?)";
         try (Connection conn = DriverManager.getConnection(url);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, ID);
             pstmt.setString(2, customerName);
             pstmt.setString(3,SSN);
-            pstmt.setDouble(4,balance);
+            pstmt.setDouble(4,deposit);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void insertIntoSavingsAccount(String ID, Double deposit,String SSN, String customerName){
+        String sql = "INSERT INTO SavingsAccount (UUID, customerName, SSN, SavingsBalance) VALUES (?,?,?,?)";
+        try (Connection conn = DriverManager.getConnection(url);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, ID);
+            pstmt.setString(2, customerName);
+            pstmt.setString(3,SSN);
+            pstmt.setDouble(4,deposit);
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());

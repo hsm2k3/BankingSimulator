@@ -50,4 +50,7 @@ public class Teller {
     public void depositToCheckingAccount(String name, String SSN, Double deposit){
     branchManager.depositToCheckingAccount(this.uuid,name,SSN,deposit);
     }
+    public void depositToSavingsAccount(String name, String SSN, Double deposit){
+        branchManager.depositToSavingsAccount(this.uuid,name,SSN,deposit);
+    }
 }
