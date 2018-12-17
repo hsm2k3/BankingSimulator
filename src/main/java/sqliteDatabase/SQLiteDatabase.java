@@ -12,6 +12,7 @@ public class SQLiteDatabase {
     private JuniorCheckingAccount juniorCheckingAccount = new JuniorCheckingAccount();
     private JuniorSavingsAccount juniorSavingsAccount = new JuniorSavingsAccount();
     private Date customerDOB;
+    protected int index;
     public static boolean connect() {
         Connection connection = null;
         boolean connected = false;
@@ -46,6 +47,7 @@ public class SQLiteDatabase {
         String sql = "CREATE TABLE IF NOT EXISTS CheckingAccount (\n "
                 + "UUID TEXT NOT NULL UNIQUE, \n"
                 + "CustomerName TEXT NOT NULL,\n"
+                + "SSN TEXT NOT NULL,\n"
                 + "Balance REAL NOT NULL,\n"
                 + "PRIMARY KEY(UUID)\n"
                 + ");";
@@ -111,6 +113,7 @@ public class SQLiteDatabase {
                 + "UUID TEXT NOT NULL UNIQUE ,\n"
                 + "CustomerName TEXT NOT NULL,\n"
                 + "AccountCreationDate TEXT NOT NULL,\n"
+                + "SSN TEXT NOT NULL UNIQUE,\n"
                 + "DOB TEXT NOT NULL,\n"
                 + "PRIMARY KEY(UUID)\n"
                 + ");";
@@ -194,13 +197,14 @@ public class SQLiteDatabase {
         }
     }
 
-    public void insertIntoCheckingAccount(String ID, Double balance, String customerName){
-        String sql = "INSERT INTO CheckingAccount (UUID, customerName, balance) VALUES (?,?,?)";
+    public void insertIntoCheckingAccount(String ID, Double balance,String SSN, String customerName){
+        String sql = "INSERT INTO CheckingAccount (UUID, customerName, SSN, balance) VALUES (?,?,?,?)";
         try (Connection conn = DriverManager.getConnection(url);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, ID);
             pstmt.setString(2, customerName);
-            pstmt.setDouble(3,balance);
+            pstmt.setString(3,SSN);
+            pstmt.setDouble(4,balance);
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -208,14 +212,15 @@ public class SQLiteDatabase {
     }
 
 
-    public void insertIntoUserAccount(String ID, String customerName, String accountCreationDate, String dob){
-        String sql = "INSERT INTO UserAccounts (UUID, CustomerName, AccountCreationDate, DOB) VALUES (?,?,?,?)";
+    public void insertIntoUserAccount(String ID, String customerName, String accountCreationDate, String SSN, String dob){
+        String sql = "INSERT INTO UserAccounts (UUID, CustomerName, AccountCreationDate, SSN, DOB) VALUES (?,?,?,?,?)";
         try (Connection conn = DriverManager.getConnection(url);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, ID);
             pstmt.setString(2, customerName);
             pstmt.setString(3, accountCreationDate);
-            pstmt.setString(4, dob);
+            pstmt.setString(4,SSN);
+            pstmt.setString(5, dob);
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -239,8 +244,8 @@ public class SQLiteDatabase {
     }
 
     public boolean getUserAccounts(){
-        int index = 0;
-        String sql = "SELECT UUID, CustomerName, AccountCreationDate, DOB FROM UserAccounts";
+        String [][]userAccountsString = new String[index][5];
+        String sql = "SELECT UUID, CustomerName, AccountCreationDate, SSN, DOB FROM UserAccounts";
         try (Connection conn = DriverManager.getConnection(url);
              Statement stmt  = conn.createStatement();
              ResultSet resultSet = stmt.executeQuery(sql)) {
@@ -248,8 +253,14 @@ public class SQLiteDatabase {
                 String UUID = resultSet.getString("UUID");
                 String customerName =resultSet.getString("CustomerName");
                 String accountCreationDate = resultSet.getString("AccountCreationDate");
+                String SSN = resultSet.getString("SSN");
                 String dob = resultSet.getString("DOB");
-                userAccounts.getUserAccounts(UUID,customerName,accountCreationDate,dob,index);
+                userAccountsString[index][0] = UUID;
+                userAccountsString[index][1] = customerName;
+                userAccountsString[index][2] = accountCreationDate;
+                userAccountsString[index][3] = SSN;
+                userAccountsString[index][4] = dob;
+//                userAccounts.setUserAccounts(userAccountsString,index);
                 index++;
             }
             return true;
@@ -280,7 +291,7 @@ public class SQLiteDatabase {
     }
 
     public boolean getSavingsAccounts(){
-        int index = 0;
+        index = 0;
         String sql = "SELECT UUID, CustomerName, Balance FROM SavingsAccount";
         try (Connection conn = DriverManager.getConnection(url);
              Statement stmt  = conn.createStatement();
@@ -289,7 +300,7 @@ public class SQLiteDatabase {
                 String UUID = resultSet.getString("UUID");
                 String customerName =resultSet.getString("CustomerName");
                 Double balance = resultSet.getDouble("Balance");
-                savingsAccount.getSavingsAccounts(UUID,customerName,balance,index);
+//                savingsAccount.getSavingsAccounts(UUID,customerName,balance,index);
                 index++;
             }
             return true;
@@ -339,11 +350,11 @@ public class SQLiteDatabase {
         }
     }
 
-    public boolean doesUserAccountExist(String customerName, String DOB){
-        if (userAccounts.doesUserAccountExist(customerName,DOB))
-            return true;
-        else
-            return false;
-    }
+//    public boolean doesUserAccountExist(String customerName, String SSN, String DOB){
+//        if (userAccounts.doesUserAccountExist(customerName,SSN,DOB,index))
+//            return true;
+//        else
+//            return false;
+//    }
 
 }

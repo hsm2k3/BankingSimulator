@@ -24,12 +24,12 @@ public class Main {
     private static final int FINANCIAL_ADVISOR = 2;
     private static final int TELLER_MAKE_CHECKING_ACCOUNT = 1;
     private static final int TELLER_MAKE_SAVINGS_ACCOUNT = 2;
-    private static final int DEPOSIT_CHECKING = 3;
-    private static final int DEPOSIT_SAVINGS = 4;
-    private static final int WITHDRAW_CHECKING = 5;
-    private static final int WITHDRAW_SAVINGS = 6;
-    private static final int
-    private static final int LEAVE_TELLER = 7;
+    private static final int TELLER_DEPOSIT_CHECKING = 3;
+    private static final int TELLER_DEPOSIT_SAVINGS = 4;
+    private static final int TELLER_WITHDRAW_CHECKING = 5;
+    private static final int TELLER_WITHDRAW_SAVINGS = 6;
+    private static final int TELLER_CHECK_TRANSACTIONS = 7;
+    private static final int LEAVE_TELLER = 8;
     private static final int FINANCIAL_ADVISOR_NEW_ACCOUNT = 1;
     private static final int FINANCIAL_ADVISOR_INVEST_MONEY = 2;
     private static final int LEAVE_FINANCIAL_ADVISOR = 3;
@@ -37,6 +37,8 @@ public class Main {
     //we might need to have other classes access these data types
     protected static String CUSTOMER_NAME = null;
     protected static String CUSTOMER_DOB = null;
+    protected static String CUSTOMER_SSN = null;
+    protected static Double CUSTOMER_BALANCE = null;
 
     public static void main(String args[]) throws ParseException {
         int selection = 0, tellerSelection = 0, financialAdvisorSelection = 0;
@@ -52,8 +54,12 @@ public class Main {
 
         CUSTOMER_NAME = getCustomerName(scanner);
         CUSTOMER_DOB = getCustomerDOB(scanner);
+        CUSTOMER_SSN = getCustomerSSN(scanner);
+        CUSTOMER_BALANCE = getCustomerBalance(scanner);
         customer.setCustomerName(CUSTOMER_NAME);
         customer.setCustomerDOB(CUSTOMER_DOB);
+        customer.setCustomerSNN(CUSTOMER_SSN);
+        customer.setCustomerBalance(CUSTOMER_BALANCE);
         if(branchManager.isBankOpen()) {
             do {
                 selection = displayMenu(scanner);
@@ -128,7 +134,7 @@ public class Main {
             System.out.println("8. Return to main menu.");
             System.out.println("----------------------------------------");
             selection = scanner.nextInt();
-            if(selection > 7 || selection < 1)
+            if(selection > 8 || selection < 1)
                 validSelection = false;
             else
                 validSelection = true;
@@ -136,21 +142,27 @@ public class Main {
 
         switch(selection){
             case TELLER_MAKE_CHECKING_ACCOUNT:
-                teller.setUUID();
-                if(!teller.doesUserAccountExists(CUSTOMER_NAME,CUSTOMER_DOB))
-                    teller.addUserAccout(CUSTOMER_NAME,CUSTOMER_DOB);
-                else
-                    System.out.println(CUSTOMER_NAME + " already has an account. Returning to main menu.");
+                    teller.setUUID();
+                    teller.addUserAccount(CUSTOMER_NAME, CUSTOMER_SSN, CUSTOMER_DOB);
+                    teller.addCheckingAccount(CUSTOMER_NAME, CUSTOMER_SSN, CUSTOMER_DOB,CUSTOMER_BALANCE);
+                    System.out.println(CUSTOMER_NAME+ " your account has been created.");
+                    displayTellerMenu(scanner, teller);
                 break;
             case TELLER_MAKE_SAVINGS_ACCOUNT:
+                teller.setUUID();
+                teller.addSavingsAccount(CUSTOMER_NAME, CUSTOMER_SSN, CUSTOMER_DOB,CUSTOMER_BALANCE);
+                System.out.println(CUSTOMER_NAME+ " your account has been created.");
+                displayTellerMenu(scanner, teller);
                 break;
-            case DEPOSIT_CHECKING:
+            case TELLER_DEPOSIT_CHECKING:
                 break;
-            case DEPOSIT_SAVINGS:
+            case TELLER_DEPOSIT_SAVINGS:
                 break;
-            case WITHDRAW_CHECKING:
+            case TELLER_WITHDRAW_CHECKING:
                 break;
-            case WITHDRAW_SAVINGS:
+            case TELLER_WITHDRAW_SAVINGS:
+                break;
+            case TELLER_CHECK_TRANSACTIONS:
                 break;
             case LEAVE_TELLER:
                 break;
@@ -194,7 +206,7 @@ public class Main {
     public static String getCustomerName(Scanner scanner){
         String customerName;
         System.out.println("Please provide your name: " );
-        customerName = scanner.nextLine();
+        customerName ="test2"/* scanner.nextLine()*/;
         System.out.println();
         return customerName;
     }
@@ -202,10 +214,28 @@ public class Main {
     public static String getCustomerDOB(Scanner scanner){
         String DOB;
         System.out.println("Please provide your DOB (MM/DD/YYYY): ");
-        DOB = scanner.nextLine();
+        DOB = "1/1/1920"/*scanner.nextLine()*/;
         System.out.println();
         return DOB;
 
+    }
+
+    public static String getCustomerSSN(Scanner scanner){
+        String SSN;
+        System.out.println("Please provide your SSN : ");
+        SSN = "11-22-3333"/*scanner.nextLine()*/;
+        String cleanSSN = SSN.replaceAll("[\\s\\-()]", "");
+        System.out.println();
+        return cleanSSN;
+
+    }
+
+    public static Double getCustomerBalance(Scanner scanner){
+        Double balance;
+        System.out.println("Please provide your SSN : ");
+        balance = 500.01/*scanner.nextDouble()*/;
+        System.out.println();
+        return balance;
     }
 
 

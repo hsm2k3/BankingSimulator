@@ -24,19 +24,26 @@ public class Teller {
     }
 
 //    public Customer getCustomerAccount(String UUID, String customerName, String accountCreationDate, String DOB){
-//        setCurrentCustomer(branchManager.addUserAccount(UUID,customerName, accountCreationDate, DOB));
+//        setCurrentCustomer(branchManager.addCheckingAccount(UUID,customerName, accountCreationDate, DOB));
 //        return branchManager.getUserAccount(name, dateOfBirth);
 //    }
 
-    public boolean doesUserAccountExists(String name, String dob){
-        if(branchManager.doesUserAccountExist(name,dob))
-            return true;
-        else
-            return false;
+//    public boolean doesUserAccountExists(String name, String SSN, String dob){
+//        if(branchManager.doesUserAccountExist(name, SSN, dob))
+//            return true;
+//        else
+//            return false;
+//    }
+    public void addUserAccount(String name, String SSN, String dob){
+        branchManager.addUserAccount(this.uuid,name,SSN,dob);
     }
+    public void addCheckingAccount(String name, String SSN, String dob, Double balance){
+        branchManager.addCheckingAccount(this.uuid,name,SSN, balance);
 
-    public void addUserAccout(String name, String dob){
-        branchManager.addUserAccount(this.uuid,name,dob);
+    }
+    public void addSavingsAccount(String name, String SSN, String dob, Double balance){
+        branchManager.addUserAccount(this.uuid,name,SSN,dob);
+
     }
 
 }

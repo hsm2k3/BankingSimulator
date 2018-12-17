@@ -1,6 +1,9 @@
 package Bank.Employees;
 import Bank.Bank;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 public class BranchManager {
     private Bank bank;
     public BranchManager(Bank bank){
@@ -34,23 +37,23 @@ public class BranchManager {
         this.bank.getJuniorSavingsAccounts();
     }
 
-    public boolean doesUserAccountExist(String customerName, String DOB){
-        if(this.bank.doesUserAccountExist(customerName,DOB))
-            return true;
-        else
-            return false;
+//    public boolean doesUserAccountExist(String customerName, String SSN, String DOB){
+//        if(this.bank.doesUserAccountExist(customerName,SSN, DOB))
+//            return true;
+//        else
+//            return false;
+//    }
+
+    public void addUserAccount(String UUID, String customerName, String SSN, String DOB){
+        String accountCreationDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+
+            this.bank.addUserAccount(UUID, customerName, accountCreationDate, SSN, DOB);
+
+        }
+
+        public void addCheckingAccount(String UUID, String customerName, String SSN, Double balance){
+        this.bank.addCheckingAccount(UUID,balance,customerName,SSN);
+        }
     }
 
-    public boolean addUserAccount(String UUID, String customerName, String DOB){
-        String accountCreationDate = "";
-        if(this.bank.doesUserAccountExist(customerName,DOB)) {
-            System.out.println(customerName + " already has an account");
-            return false;
-        }
-        else {
-            this.bank.addUserAccount(UUID, customerName, accountCreationDate, DOB);
-            return true;
-        }
-    }
 
-}

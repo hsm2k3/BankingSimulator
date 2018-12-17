@@ -16,25 +16,25 @@ public class TransactionList {
 
     public void addTransaction(Transaction recentTransaction){ transactionList.add(recentTransaction); }
 
-    public Boolean removeTransaction(UUID transactionUUID){
-        //Searches for the transaction and adds removes it
-        for(Integer i =0; i<transactionList.size(); i++) {
-            if (transactionList.get(i).getTransactionID() == transactionUUID) {
-                transactionList.remove(i);
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    public Transaction getTransaction(UUID transactionUUID){
-        for(Integer i =0; i<transactionList.size(); i++) {
-            if (transactionList.get(i).getTransactionID() == transactionUUID)
-            return transactionList.get(i);
-        }
-        return null;
-    }
+//    public Boolean removeTransaction(UUID transactionUUID){
+//        //Searches for the transaction and adds removes it
+//        for(Integer i =0; i<transactionList.size(); i++) {
+//            if (transactionList.get(i).getTransactionID() == transactionUUID) {
+//                transactionList.remove(i);
+//                return true;
+//            }
+//        }
+//
+//        return false;
+//    }
+//
+//    public Transaction getTransaction(UUID transactionUUID){
+//        for(Integer i =0; i<transactionList.size(); i++) {
+//            if (transactionList.get(i).getTransactionID() == transactionUUID)
+//            return transactionList.get(i);
+//        }
+//        return null;
+//    }
 
 
     //This handles returning transactions from the last 30 days

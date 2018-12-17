@@ -9,6 +9,7 @@ import sqliteDatabase.SQLiteDatabase;
 public class Bank {
     private SQLiteDatabase sqliteDatabase;
     private static double BANK_FUNDS = 1000000.00;
+    private UserAccounts userAccounts = new UserAccounts();;
     private CheckingAccount checkingAccount;
     private SavingsAccount savingsAccount;
     private JuniorCheckingAccount juniorCheckingAccount;
@@ -18,7 +19,7 @@ public class Bank {
     //public void Bank()
     public Bank (SQLiteDatabase sqliteDatabase){
         this.sqliteDatabase = sqliteDatabase;
-        UserAccounts userAccounts = new UserAccounts();
+//        UserAccounts userAccounts = new UserAccounts();
         CheckingAccount checkingAccount = new CheckingAccount();
         SavingsAccount savingsAccount = new SavingsAccount();
         JuniorCheckingAccount juniorCheckingAccount = new JuniorCheckingAccount();
@@ -38,7 +39,6 @@ public class Bank {
         sqliteDatabase.createsNewSavingsAccount();
         sqliteDatabase.createsNewJuniorSavingsAccount();
         sqliteDatabase.createsNewAvailableFundsTable();
-        sqliteDatabase.getUserAccounts();
         return connectedToDB;
     }
 
@@ -76,14 +76,22 @@ public class Bank {
             return false;
     }
 
-    public boolean doesUserAccountExist(String customerName, String DOB){
-        if(sqliteDatabase.doesUserAccountExist(customerName,DOB))
-            return true;
-        else
-            return false;
+    public void addCheckingAccount(String UUID, Double balance, String customerName, String SSN){
+        sqliteDatabase.insertIntoCheckingAccount(UUID, balance, SSN, customerName);
     }
 
-    public void addUserAccount(String UUID, String customerName, String accountCreationDate, String DOB){
-        sqliteDatabase.insertIntoUserAccount(UUID,customerName,accountCreationDate,DOB);
+//    public boolean doesUserAccountExist(String customerName, String SSN, String DOB){
+//        if(sqliteDatabase.getUserAccounts())
+//            return true;
+//        else
+//            return false;
+////        if(userAccounts.doesUserAccountExist(customerName,SSN,DOB))
+////            return true;
+////        else
+////            return false;
+//    }
+
+    public void addUserAccount(String UUID, String customerName, String accountCreationDate, String SSN, String DOB){
+        sqliteDatabase.insertIntoUserAccount(UUID,customerName,accountCreationDate,SSN,DOB);
     }
 }

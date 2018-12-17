@@ -19,7 +19,9 @@ public class Customer {
     //Fields
     private String customerName;
     private String customerDOB;
+    private String customerSSN;
     private String accountCreationDate;
+    private Double customerBalance;
 
     //Tells the user
     private Boolean isMinor;
@@ -43,8 +45,17 @@ public class Customer {
 
     }
 
+    public String setCustomerSNN(String SSN){
+        return this.customerSSN = SSN;
+    }
+
+    public Double setCustomerBalance(Double balance){
+        return this.customerBalance = balance;
+    }
+
+
     //Getters and Setters for isMinor
-    private Boolean isMinor(String DOB) throws ParseException {
+    private boolean isMinor(String DOB) throws ParseException {
         String now = LocalDateTime.now().format(DateTimeFormatter.ofPattern("MM/dd/yyyy"));
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy");
         SimpleDateFormat customerDOB = new SimpleDateFormat("MM/dd/yyyy");
@@ -62,10 +73,6 @@ public class Customer {
             return this.isMinor = true;
         else
             return this.isMinor = false;
-    }
-
-    public Boolean getisMinor() {
-        return this.isMinor;
     }
 
 }
