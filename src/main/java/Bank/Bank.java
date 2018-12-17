@@ -80,6 +80,10 @@ public class Bank {
         sqliteDatabase.insertIntoCheckingAccount(UUID, balance, SSN, customerName);
     }
 
+    public void depositToCheckingAccount(String UUID, String customerName, String SSN, Double deposit){
+        sqliteDatabase.insertIntoCheckingAccount(UUID, deposit,SSN,customerName);
+    }
+
 //    public boolean doesUserAccountExist(String customerName, String SSN, String DOB){
 //        if(sqliteDatabase.getUserAccounts())
 //            return true;

@@ -37,7 +37,7 @@ public class Teller {
     public void addUserAccount(String name, String SSN, String dob){
         branchManager.addUserAccount(this.uuid,name,SSN,dob);
     }
-    public void addCheckingAccount(String name, String SSN, String dob, Double balance){
+    public void addCheckingAccount(String name, String SSN, Double balance){
         branchManager.addCheckingAccount(this.uuid,name,SSN, balance);
 
     }
@@ -46,4 +46,8 @@ public class Teller {
 
     }
 
+
+    public void depositToCheckingAccount(String name, String SSN, Double deposit){
+    branchManager.depositToCheckingAccount(this.uuid,name,SSN,deposit);
+    }
 }
