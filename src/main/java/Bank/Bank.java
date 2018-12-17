@@ -80,6 +80,10 @@ public class Bank {
         sqliteDatabase.insertIntoCheckingAccount(UUID, balance, SSN, customerName);
     }
 
+    public void addSavingsAccount(String UUID, Double balance, String customerName, String SSN){
+        sqliteDatabase.insertIntoSavingsAccount(UUID, balance, SSN, customerName);
+    }
+
     public void depositToCheckingAccount(String UUID, String customerName, String SSN, Double deposit){
         sqliteDatabase.insertIntoCheckingAccount(UUID, deposit,SSN,customerName);
     }

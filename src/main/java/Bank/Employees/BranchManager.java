@@ -54,6 +54,9 @@ public class BranchManager {
         public void addCheckingAccount(String UUID, String customerName, String SSN, Double balance){
         this.bank.addCheckingAccount(UUID,balance,customerName,SSN);
         }
+    public void addSavingsAccount(String UUID, String customerName, String SSN, Double balance){
+        this.bank.addSavingsAccount(UUID,balance,customerName,SSN);
+    }
     public void depositToCheckingAccount(String UUID, String customerName, String SSN, Double deposit){
         this.bank.depositToCheckingAccount(UUID,customerName,SSN,deposit);
     }

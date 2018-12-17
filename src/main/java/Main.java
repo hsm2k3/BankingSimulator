@@ -65,7 +65,7 @@ public class Main {
                 selection = displayMenu(scanner);
                 switch (selection) {
                     case TELLER:
-                        displayTellerMenu(scanner, teller);
+                        displayTellerMenu(scanner, teller, customer);
                         break;
                     case FINANCIAL_ADVISOR:
                         displayFinancialAdvisorMenu(scanner);
@@ -118,7 +118,7 @@ public class Main {
         return selection;
     }
 
-    public static int displayTellerMenu(Scanner scanner, Teller teller){
+    public static int displayTellerMenu(Scanner scanner, Teller teller, Customer customer) throws ParseException {
         int selection = 0;
         boolean validSelection = true;
         do {
@@ -143,14 +143,21 @@ public class Main {
         teller.addUserAccount(CUSTOMER_NAME, CUSTOMER_SSN, CUSTOMER_DOB);
         switch(selection){
             case TELLER_MAKE_CHECKING_ACCOUNT:
-                    teller.addCheckingAccount(CUSTOMER_NAME, CUSTOMER_SSN,CUSTOMER_BALANCE);
-                    System.out.println(CUSTOMER_NAME+ " your account has been created.");
-                    displayTellerMenu(scanner, teller);
+                if(!customer.isMinor(CUSTOMER_DOB)) {
+                    teller.addCheckingAccount(CUSTOMER_NAME, CUSTOMER_SSN, CUSTOMER_BALANCE);
+                    System.out.println(CUSTOMER_NAME + " your account has been created.");
+                    displayTellerMenu(scanner, teller, customer);
+                }
+                else
+                {
+
+                }
+
                 break;
             case TELLER_MAKE_SAVINGS_ACCOUNT:
                 teller.addSavingsAccount(CUSTOMER_NAME, CUSTOMER_SSN, CUSTOMER_DOB,CUSTOMER_BALANCE);
                 System.out.println(CUSTOMER_NAME+ " your account has been created.");
-                displayTellerMenu(scanner, teller);
+                displayTellerMenu(scanner, teller, customer);
                 break;
             case TELLER_DEPOSIT_CHECKING:
                 System.out.println("How much would you like to deposit?");
@@ -158,7 +165,7 @@ public class Main {
                 deposit = scanner.nextDouble();
                 teller.depositToCheckingAccount(CUSTOMER_NAME, CUSTOMER_SSN,deposit);
                 System.out.println(CUSTOMER_NAME+ " we deposited $" +deposit+ " into a checking account.");
-                displayTellerMenu(scanner, teller);
+                displayTellerMenu(scanner, teller,customer);
                 break;
             case TELLER_DEPOSIT_SAVINGS:
                 System.out.println("How much would you like to deposit?");
@@ -166,7 +173,7 @@ public class Main {
                 depositSavings = scanner.nextDouble();
                 teller.depositToSavingsAccount(CUSTOMER_NAME, CUSTOMER_SSN,depositSavings);
                 System.out.println(CUSTOMER_NAME+ " we deposited $" +depositSavings+ " into a savings account.");
-                displayTellerMenu(scanner, teller);
+                displayTellerMenu(scanner, teller, customer);
                 break;
             case TELLER_WITHDRAW_CHECKING:
 

@@ -55,7 +55,7 @@ public class Customer {
 
 
     //Getters and Setters for isMinor
-    private boolean isMinor(String DOB) throws ParseException {
+    public boolean isMinor(String DOB) throws ParseException {
         String now = LocalDateTime.now().format(DateTimeFormatter.ofPattern("MM/dd/yyyy"));
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy");
         SimpleDateFormat customerDOB = new SimpleDateFormat("MM/dd/yyyy");

@@ -41,8 +41,8 @@ public class Teller {
         branchManager.addCheckingAccount(this.uuid,name,SSN, balance);
 
     }
-    public void addSavingsAccount(String name, String SSN, String dob, Double balance){
-        branchManager.addUserAccount(this.uuid,name,SSN,dob);
+    public void addSavingsAccount(String name, String SSN, String DOB, Double balance){
+        branchManager.addSavingsAccount(this.uuid,name,SSN,balance);
 
     }
 
