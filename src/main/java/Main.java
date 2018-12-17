@@ -150,22 +150,42 @@ public class Main {
                 }
                 else
                 {
-
+                    teller.addJuniorCheckingAccount(CUSTOMER_NAME, CUSTOMER_SSN, CUSTOMER_BALANCE);
+                    System.out.println(CUSTOMER_NAME + " your JUNIOR account has been created.");
+                    displayTellerMenu(scanner, teller, customer);
                 }
 
                 break;
             case TELLER_MAKE_SAVINGS_ACCOUNT:
-                teller.addSavingsAccount(CUSTOMER_NAME, CUSTOMER_SSN, CUSTOMER_DOB,CUSTOMER_BALANCE);
-                System.out.println(CUSTOMER_NAME+ " your account has been created.");
-                displayTellerMenu(scanner, teller, customer);
+                if(!customer.isMinor(CUSTOMER_DOB)) {
+                    teller.addSavingsAccount(CUSTOMER_NAME, CUSTOMER_SSN, CUSTOMER_DOB, CUSTOMER_BALANCE);
+                    System.out.println(CUSTOMER_NAME + " your account has been created.");
+                    displayTellerMenu(scanner, teller, customer);
+                }
+                else
+                {
+                    teller.addJuniorSavingsAccount(CUSTOMER_NAME, CUSTOMER_SSN, CUSTOMER_BALANCE);
+                    System.out.println(CUSTOMER_NAME + " your JUNIOR account has been created.");
+                    displayTellerMenu(scanner, teller, customer);
+                }
                 break;
             case TELLER_DEPOSIT_CHECKING:
-                System.out.println("How much would you like to deposit?");
                 Double deposit;
+                if(!customer.isMinor(CUSTOMER_DOB)) {
+                System.out.println("How much would you like to deposit?");
                 deposit = scanner.nextDouble();
                 teller.depositToCheckingAccount(CUSTOMER_NAME, CUSTOMER_SSN,deposit);
                 System.out.println(CUSTOMER_NAME+ " we deposited $" +deposit+ " into a checking account.");
                 displayTellerMenu(scanner, teller,customer);
+                }
+                else
+                {
+                System.out.println("How much would you like to deposit?");
+                deposit = scanner.nextDouble();
+                teller.depositToJuniorCheckingAccount(CUSTOMER_NAME, CUSTOMER_SSN,deposit);
+                System.out.println(CUSTOMER_NAME+ " we deposited $" +deposit+ " into a checking account.");
+                displayTellerMenu(scanner, teller,customer);
+                }
                 break;
             case TELLER_DEPOSIT_SAVINGS:
                 System.out.println("How much would you like to deposit?");
@@ -232,7 +252,7 @@ public class Main {
     public static String getCustomerDOB(Scanner scanner){
         String DOB;
         System.out.println("Please provide your DOB (MM/DD/YYYY): ");
-        DOB = "1/1/1920"/*scanner.nextLine()*/;
+        DOB = "1/1/2008"/*scanner.nextLine()*/;
         System.out.println();
         return DOB;
 

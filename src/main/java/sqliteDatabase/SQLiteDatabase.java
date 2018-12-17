@@ -69,6 +69,7 @@ public class SQLiteDatabase {
         String sql = "CREATE TABLE IF NOT EXISTS JuniorCheckingAccount (\n "
                 + "UUID TEXT NOT NULL UNIQUE, \n"
                 + "CustomerName TEXT NOT NULL,\n"
+                + "SSN TEXT NOT NULL,\n"
                 + "Balance REAL NOT NULL,\n"
                 + "PRIMARY KEY(UUID)\n"
                 + ");";
@@ -171,6 +172,7 @@ public class SQLiteDatabase {
                 // AccountID will use the UUID
                 + "UUID TEXT NOT NULL UNIQUE ,\n"
                 + "CustomerName TEXT NOT NULL,\n"
+                + "SSN TEXT NOT NULL,\n"
                 + "JuniorSavingsBalancae REAL NOT NULL ,\n"
                 + "PRIMARY KEY (UUID)\n"
                 + ");";
@@ -214,6 +216,34 @@ public class SQLiteDatabase {
 
     public void insertIntoSavingsAccount(String ID, Double deposit,String SSN, String customerName){
         String sql = "INSERT INTO SavingsAccount (UUID, customerName, SSN, SavingsBalance) VALUES (?,?,?,?)";
+        try (Connection conn = DriverManager.getConnection(url);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, ID);
+            pstmt.setString(2, customerName);
+            pstmt.setString(3,SSN);
+            pstmt.setDouble(4,deposit);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void insertIntoJuniorCheckingAccount(String ID, Double deposit,String SSN, String customerName){
+        String sql = "INSERT INTO JuniorCheckingAccount (UUID, customerName, SSN, balance) VALUES (?,?,?,?)";
+        try (Connection conn = DriverManager.getConnection(url);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, ID);
+            pstmt.setString(2, customerName);
+            pstmt.setString(3,SSN);
+            pstmt.setDouble(4,deposit);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void insertIntoJuniorSavingsAccount(String ID, Double deposit,String SSN, String customerName){
+        String sql = "INSERT INTO JuniorSavingsAccount (UUID, customerName, SSN, JuniorSavingsBalancae) VALUES (?,?,?,?)";
         try (Connection conn = DriverManager.getConnection(url);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, ID);

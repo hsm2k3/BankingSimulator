@@ -57,8 +57,17 @@ public class BranchManager {
     public void addSavingsAccount(String UUID, String customerName, String SSN, Double balance){
         this.bank.addSavingsAccount(UUID,balance,customerName,SSN);
     }
+    public void addJuniorCheckingAccount(String UUID, String customerName, String SSN, Double balance){
+        this.bank.addJuniorCheckingAccount(UUID,balance,customerName,SSN);
+    }
+    public void addJuniorSavingsAccount(String UUID, String customerName, String SSN, Double balance){
+        this.bank.addJuniorSavingsAccount(UUID,balance,customerName,SSN);
+    }
     public void depositToCheckingAccount(String UUID, String customerName, String SSN, Double deposit){
         this.bank.depositToCheckingAccount(UUID,customerName,SSN,deposit);
+    }
+    public void depositToJuniorCheckingAccount(String UUID, String customerName, String SSN, Double deposit){
+        this.bank.depositToJuniorCheckingAccount(UUID,customerName,SSN,deposit);
     }
 
     public void depositToSavingsAccount(String UUID, String customerName, String SSN, Double deposit){

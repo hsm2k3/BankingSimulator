@@ -45,10 +45,19 @@ public class Teller {
         branchManager.addSavingsAccount(this.uuid,name,SSN,balance);
 
     }
+    public void addJuniorCheckingAccount(String name, String SSN, Double balance){
+        branchManager.addJuniorCheckingAccount(this.uuid,name,SSN, balance);
 
+    }
+    public void addJuniorSavingsAccount(String name, String SSN, Double balance){
+        branchManager.addJuniorSavingsAccount(this.uuid,name,SSN, balance);
 
+    }
     public void depositToCheckingAccount(String name, String SSN, Double deposit){
     branchManager.depositToCheckingAccount(this.uuid,name,SSN,deposit);
+    }
+    public void depositToJuniorCheckingAccount(String name, String SSN, Double deposit){
+        branchManager.depositToJuniorCheckingAccount(this.uuid,name,SSN,deposit);
     }
     public void depositToSavingsAccount(String name, String SSN, Double deposit){
         branchManager.depositToSavingsAccount(this.uuid,name,SSN,deposit);

@@ -39,6 +39,7 @@ public class Bank {
         sqliteDatabase.createsNewSavingsAccount();
         sqliteDatabase.createsNewJuniorSavingsAccount();
         sqliteDatabase.createsNewAvailableFundsTable();
+        sqliteDatabase.insertIntoAvailableFunds(BANK_FUNDS);
         return connectedToDB;
     }
 
@@ -83,6 +84,12 @@ public class Bank {
     public void addSavingsAccount(String UUID, Double balance, String customerName, String SSN){
         sqliteDatabase.insertIntoSavingsAccount(UUID, balance, SSN, customerName);
     }
+    public void addJuniorCheckingAccount(String UUID, Double balance, String customerName, String SSN){
+        sqliteDatabase.insertIntoJuniorCheckingAccount(UUID, balance, SSN, customerName);
+    }
+    public void addJuniorSavingsAccount(String UUID, Double balance, String customerName, String SSN){
+        sqliteDatabase.insertIntoJuniorSavingsAccount(UUID, balance, SSN, customerName);
+    }
 
     public void depositToCheckingAccount(String UUID, String customerName, String SSN, Double deposit){
         sqliteDatabase.insertIntoCheckingAccount(UUID, deposit,SSN,customerName);
@@ -90,6 +97,10 @@ public class Bank {
 
     public void depositToSavingsAccount(String UUID, String customerName, String SSN, Double deposit){
         sqliteDatabase.insertIntoSavingsAccount(UUID, deposit,SSN,customerName);
+    }
+
+    public void depositToJuniorCheckingAccount(String UUID, String customerName, String SSN, Double deposit){
+        sqliteDatabase.insertIntoJuniorCheckingAccount(UUID, deposit,SSN,customerName);
     }
 
 //    public boolean doesUserAccountExist(String customerName, String SSN, String DOB){
