@@ -61,8 +61,8 @@ public class Main {
         customer.setCustomerSNN(CUSTOMER_SSN);
         customer.setCustomerBalance(CUSTOMER_BALANCE);
         if(branchManager.isBankOpen()) {
-            do {
-                selection = displayMenu(scanner);
+//            do {
+                selection = 1;/*displayMenu(scanner);*/
                 switch (selection) {
                     case TELLER:
                         displayTellerMenu(scanner, teller, customer);
@@ -76,7 +76,7 @@ public class Main {
                         System.out.println("Oops! Something went wrong.");
                         break;
                 }
-            } while (selection != EXIT);
+//            } while (selection != EXIT);
         }
         else
             System.out.println("The bank is closed. Come back next time.");
@@ -119,91 +119,116 @@ public class Main {
     }
 
     public static int displayTellerMenu(Scanner scanner, Teller teller, Customer customer) throws ParseException {
-        int selection = 0;
-        boolean validSelection = true;
-        do {
-            System.out.println("Welcome, " + CUSTOMER_NAME + ", how may I help you today?");
-            System.out.println("----------------------------------------");
-            System.out.println("1. Make a new checking account.");
-            System.out.println("2. Make a new savings account.");
-            System.out.println("3. Deposit money into checking account.");
-            System.out.println("4. Deposit money into savings account.");
-            System.out.println("5. Withdraw money from checking account.");
-            System.out.println("6. Withdraw money from savings account.");
-            System.out.println("7. Check account transactions.");
-            System.out.println("8. Return to main menu.");
-            System.out.println("----------------------------------------");
-            selection = scanner.nextInt();
-            if(selection > 8 || selection < 1)
-                validSelection = false;
-            else
-                validSelection = true;
-        }while (!validSelection);
-        teller.setUUID();
-        teller.addUserAccount(CUSTOMER_NAME, CUSTOMER_SSN, CUSTOMER_DOB);
+        int selection = 1;
+//        teller.printUserAccounts();
+//        boolean validSelection = true;
+//        do {
+//            System.out.println("Welcome, " + CUSTOMER_NAME + ", how may I help you today?");
+//            System.out.println("----------------------------------------");
+//            System.out.println("1. Make a new checking account.");
+//            System.out.println("2. Make a new savings account.");
+//            System.out.println("3. Deposit money into che0cking account.");
+//            System.out.println("4. Deposit money into savings account.");
+//            System.out.println("5. Withdraw money from checking account.");
+//            System.out.println("6. Withdraw money from savings account.");
+//            System.out.println("7. Check account transactions.");
+//            System.out.println("8. Return to main menu.");
+//            System.out.println("----------------------------------------");
+//            selection = scanner.nextInt();
+//            if(selection > 8 || selection < 1)
+//                validSelection = false;
+//            else
+//                validSelection = true;
+//        }while (!validSelection);
+//        teller.setUUID();
+//        teller.addUserAccount(CUSTOMER_NAME, CUSTOMER_SSN, CUSTOMER_DOB);
         switch(selection){
             case TELLER_MAKE_CHECKING_ACCOUNT:
                 if(!customer.isMinor(CUSTOMER_DOB)) {
                     teller.addCheckingAccount(CUSTOMER_NAME, CUSTOMER_SSN, CUSTOMER_BALANCE);
                     System.out.println(CUSTOMER_NAME + " your account has been created.");
-                    displayTellerMenu(scanner, teller, customer);
+//                    displayTellerMenu(scanner, teller, customer);
                 }
                 else
                 {
                     teller.addJuniorCheckingAccount(CUSTOMER_NAME, CUSTOMER_SSN, CUSTOMER_BALANCE);
                     System.out.println(CUSTOMER_NAME + " your JUNIOR account has been created.");
-                    displayTellerMenu(scanner, teller, customer);
+//                    displayTellerMenu(scanner, teller, customer);
+                    if(teller.checkUserAccount(CUSTOMER_SSN)) {
+                        System.out.println("user with SSN" + CUSTOMER_SSN + " was found");
+                        teller.displayAccountInformation(CUSTOMER_SSN);
+                        System.out.println("We're doing a deposit now!!!!");
+                        teller.depositToJuniorCheckingAccount(CUSTOMER_SSN, 500.50);
+                        teller.withdrawlFromJuniorCheckingAccount(CUSTOMER_SSN, 100.00);
+                    }
+                    else
+                        System.out.println("didn't find you");
                 }
 
                 break;
-            case TELLER_MAKE_SAVINGS_ACCOUNT:
-                if(!customer.isMinor(CUSTOMER_DOB)) {
-                    teller.addSavingsAccount(CUSTOMER_NAME, CUSTOMER_SSN, CUSTOMER_DOB, CUSTOMER_BALANCE);
-                    System.out.println(CUSTOMER_NAME + " your account has been created.");
-                    displayTellerMenu(scanner, teller, customer);
-                }
-                else
-                {
-                    teller.addJuniorSavingsAccount(CUSTOMER_NAME, CUSTOMER_SSN, CUSTOMER_BALANCE);
-                    System.out.println(CUSTOMER_NAME + " your JUNIOR account has been created.");
-                    displayTellerMenu(scanner, teller, customer);
-                }
-                break;
-            case TELLER_DEPOSIT_CHECKING:
-                Double deposit;
-                if(!customer.isMinor(CUSTOMER_DOB)) {
-                System.out.println("How much would you like to deposit?");
-                deposit = scanner.nextDouble();
-                teller.depositToCheckingAccount(CUSTOMER_NAME, CUSTOMER_SSN,deposit);
-                System.out.println(CUSTOMER_NAME+ " we deposited $" +deposit+ " into a checking account.");
-                displayTellerMenu(scanner, teller,customer);
-                }
-                else
-                {
-                System.out.println("How much would you like to deposit?");
-                deposit = scanner.nextDouble();
-                teller.depositToJuniorCheckingAccount(CUSTOMER_NAME, CUSTOMER_SSN,deposit);
-                System.out.println(CUSTOMER_NAME+ " we deposited $" +deposit+ " into a checking account.");
-                displayTellerMenu(scanner, teller,customer);
-                }
-                break;
-            case TELLER_DEPOSIT_SAVINGS:
-                System.out.println("How much would you like to deposit?");
-                Double depositSavings;
-                depositSavings = scanner.nextDouble();
-                teller.depositToSavingsAccount(CUSTOMER_NAME, CUSTOMER_SSN,depositSavings);
-                System.out.println(CUSTOMER_NAME+ " we deposited $" +depositSavings+ " into a savings account.");
-                displayTellerMenu(scanner, teller, customer);
-                break;
-            case TELLER_WITHDRAW_CHECKING:
-
-                break;
-            case TELLER_WITHDRAW_SAVINGS:
-                break;
-            case TELLER_CHECK_TRANSACTIONS:
-                break;
-            case LEAVE_TELLER:
-                break;
+//            case TELLER_MAKE_SAVINGS_ACCOUNT:
+//                if(!customer.isMinor(CUSTOMER_DOB)) {
+//                    teller.addSavingsAccount(CUSTOMER_NAME, CUSTOMER_SSN, CUSTOMER_DOB, CUSTOMER_BALANCE);
+//                    System.out.println(CUSTOMER_NAME + " your account has been created.");
+//                    displayTellerMenu(scanner, teller, customer);
+//                }
+//                else
+//                {
+//                    teller.addJuniorSavingsAccount(CUSTOMER_NAME, CUSTOMER_SSN, CUSTOMER_BALANCE);
+//                    System.out.println(CUSTOMER_NAME + " your JUNIOR account has been created.");
+//                    displayTellerMenu(scanner, teller, customer);
+//                }
+//                break;
+//            case TELLER_DEPOSIT_CHECKING:
+//                Double deposit;
+//                if(!customer.isMinor(CUSTOMER_DOB)) {
+//                System.out.println("How much would you like to deposit?");
+//                deposit = scanner.nextDouble();
+//                teller.depositToCheckingAccount(CUSTOMER_NAME, CUSTOMER_SSN,deposit);
+//                System.out.println(CUSTOMER_NAME+ " we deposited $" +deposit+ " into a checking account.");
+//                displayTellerMenu(scanner, teller,customer);
+//                }
+//                else
+//                {
+//                System.out.println("How much would you like to deposit?");
+//                deposit = scanner.nextDouble();
+////                teller.depositToJuniorCheckingAccount(CUSTOMER_NAME, CUSTOMER_SSN,deposit);
+//                System.out.println(CUSTOMER_NAME+ " we deposited $" +deposit+ " into a checking account.");
+//                displayTellerMenu(scanner, teller,customer);
+//                }
+//                break;
+//            case TELLER_DEPOSIT_SAVINGS:
+//                Double depositSavings;
+//                if(!customer.isMinor(CUSTOMER_DOB)) {
+//                    System.out.println("How much would you like to deposit?");
+//                    depositSavings = scanner.nextDouble();
+//                    teller.depositToSavingsAccount(CUSTOMER_NAME, CUSTOMER_SSN, depositSavings);
+//                    System.out.println(CUSTOMER_NAME + " we deposited $" + depositSavings + " into a savings account.");
+//                    displayTellerMenu(scanner, teller, customer);
+//                }
+//                else
+//                {
+//                    System.out.println("How much would you like to deposit?");
+//                    deposit = scanner.nextDouble();
+//                    teller.depositToJuniorSavingsAccount(CUSTOMER_NAME, CUSTOMER_SSN,deposit);
+//                    System.out.println(CUSTOMER_NAME+ " we deposited $" +deposit+ " into a checking account.");
+//                    displayTellerMenu(scanner, teller,customer);
+//                }
+//                break;
+//            case TELLER_WITHDRAW_CHECKING:
+//                //FREE MONEY!!! lol
+//                System.out.println("How much would you like to with draw? Withdrawals are free today!");
+//                Double freeMoney;
+//                freeMoney = scanner.nextDouble();
+//                teller.withdrawFreeMoney(freeMoney);
+//                System.out.println("Withdrawal: $" +freeMoney+ " don't spend it all in one place.");
+//                break;
+//            case TELLER_WITHDRAW_SAVINGS:
+//                break;
+//            case TELLER_CHECK_TRANSACTIONS:
+//                break;
+//            case LEAVE_TELLER:
+//                break;
             default:
                 break;
         }

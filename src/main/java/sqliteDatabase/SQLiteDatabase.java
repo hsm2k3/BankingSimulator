@@ -1,16 +1,12 @@
 package sqliteDatabase;
 
-import Accounts.*;
+
 
 import java.sql.*;
 
 public class SQLiteDatabase {
     private static final String url = "jdbc:sqlite:bank.db";
-    private UserAccounts userAccounts = new UserAccounts();
-    private CheckingAccount checkingAccount = new CheckingAccount();
-    private SavingsAccount savingsAccount = new SavingsAccount();
-    private JuniorCheckingAccount juniorCheckingAccount = new JuniorCheckingAccount();
-    private JuniorSavingsAccount juniorSavingsAccount = new JuniorSavingsAccount();
+
     private Date customerDOB;
     protected int index;
     public static boolean connect() {
@@ -70,7 +66,7 @@ public class SQLiteDatabase {
                 + "UUID TEXT NOT NULL UNIQUE, \n"
                 + "CustomerName TEXT NOT NULL,\n"
                 + "SSN TEXT NOT NULL,\n"
-                + "Balance REAL NOT NULL,\n"
+                + "withdrawal REAL NOT NULL,\n"
                 + "PRIMARY KEY(UUID)\n"
                 + ");";
 
@@ -200,6 +196,24 @@ public class SQLiteDatabase {
         }
     }
 
+    public boolean withDrawFromBankFunds(Double freeMoney){
+        boolean withdrawl = false;
+        String sql = "UPDATE AvailableFunds SET TotalAvailableFunds = -(?)";
+        try (Connection conn = DriverManager.getConnection(url);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setDouble(1, freeMoney);
+            pstmt.executeUpdate();
+            withdrawl = true;
+        }
+        catch(SQLException e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Call 911 the bank was robbed!");
+            withdrawl = false;
+        }
+        return withdrawl;
+    }
+
     public void insertIntoCheckingAccount(String ID, Double deposit,String SSN, String customerName){
         String sql = "INSERT INTO CheckingAccount (UUID, customerName, SSN, balance) VALUES (?,?,?,?)";
         try (Connection conn = DriverManager.getConnection(url);
@@ -228,33 +242,105 @@ public class SQLiteDatabase {
         }
     }
 
-    public void insertIntoJuniorCheckingAccount(String ID, Double deposit,String SSN, String customerName){
-        String sql = "INSERT INTO JuniorCheckingAccount (UUID, customerName, SSN, balance) VALUES (?,?,?,?)";
+    public void insertIntoJuniorCheckingAccount(String SSN, Double deposit){
+        String sql = "SELECT * FROM JuniorCheckingAccount WHERE SSN = " +SSN;
+        String UUID = "";
+        String customerName="";
+        Double Balance = 0.0;
         try (Connection conn = DriverManager.getConnection(url);
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, ID);
-            pstmt.setString(2, customerName);
+             Statement stmt  = conn.createStatement();
+             ResultSet resultSet = stmt.executeQuery(sql)) {
+            while(resultSet.next()){
+                UUID = resultSet.getString("UUID");
+                customerName = resultSet.getString("CustomerName");
+                Balance = resultSet.getDouble("Balance");
+                System.out.println("original balance " + Balance);
+                Balance = Balance + deposit;
+                System.out.println("this is the new Balance " +Balance);
+            }
+        }
+        catch(SQLException e){
+        System.out.println("The bank got robbed! Call 911!");
+        }
+        String sqlupdate = "UPDATE JuniorCheckingAccount SET UUID = ?, CustomerName = ?, SSN = ?, Balance = ? WHERE SSN = " +SSN;
+        try (Connection conn = DriverManager.getConnection(url);
+             PreparedStatement pstmt = conn.prepareStatement(sqlupdate);
+             /*ResultSet resultSet = pstmt.executeQuery(sqlupdate)*/) {
+            System.out.println("right before setDouble");
+            pstmt.setString(1,UUID);
+            pstmt.setString(2,customerName);
             pstmt.setString(3,SSN);
-            pstmt.setDouble(4,deposit);
+            pstmt.setDouble(4, Balance);
+            System.out.println("We're adding this " + Balance+ " to your account");
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+
+
     }
 
-    public void insertIntoJuniorSavingsAccount(String ID, Double deposit,String SSN, String customerName){
-        String sql = "INSERT INTO JuniorSavingsAccount (UUID, customerName, SSN, JuniorSavingsBalancae) VALUES (?,?,?,?)";
+    public Boolean wihdrawIntoJuniorCheckingAccount(String SSN, Double withdrawal){
+        String sql = "SELECT * FROM JuniorCheckingAccount WHERE SSN = " +SSN;
+        String UUID = "";
+        String customerName="";
+        Double Balance = 0.0;
+
+
+
         try (Connection conn = DriverManager.getConnection(url);
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, ID);
-            pstmt.setString(2, customerName);
-            pstmt.setString(3,SSN);
-            pstmt.setDouble(4,deposit);
-            pstmt.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
+             Statement stmt  = conn.createStatement();
+             ResultSet resultSet = stmt.executeQuery(sql)) {
+            while(resultSet.next()){
+                UUID = resultSet.getString("UUID");
+                customerName = resultSet.getString("CustomerName");
+                Balance = resultSet.getDouble("Balance");
+                System.out.println("original balance " + Balance);
+                Balance = Balance - withdrawal;
+                System.out.println("this is the new Balance " +Balance);
+            }
         }
+        catch(SQLException e){
+            System.out.println("The bank got robbed! Call 911!");
+        }
+        String sqlupdate = "UPDATE JuniorCheckingAccount SET UUID = ?, CustomerName = ?, SSN = ?, Balance = ? WHERE SSN = " +SSN;
+
+        if((Balance>=0.0)){
+            try (Connection conn = DriverManager.getConnection(url);
+                 PreparedStatement pstmt = conn.prepareStatement(sqlupdate);
+                    /*ResultSet resultSet = pstmt.executeQuery(sqlupdate)*/) {
+                System.out.println("right before setDouble");
+                pstmt.setString(1, UUID);
+                pstmt.setString(2, customerName);
+                pstmt.setString(3, SSN);
+                pstmt.setDouble(4, Balance);
+                System.out.println("We're adding this " + Balance + " to your account");
+                pstmt.executeUpdate();
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+            return true;
+        }
+        else
+            return false;
+
+
+
     }
+
+//    public void insertIntoJuniorSavingsAccount(String ID, Double deposit,String SSN, String customerName){
+//        String sql = "INSERT INTO JuniorSavingsAccount (UUID, customerName, SSN, JuniorSavingsBalancae) VALUES (?,?,?,?)";
+//        try (Connection conn = DriverManager.getConnection(url);
+//             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+//            pstmt.setString(1, ID);
+//            pstmt.setString(2, customerName);
+//            pstmt.setString(3,SSN);
+//            pstmt.setDouble(4,deposit);
+//            pstmt.executeUpdate();
+//        } catch (SQLException e) {
+//            System.out.println(e.getMessage());
+//        }
+//    }
 
 
     public void insertIntoUserAccount(String ID, String customerName, String accountCreationDate, String SSN, String dob){
@@ -289,7 +375,7 @@ public class SQLiteDatabase {
     }
 
     public boolean getUserAccounts(){
-        String [][]userAccountsString = new String[index][5];
+        String [][]userAccountsString = new String[index+1][5];
         String sql = "SELECT UUID, CustomerName, AccountCreationDate, SSN, DOB FROM UserAccounts";
         try (Connection conn = DriverManager.getConnection(url);
              Statement stmt  = conn.createStatement();
@@ -305,8 +391,14 @@ public class SQLiteDatabase {
                 userAccountsString[index][2] = accountCreationDate;
                 userAccountsString[index][3] = SSN;
                 userAccountsString[index][4] = dob;
-//                userAccounts.setUserAccounts(userAccountsString,index);
+//                checkingAccount.setIndex(index);
+
+
+                System.out.println(userAccountsString[index][0]);
                 index++;
+                System.out.println(userAccountsString[index][0]);
+                System.out.println("this is index from DB " + index);
+
             }
             return true;
         } catch (SQLException e) {
@@ -325,7 +417,7 @@ public class SQLiteDatabase {
                 String UUID = resultSet.getString("UUID");
                 String customerName =resultSet.getString("CustomerName");
                 Double balance = resultSet.getDouble("Balance");
-                checkingAccount.getCheckingAccounts(UUID,customerName,balance,index);
+//                checkingAccount.getCheckingAccounts(UUID,customerName,balance,index);
                 index++;
             }
             return true;
@@ -365,7 +457,6 @@ public class SQLiteDatabase {
                 String UUID = resultSet.getString("UUID");
                 String customerName =resultSet.getString("CustomerName");
                 Double balance = resultSet.getDouble("Balance");
-                juniorCheckingAccount.getJuniorCheckingAccount(UUID,customerName,balance,index);
                 index++;
             }
             return true;
@@ -385,7 +476,6 @@ public class SQLiteDatabase {
                 String UUID = resultSet.getString("UUID");
                 String customerName =resultSet.getString("CustomerName");
                 Double balance = resultSet.getDouble("Balance");
-                juniorSavingsAccount.getJuniorSavingsAccount(UUID,customerName,balance,index);
                 index++;
             }
             return true;
@@ -395,11 +485,50 @@ public class SQLiteDatabase {
         }
     }
 
+    public boolean checkUserAccount(String SSN){
+        boolean flag = false;
+        String sql = "SELECT SSN FROM UserAccounts WHERE SSN = " +SSN;
+        try (Connection conn = DriverManager.getConnection(url);
+             Statement stmt  = conn.createStatement();
+             ResultSet resultSet = stmt.executeQuery(sql)) {
+            while(resultSet.next()){
+                String SSN2 = resultSet.getString("SSN");
+                if(SSN2.equals(SSN))
+                flag = true;
+            }
+        }
+        catch(SQLException e){
+            flag = false;
+        }
+        return flag;
+    }
+
 //    public boolean doesUserAccountExist(String customerName, String SSN, String DOB){
 //        if (userAccounts.doesUserAccountExist(customerName,SSN,DOB,index))
 //            return true;
 //        else
 //            return false;
 //    }
+    public void displayAccountInformation(String SSN){
+        String sql = "SELECT * FROM UserAccounts WHERE SSN = " +SSN;
+        try (Connection conn = DriverManager.getConnection(url);
+             Statement stmt  = conn.createStatement();
+             ResultSet resultSet = stmt.executeQuery(sql)) {
+            while(resultSet.next()){
+                String UUID = resultSet.getString("UUID");
+                String customerName = resultSet.getString("CustomerName");
+                String AccountCreationDate = resultSet.getString("AccountCreationDate");
+                String customerSSN = resultSet.getString("SSN");
+                String DOB = resultSet.getString("DOB");
+                System.out.println(UUID);
+                System.out.println(customerName);
+                System.out.println(AccountCreationDate);
+                System.out.println(customerSSN);
+                System.out.println(DOB);
+            }
+        }
+        catch(SQLException e){
 
+        }
+    }
 }

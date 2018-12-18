@@ -12,10 +12,15 @@ public class Teller {
     private BranchManager branchManager;
     protected String uuid;
 
+
     public Teller(BranchManager branchManager){
         this.branchManager = branchManager;
     }
 
+//    public void printUserAccounts(){
+//        System.out.println("printuseraccounts is called");
+//
+//    }
     //    public Boolean passDeposit()
 
     public String setUUID(){
@@ -35,31 +40,58 @@ public class Teller {
 //            return false;
 //    }
     public void addUserAccount(String name, String SSN, String dob){
-        branchManager.addUserAccount(this.uuid,name,SSN,dob);
+        this.branchManager.addUserAccount(this.uuid,name,SSN,dob);
     }
     public void addCheckingAccount(String name, String SSN, Double balance){
-        branchManager.addCheckingAccount(this.uuid,name,SSN, balance);
+        this.branchManager.addCheckingAccount(this.uuid,name,SSN, balance);
 
     }
     public void addSavingsAccount(String name, String SSN, String DOB, Double balance){
-        branchManager.addSavingsAccount(this.uuid,name,SSN,balance);
+        this.branchManager.addSavingsAccount(this.uuid,name,SSN,balance);
 
     }
     public void addJuniorCheckingAccount(String name, String SSN, Double balance){
-        branchManager.addJuniorCheckingAccount(this.uuid,name,SSN, balance);
+        this.branchManager.addJuniorCheckingAccount(this.uuid,name,SSN, balance);
 
     }
-    public void addJuniorSavingsAccount(String name, String SSN, Double balance){
-        branchManager.addJuniorSavingsAccount(this.uuid,name,SSN, balance);
+//    public void addJuniorSavingsAccount(String name, String SSN, Double balance){
+//        this.branchManager.addJuniorSavingsAccount(this.uuid,name,SSN, balance);
+//
+//    }
+//    public void depositToCheckingAccount(String name, String SSN, Double deposit){
+//        this.branchManager.depositToCheckingAccount(this.uuid,name,SSN,deposit);
+//    }
+//
+//    public void depositToSavingsAccount(String name, String SSN, Double deposit){
+//        this.branchManager.depositToSavingsAccount(this.uuid,name,SSN,deposit);
+//    }
 
+    public void depositToJuniorCheckingAccount(String SSN, Double deposit){
+        this.branchManager.depositToJuniorCheckingAccount(SSN,deposit);
     }
-    public void depositToCheckingAccount(String name, String SSN, Double deposit){
-    branchManager.depositToCheckingAccount(this.uuid,name,SSN,deposit);
+
+    public Boolean withdrawlFromJuniorCheckingAccount(String SSN, Double withdrawal){
+        return this.branchManager.withdrawalFromJuniorCheckingAccount(SSN, withdrawal);
     }
-    public void depositToJuniorCheckingAccount(String name, String SSN, Double deposit){
-        branchManager.depositToJuniorCheckingAccount(this.uuid,name,SSN,deposit);
+
+//    public void depositToJuniorSavingsAccount(String name, String SSN, Double deposit){
+//        this.branchManager.depositToJuniorSavingsAccount(this.uuid,name,SSN,deposit);
+//    }
+//    public boolean withdrawFreeMoney(Double freeMoney){
+//        if(this.branchManager.withDrawFromBankFunds(freeMoney))
+//            return true;
+//        else
+//            return false;
+//    }
+
+    public boolean checkUserAccount(String SSN){
+        if(this.branchManager.checkUserAccount(SSN))
+            return true;
+        else
+            return false;
     }
-    public void depositToSavingsAccount(String name, String SSN, Double deposit){
-        branchManager.depositToSavingsAccount(this.uuid,name,SSN,deposit);
+
+    public void displayAccountInformation(String SSN){
+        this.branchManager.displayAccountInformation(SSN);
     }
 }

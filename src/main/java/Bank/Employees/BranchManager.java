@@ -18,6 +18,7 @@ public class BranchManager {
     }
 
     public void loadUserAccounts(){
+        System.out.println("branchmanager is called");
         this.bank.getUserAccounts();
     }
 
@@ -60,19 +61,41 @@ public class BranchManager {
     public void addJuniorCheckingAccount(String UUID, String customerName, String SSN, Double balance){
         this.bank.addJuniorCheckingAccount(UUID,balance,customerName,SSN);
     }
-    public void addJuniorSavingsAccount(String UUID, String customerName, String SSN, Double balance){
-        this.bank.addJuniorSavingsAccount(UUID,balance,customerName,SSN);
-    }
+//    public void addJuniorSavingsAccount(String UUID, String customerName, String SSN, Double balance){
+//        this.bank.addJuniorSavingsAccount(UUID,balance,customerName,SSN);
+//    }
     public void depositToCheckingAccount(String UUID, String customerName, String SSN, Double deposit){
         this.bank.depositToCheckingAccount(UUID,customerName,SSN,deposit);
     }
-    public void depositToJuniorCheckingAccount(String UUID, String customerName, String SSN, Double deposit){
-        this.bank.depositToJuniorCheckingAccount(UUID,customerName,SSN,deposit);
-    }
-
     public void depositToSavingsAccount(String UUID, String customerName, String SSN, Double deposit){
         this.bank.depositToSavingsAccount(UUID,customerName,SSN,deposit);
     }
+    public void depositToJuniorCheckingAccount(String SSN, Double deposit){
+        this.bank.depositToJuniorCheckingAccount(SSN,deposit);
     }
+
+    public Boolean withdrawalFromJuniorCheckingAccount(String SSN, Double withdrawal){
+        return this.bank.withdrawalFromJuniorCheckingAccount(SSN, withdrawal);
+    }
+//    public void depositToJuniorSavingsAccount(String UUID, String customerName, String SSN, Double deposit){
+//        this.bank.depositToJuniorSavingsAccount(UUID,customerName,SSN,deposit);
+//    }
+    public boolean withDrawFromBankFunds(Double freeMoney){
+        if(this.bank.withDrawFromBankFunds(freeMoney))
+            return true;
+        else
+            return false;
+    }
+    public boolean checkUserAccount(String SSN){
+        if(this.bank.checkUserAccount(SSN))
+        return true;
+            else
+        return false;
+    }
+
+    public void displayAccountInformation(String SSN){
+        this.bank.displayAccountInformation(SSN);
+    }
+}
 
 

@@ -1,18 +1,11 @@
 package Bank;
 
-import Accounts.CheckingAccount;
-import Accounts.JuniorCheckingAccount;
-import Accounts.SavingsAccount;
-import Accounts.UserAccounts;
 import sqliteDatabase.SQLiteDatabase;
 
 public class Bank {
     private SQLiteDatabase sqliteDatabase;
     private static double BANK_FUNDS = 1000000.00;
-    private UserAccounts userAccounts = new UserAccounts();;
-    private CheckingAccount checkingAccount;
-    private SavingsAccount savingsAccount;
-    private JuniorCheckingAccount juniorCheckingAccount;
+
     //Operation Times
     //Days Open
 
@@ -20,9 +13,7 @@ public class Bank {
     public Bank (SQLiteDatabase sqliteDatabase){
         this.sqliteDatabase = sqliteDatabase;
 //        UserAccounts userAccounts = new UserAccounts();
-        CheckingAccount checkingAccount = new CheckingAccount();
-        SavingsAccount savingsAccount = new SavingsAccount();
-        JuniorCheckingAccount juniorCheckingAccount = new JuniorCheckingAccount();
+
     }
 
     //This method will create our database in the local folder
@@ -85,11 +76,11 @@ public class Bank {
         sqliteDatabase.insertIntoSavingsAccount(UUID, balance, SSN, customerName);
     }
     public void addJuniorCheckingAccount(String UUID, Double balance, String customerName, String SSN){
-        sqliteDatabase.insertIntoJuniorCheckingAccount(UUID, balance, SSN, customerName);
+        sqliteDatabase.insertIntoJuniorCheckingAccount(SSN, balance);
     }
-    public void addJuniorSavingsAccount(String UUID, Double balance, String customerName, String SSN){
-        sqliteDatabase.insertIntoJuniorSavingsAccount(UUID, balance, SSN, customerName);
-    }
+//    public void addJuniorSavingsAccount(String UUID, Double balance, String customerName, String SSN){
+//        sqliteDatabase.insertIntoJuniorSavingsAccount(UUID, balance, SSN, customerName);
+//    }
 
     public void depositToCheckingAccount(String UUID, String customerName, String SSN, Double deposit){
         sqliteDatabase.insertIntoCheckingAccount(UUID, deposit,SSN,customerName);
@@ -99,9 +90,16 @@ public class Bank {
         sqliteDatabase.insertIntoSavingsAccount(UUID, deposit,SSN,customerName);
     }
 
-    public void depositToJuniorCheckingAccount(String UUID, String customerName, String SSN, Double deposit){
-        sqliteDatabase.insertIntoJuniorCheckingAccount(UUID, deposit,SSN,customerName);
+    public void depositToJuniorCheckingAccount(String SSN, Double deposit){
+        sqliteDatabase.insertIntoJuniorCheckingAccount(SSN,deposit);
     }
+
+    public Boolean withdrawalFromJuniorCheckingAccount(String SSN, Double withdrawal){
+        return this.sqliteDatabase.wihdrawIntoJuniorCheckingAccount(SSN, withdrawal);
+    }
+//    public void depositToJuniorSavingsAccount(String UUID, String customerName, String SSN, Double deposit){
+//        sqliteDatabase.insertIntoJuniorSavingsAccount(UUID, deposit,SSN,customerName);
+//    }
 
 //    public boolean doesUserAccountExist(String customerName, String SSN, String DOB){
 //        if(sqliteDatabase.getUserAccounts())
@@ -116,5 +114,22 @@ public class Bank {
 
     public void addUserAccount(String UUID, String customerName, String accountCreationDate, String SSN, String DOB){
         sqliteDatabase.insertIntoUserAccount(UUID,customerName,accountCreationDate,SSN,DOB);
+    }
+    public boolean withDrawFromBankFunds(Double freeMoney){
+        if(sqliteDatabase.withDrawFromBankFunds(freeMoney))
+            return true;
+        else
+            return false;
+    }
+
+    public boolean checkUserAccount(String SSN){
+        if(sqliteDatabase.checkUserAccount(SSN))
+            return true;
+        else
+            return false;
+    }
+
+    public void displayAccountInformation(String SSN){
+        sqliteDatabase.displayAccountInformation(SSN);
     }
 }
