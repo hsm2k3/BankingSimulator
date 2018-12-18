@@ -30,10 +30,10 @@ public class Bank {
 
 
     public void addToAccount(String UUID, Double balance, String customerName, String SSN){
-        sqliteDatabase.insertIntoAccount(SSN, balance);
+        sqliteDatabase.insertIntoAccount(UUID, customerName,SSN, balance);
     }
     public void depositToAccount(String SSN, Double deposit){
-        sqliteDatabase.insertIntoAccount(SSN,deposit);
+        sqliteDatabase.depositIntoAccount(SSN,deposit);
     }
 
     public Boolean withdrawalFromJuniorCheckingAccount(String SSN, Double withdrawal){

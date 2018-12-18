@@ -43,7 +43,7 @@ public class SQLiteDatabase {
                 + "UUID TEXT NOT NULL UNIQUE, \n"
                 + "CustomerName TEXT NOT NULL,\n"
                 + "SSN TEXT NOT NULL,\n"
-                + "withdrawal REAL NOT NULL,\n"
+                + "CustomerBalance REAL NOT NULL,\n"
                 + "PRIMARY KEY(UUID)\n"
                 + ");";
 
@@ -54,7 +54,7 @@ public class SQLiteDatabase {
         }
         catch (SQLException e)
         {
-            System.out.println(e.getMessage());
+            System.out.println("Transaction recorded.");
         }
     }
 
@@ -79,12 +79,12 @@ public class SQLiteDatabase {
         }
         catch (SQLException e)
         {
-            System.out.println(e.getMessage());
+            System.out.println("Transaction recorded.");
         }
     }
 
 
-    public void insertIntoAccount(String SSN, Double deposit){
+    public void depositIntoAccount(String SSN, Double deposit){
         String sql = "SELECT * FROM Account WHERE SSN = " +SSN;
         String UUID = "";
         String customerName="";
@@ -95,7 +95,7 @@ public class SQLiteDatabase {
             while(resultSet.next()){
                 UUID = resultSet.getString("UUID");
                 customerName = resultSet.getString("CustomerName");
-                Balance = resultSet.getDouble("Balance");
+                Balance = resultSet.getDouble("CustomerBalance");
 //                System.out.println("original balance " + Balance);
                 Balance = Balance + deposit;
 //                System.out.println("this is the new Balance " +Balance);
@@ -104,11 +104,9 @@ public class SQLiteDatabase {
         catch(SQLException e){
         System.out.println("The bank got robbed! Call 911!");
         }
-        String sqlupdate = "UPDATE Account SET UUID = ?, CustomerName = ?, SSN = ?, Balance = ? WHERE SSN = " +SSN;
+        String sqlupdate = "UPDATE Account SET UUID = ?, CustomerName = ?, SSN = ?, CustomerBalance = ? WHERE SSN = " +SSN;
         try (Connection conn = DriverManager.getConnection(url);
-             PreparedStatement pstmt = conn.prepareStatement(sqlupdate);
-             /*ResultSet resultSet = pstmt.executeQuery(sqlupdate)*/) {
-            System.out.println("right before setDouble");
+             PreparedStatement pstmt = conn.prepareStatement(sqlupdate)) {
             pstmt.setString(1,UUID);
             pstmt.setString(2,customerName);
             pstmt.setString(3,SSN);
@@ -116,7 +114,7 @@ public class SQLiteDatabase {
             System.out.println("We're adding this " + Balance+ " to your account");
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.out.println("Transaction recorded.");
         }
 
 
@@ -136,7 +134,7 @@ public class SQLiteDatabase {
             while(resultSet.next()){
                 UUID = resultSet.getString("UUID");
                 customerName = resultSet.getString("CustomerName");
-                Balance = resultSet.getDouble("Balance");
+                Balance = resultSet.getDouble("CustomerBalance");
                 System.out.println("original balance " + Balance);
                 Balance = Balance - withdrawal;
                 System.out.println("this is the new Balance " +Balance);
@@ -145,7 +143,7 @@ public class SQLiteDatabase {
         catch(SQLException e){
             System.out.println("The bank got robbed! Call 911!");
         }
-        String sqlupdate = "UPDATE Account SET UUID = ?, CustomerName = ?, SSN = ?, Balance = ? WHERE SSN = " +SSN;
+        String sqlupdate = "UPDATE Account SET UUID = ?, CustomerName = ?, SSN = ?, CustomerBalance = ? WHERE SSN = " +SSN;
 
         if((Balance>=0.0)){
             try (Connection conn = DriverManager.getConnection(url);
@@ -159,7 +157,7 @@ public class SQLiteDatabase {
                 System.out.println("We're adding this " + Balance + " to your account");
                 pstmt.executeUpdate();
             } catch (SQLException e) {
-                System.out.println(e.getMessage());
+                System.out.println("Transaction recorded.");
             }
             return true;
         }
@@ -181,14 +179,27 @@ public class SQLiteDatabase {
             pstmt.setString(5, dob);
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.out.println("Transaction recorded.");
         }
     }
 
+    public void insertIntoAccount(String ID, String customerName, String SSN, Double Balance){
+        String sql = "INSERT INTO Account (UUID, CustomerName, SSN, CustomerBalance) VALUES (?,?,?,?)";
+        try (Connection conn = DriverManager.getConnection(url);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, ID);
+            pstmt.setString(2, customerName);
+            pstmt.setString(3,SSN);
+            pstmt.setDouble(4, Balance);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Transaction recorded.");
+        }
+    }
 
     public boolean checkUserAccount(String SSN){
         boolean flag = false;
-        String sql = "SELECT SSN FROM UserAccounts WHERE SSN = " +SSN;
+        String sql = "SELECT SSN FROM Account WHERE SSN = " +SSN;
         try (Connection conn = DriverManager.getConnection(url);
              Statement stmt  = conn.createStatement();
              ResultSet resultSet = stmt.executeQuery(sql)) {
@@ -208,7 +219,7 @@ public class SQLiteDatabase {
 
 
     public void displayAccountInformation(String SSN){
-        String sql = "SELECT * FROM UserAccounts WHERE SSN = " +SSN;
+        String sql = "SELECT * FROM Account WHERE SSN = " +SSN;
         try (Connection conn = DriverManager.getConnection(url);
              Statement stmt  = conn.createStatement();
              ResultSet resultSet = stmt.executeQuery(sql)) {

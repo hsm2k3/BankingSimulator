@@ -151,7 +151,7 @@ public class Main {
                         teller.displayAccountInformation(CUSTOMER_SSN);
                         System.out.println("We're doing a deposit now!!!!");
                         teller.depositToAccount(CUSTOMER_SSN, 500.50);
-                        teller.withdrawlFromJuniorCheckingAccount(CUSTOMER_SSN, 100.00);
+                        teller.withdrawFromAccount(CUSTOMER_SSN, 100.00);
                     }
                     else
                         System.out.println("didn't find you");
@@ -164,27 +164,24 @@ public class Main {
                     if(teller.checkUserAccount(CUSTOMER_SSN)) {
                         System.out.println("How much would you like to deposit?");
                         deposit = scanner.nextDouble();
-                        teller.depositToAccount(CUSTOMER_NAME, CUSTOMER_SSN, deposit);
+                        teller.depositToAccount(CUSTOMER_SSN, deposit);
                         System.out.println(CUSTOMER_NAME + " we deposited $" + deposit + " into a checking account.");
                         displayTellerMenu(scanner, teller, customer);
                     }
                 }
                 else
                 {
-                System.out.println("How much would you like to deposit?");
-                deposit = scanner.nextDouble();
-//                teller.depositToAccount(CUSTOMER_NAME, CUSTOMER_SSN,deposit);
-                System.out.println(CUSTOMER_NAME+ " we deposited $" +deposit+ " into a checking account.");
+                System.out.println("You're a minor, come back when you're older");
                 displayTellerMenu(scanner, teller,customer);
                 }
                 break;
             case TELLER_WITHDRAW_ACCOUNT:
                 //FREE MONEY!!! lol
                 System.out.println("How much would you like to with draw? Withdrawals are free today!");
-                Double freeMoney;
-                freeMoney = scanner.nextDouble();
-                teller.withdrawFreeMoney(freeMoney);
-                System.out.println("Withdrawal: $" +freeMoney+ " don't spend it all in one place.");
+                Double withdrawl;
+                withdrawl = scanner.nextDouble();
+                teller.withdrawFromAccount(CUSTOMER_SSN,withdrawl);
+                System.out.println("Withdrawal: $" +withdrawl+ " don't spend it all in one place.");
                 break;
             case LEAVE_TELLER:
                 break;
@@ -194,7 +191,7 @@ public class Main {
 
         return selection;
     }
-
+    //this is a work in progress
     public static int displayFinancialAdvisorMenu(Scanner scanner){
         int selection = 0;
         boolean validSelection = true;
@@ -228,7 +225,7 @@ public class Main {
     public static String getCustomerName(Scanner scanner){
         String customerName;
         System.out.println("Please provide your name: " );
-        customerName = scanner.nextLine();
+        customerName = "test1";/*scanner.nextLine();*/
         System.out.println();
         return customerName;
     }
@@ -236,7 +233,7 @@ public class Main {
     public static String getCustomerDOB(Scanner scanner){
         String DOB;
         System.out.println("Please provide your DOB (MM/DD/YYYY): ");
-        DOB = scanner.nextLine();
+        DOB = "1/1/1950";/*scanner.nextLine();*/
         System.out.println();
         return DOB;
 
@@ -245,7 +242,7 @@ public class Main {
     public static String getCustomerSSN(Scanner scanner){
         String SSN;
         System.out.println("Please provide your SSN : ");
-        SSN = scanner.nextLine();
+        SSN = "12-34-5678";/*scanner.nextLine();*/
         String cleanSSN = SSN.replaceAll("[\\s\\-()]", "");
         System.out.println();
         return cleanSSN;
@@ -254,8 +251,8 @@ public class Main {
 
     public static Double getCustomerBalance(Scanner scanner){
         Double balance;
-        System.out.println("Please deposit an amount to your account: ");
-        balance = scanner.nextDouble();
+        System.out.println("How much do you have? ");
+        balance = 500.01;/*scanner.nextDouble();*/
         System.out.println();
         return balance;
     }

@@ -38,7 +38,7 @@ public class Teller {
         this.branchManager.depositToAccount(SSN,deposit);
     }
 
-    public Boolean withdrawlFromJuniorCheckingAccount(String SSN, Double withdrawal){
+    public Boolean withdrawFromAccount(String SSN, Double withdrawal){
         return this.branchManager.withdrawalFromJuniorCheckingAccount(SSN, withdrawal);
     }
 

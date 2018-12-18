@@ -64,10 +64,7 @@ public class Customer {
         Date dob = customerDOB.parse(DOB);
         DateTime dateOfBirth = new DateTime(dob);
         DateTime currentDate = new DateTime(today);
-
-
         Period period = new Period(dateOfBirth, currentDate);
-
         //Basing availability of accounts on age
         if ((period.getYears() < 18))
             return this.isMinor = true;
