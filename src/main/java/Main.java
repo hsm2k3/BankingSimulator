@@ -25,6 +25,7 @@ public class Main {
     private static final int TELLER_MAKE_ACCOUNT = 1;
     private static final int TELLER_DEPOSIT_ACCOUNT = 2;
     private static final int TELLER_WITHDRAW_ACCOUNT = 3;
+    private static final int TELLER_CHECK_BALANCE_ACCOUNT = 4;
     private static final int LEAVE_TELLER = 5;
     private static final int FINANCIAL_ADVISOR_NEW_ACCOUNT = 1;
     private static final int FINANCIAL_ADVISOR_INVEST_MONEY = 2;
@@ -144,17 +145,17 @@ public class Main {
                 else
                 {
                     System.out.println("Sorry you're too young. Come back when you're older and have a JOB!");
-                    teller.addToAccount(CUSTOMER_NAME, CUSTOMER_SSN, CUSTOMER_BALANCE);
-                    System.out.println(CUSTOMER_NAME + " your JUNIOR account has been created.");
-                    if(teller.checkUserAccount(CUSTOMER_SSN)) {
-                        System.out.println("user with SSN" + CUSTOMER_SSN + " was found");
-                        teller.displayAccountInformation(CUSTOMER_SSN);
-                        System.out.println("We're doing a deposit now!!!!");
-                        teller.depositToAccount(CUSTOMER_SSN, 500.50);
-                        teller.withdrawFromAccount(CUSTOMER_SSN, 100.00);
-                    }
-                    else
-                        System.out.println("didn't find you");
+//                    teller.addToAccount(CUSTOMER_NAME, CUSTOMER_SSN, CUSTOMER_BALANCE);
+//                    System.out.println(CUSTOMER_NAME + " your JUNIOR account has been created.");
+//                    if(teller.checkUserAccount(CUSTOMER_SSN)) {
+//                        System.out.println("user with SSN" + CUSTOMER_SSN + " was found");
+//                        teller.displayAccountInformation(CUSTOMER_SSN);
+//                        System.out.println("We're doing a deposit now!!!!");
+//                        teller.depositToAccount(CUSTOMER_SSN, 500.50);
+//                        teller.withdrawFromAccount(CUSTOMER_SSN, 100.00);
+//                    }
+//                    else
+//                        System.out.println("didn't find you");
                 }
 
                 break;
@@ -168,6 +169,8 @@ public class Main {
                         System.out.println(CUSTOMER_NAME + " we deposited $" + deposit + " into a checking account.");
                         displayTellerMenu(scanner, teller, customer);
                     }
+                    else
+                        System.out.println("Sorry I couldn't find your account in the system.");
                 }
                 else
                 {
@@ -176,13 +179,22 @@ public class Main {
                 }
                 break;
             case TELLER_WITHDRAW_ACCOUNT:
-                //FREE MONEY!!! lol
-                System.out.println("How much would you like to with draw? Withdrawals are free today!");
-                Double withdrawl;
-                withdrawl = scanner.nextDouble();
-                teller.withdrawFromAccount(CUSTOMER_SSN,withdrawl);
-                System.out.println("Withdrawal: $" +withdrawl+ " don't spend it all in one place.");
+                Double withdrawal;
+                if(!customer.isMinor(CUSTOMER_DOB)) {
+                    System.out.println("How much would like to withdraw?");
+                    withdrawal = scanner.nextDouble();
+                    teller.withdrawFromAccount(CUSTOMER_SSN, withdrawal);
+                    System.out.println("Withdrawal: $" + withdrawal + " don't spend it all in one place.");
+                }
+                else
+                    System.out.println("Sorry your too young. Come back when you're older and have a JOB!");
                 break;
+            case TELLER_CHECK_BALANCE_ACCOUNT:
+                if(!customer.isMinor(CUSTOMER_DOB)){
+                    teller.displayAccountInformation(CUSTOMER_SSN);
+                }
+                else
+                    System.out.println("Sorry your too young. Come back when you're older and have a JOB!");
             case LEAVE_TELLER:
                 break;
             default:

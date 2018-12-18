@@ -84,11 +84,12 @@ public class SQLiteDatabase {
     }
 
 
-    public void depositIntoAccount(String SSN, Double deposit){
+    public boolean depositIntoAccount(String SSN, Double deposit){
         String sql = "SELECT * FROM Account WHERE SSN = " +SSN;
         String UUID = "";
         String customerName="";
         Double Balance = 0.0;
+        boolean depositWorked = false;
         try (Connection conn = DriverManager.getConnection(url);
              Statement stmt  = conn.createStatement();
              ResultSet resultSet = stmt.executeQuery(sql)) {
@@ -100,9 +101,11 @@ public class SQLiteDatabase {
                 Balance = Balance + deposit;
 //                System.out.println("this is the new Balance " +Balance);
             }
+            depositWorked = true;
         }
         catch(SQLException e){
         System.out.println("The bank got robbed! Call 911!");
+        depositWorked = false;
         }
         String sqlupdate = "UPDATE Account SET UUID = ?, CustomerName = ?, SSN = ?, CustomerBalance = ? WHERE SSN = " +SSN;
         try (Connection conn = DriverManager.getConnection(url);
@@ -111,13 +114,14 @@ public class SQLiteDatabase {
             pstmt.setString(2,customerName);
             pstmt.setString(3,SSN);
             pstmt.setDouble(4, Balance);
-            System.out.println("We're adding this " + Balance+ " to your account");
             pstmt.executeUpdate();
+            depositWorked = true;
         } catch (SQLException e) {
             System.out.println("Transaction recorded.");
+            depositWorked = false;
         }
 
-
+        return depositWorked;
     }
 
     public Boolean withdrawFromAccount(String SSN, Double withdrawal){
@@ -135,7 +139,6 @@ public class SQLiteDatabase {
                 UUID = resultSet.getString("UUID");
                 customerName = resultSet.getString("CustomerName");
                 Balance = resultSet.getDouble("CustomerBalance");
-                System.out.println("original balance " + Balance);
                 Balance = Balance - withdrawal;
                 System.out.println("this is the new Balance " +Balance);
             }
@@ -149,7 +152,6 @@ public class SQLiteDatabase {
             try (Connection conn = DriverManager.getConnection(url);
                  PreparedStatement pstmt = conn.prepareStatement(sqlupdate);
                     /*ResultSet resultSet = pstmt.executeQuery(sqlupdate)*/) {
-                System.out.println("right before setDouble");
                 pstmt.setString(1, UUID);
                 pstmt.setString(2, customerName);
                 pstmt.setString(3, SSN);
@@ -226,14 +228,12 @@ public class SQLiteDatabase {
             while(resultSet.next()){
                 String UUID = resultSet.getString("UUID");
                 String customerName = resultSet.getString("CustomerName");
-                String AccountCreationDate = resultSet.getString("AccountCreationDate");
                 String customerSSN = resultSet.getString("SSN");
-                String DOB = resultSet.getString("DOB");
-                System.out.println(UUID);
-                System.out.println(customerName);
-                System.out.println(AccountCreationDate);
-                System.out.println(customerSSN);
-                System.out.println(DOB);
+                Double customerBalance = resultSet.getDouble("CustomerBalance");
+                System.out.print("Account ID: " + UUID + "\t");
+                System.out.print("Name: " +customerName+ "\t");
+                System.out.print("SSN: " +customerSSN+ "\t");
+                System.out.println("Balance: " +customerBalance+ "\t");
             }
         }
         catch(SQLException e){

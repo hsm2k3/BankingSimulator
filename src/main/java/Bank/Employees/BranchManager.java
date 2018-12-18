@@ -28,8 +28,8 @@ public class BranchManager {
     public void addToAccount(String UUID, String customerName, String SSN, Double balance){
         this.bank.addToAccount(UUID,balance,customerName,SSN);
     }
-    public void depositToAccount(String SSN, Double deposit){
-        this.bank.depositToAccount(SSN,deposit);
+    public boolean depositToAccount(String SSN, Double deposit){
+        return this.bank.depositToAccount(SSN,deposit);
     }
 
     public Boolean withdrawalFromJuniorCheckingAccount(String SSN, Double withdrawal){

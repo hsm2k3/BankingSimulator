@@ -34,8 +34,8 @@ public class Teller {
 
     }
 
-    public void depositToAccount(String SSN, Double deposit){
-        this.branchManager.depositToAccount(SSN,deposit);
+    public boolean depositToAccount(String SSN, Double deposit){
+        return this.branchManager.depositToAccount(SSN,deposit);
     }
 
     public Boolean withdrawFromAccount(String SSN, Double withdrawal){
