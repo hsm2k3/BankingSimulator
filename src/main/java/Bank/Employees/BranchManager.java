@@ -37,11 +37,8 @@ public class BranchManager {
     }
 
 
-    public boolean checkUserAccount(String SSN){
-        if(this.bank.checkUserAccount(SSN))
-        return true;
-            else
-        return false;
+    public boolean isUserAccountInDB(String SSN){
+        return this.bank.isUserAccountInDB(SSN);
     }
 
     public void displayAccountInformation(String SSN){

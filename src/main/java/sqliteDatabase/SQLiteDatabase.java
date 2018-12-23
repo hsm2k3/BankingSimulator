@@ -3,6 +3,7 @@ package sqliteDatabase;
 
 
 import java.sql.*;
+import java.text.DecimalFormat;
 
 public class SQLiteDatabase {
     private static final String url = "jdbc:sqlite:bank.db";
@@ -19,18 +20,6 @@ public class SQLiteDatabase {
             System.out.println("Sorry the bank is closed now.");
              connected = false;
         }
-//        finally {
-//            try {
-//                if (connection != null) {
-//                    connection.close();
-//                    connected = false;
-//                }
-//            } catch (SQLException ex) {
-//                System.out.println(ex.getMessage());
-//                System.out.println("Sorry the bank is closed now.");
-//                connected = false;
-//            }
-//        }
         return connected;
     }
 
@@ -199,9 +188,9 @@ public class SQLiteDatabase {
         }
     }
 
-    public boolean checkUserAccount(String SSN){
+    public boolean isUserAccountInDB(String SSN){
         boolean flag = false;
-        String sql = "SELECT SSN FROM Account WHERE SSN = " +SSN;
+        String sql = "SELECT SSN FROM UserAccounts WHERE SSN = " +SSN;
         try (Connection conn = DriverManager.getConnection(url);
              Statement stmt  = conn.createStatement();
              ResultSet resultSet = stmt.executeQuery(sql)) {
@@ -222,6 +211,7 @@ public class SQLiteDatabase {
 
     public void displayAccountInformation(String SSN){
         String sql = "SELECT * FROM Account WHERE SSN = " +SSN;
+        DecimalFormat decimalFormat = new DecimalFormat("###,###,###.00");
         try (Connection conn = DriverManager.getConnection(url);
              Statement stmt  = conn.createStatement();
              ResultSet resultSet = stmt.executeQuery(sql)) {
@@ -233,7 +223,7 @@ public class SQLiteDatabase {
                 System.out.print("Account ID: " + UUID + "\t");
                 System.out.print("Name: " +customerName+ "\t");
                 System.out.print("SSN: " +customerSSN+ "\t");
-                System.out.println("Balance: " +customerBalance+ "\t");
+                System.out.println("Balance: $" +decimalFormat.format(customerBalance)+ "\t");
             }
         }
         catch(SQLException e){

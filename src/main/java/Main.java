@@ -13,6 +13,7 @@ import Bank.Employees.Teller;
 import customer.Customer;
 
 
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.util.Scanner;
 //import bank.Bank;
@@ -31,10 +32,10 @@ public class Main {
     private static final int FINANCIAL_ADVISOR_INVEST_MONEY = 2;
     private static final int LEAVE_FINANCIAL_ADVISOR = 3;
 
-    protected static String CUSTOMER_NAME = null;
-    protected static String CUSTOMER_DOB = null;
-    protected static String CUSTOMER_SSN = null;
-    protected static Double CUSTOMER_BALANCE = null;
+    private static String CUSTOMER_NAME = null;
+    private static String CUSTOMER_DOB = null;
+    private static String CUSTOMER_SSN = null;
+    private static Double CUSTOMER_BALANCE = null;
 
     public static void main(String args[]) throws ParseException {
         int selection = 0, tellerSelection = 0, financialAdvisorSelection = 0;
@@ -45,6 +46,7 @@ public class Main {
         FinancialAdvisor financialAdvisor = new FinancialAdvisor(branchManager);
         Customer customer = new Customer();
         Scanner scanner = new Scanner(System.in);
+        DecimalFormat decimalFormat = new DecimalFormat("###,###,###.00");
 
 
 
@@ -55,7 +57,8 @@ public class Main {
         customer.setCustomerName(CUSTOMER_NAME);
         customer.setCustomerDOB(CUSTOMER_DOB);
         customer.setCustomerSNN(CUSTOMER_SSN);
-        customer.setCustomerBalance(CUSTOMER_BALANCE);
+//        System.out.println(decimalFormat.format(CUSTOMER_BALANCE));
+        customer.setCustomerBalance(Double.valueOf(decimalFormat.format(CUSTOMER_BALANCE)));
         if(branchManager.isBankOpen()) {
             do {
                 selection = displayMenu(scanner);
@@ -134,35 +137,27 @@ public class Main {
                 validSelection = true;
         }while (!validSelection);
         teller.setUUID();
-        teller.addUserAccount(CUSTOMER_NAME, CUSTOMER_SSN, CUSTOMER_DOB);
         switch(selection){
             case TELLER_MAKE_ACCOUNT:
                 if(!customer.isMinor(CUSTOMER_DOB)) {
-                    teller.addToAccount(CUSTOMER_NAME, CUSTOMER_SSN, CUSTOMER_BALANCE);
-                    System.out.println(CUSTOMER_NAME + " your account has been created.");
-                    displayTellerMenu(scanner, teller, customer);
+                    if (!teller.isUserAccountInDB(CUSTOMER_SSN)) {
+                        teller.addUserAccount(CUSTOMER_NAME, CUSTOMER_SSN, CUSTOMER_DOB);
+                        teller.addToAccount(CUSTOMER_NAME, CUSTOMER_SSN, CUSTOMER_BALANCE);
+                        System.out.println(CUSTOMER_NAME + " your account has been created.");
+                        displayTellerMenu(scanner, teller, customer);
+                    }
+                    else
+                        System.out.println("You already have an account! Choose something else. ");
                 }
                 else
                 {
                     System.out.println("Sorry you're too young. Come back when you're older and have a JOB!");
-//                    teller.addToAccount(CUSTOMER_NAME, CUSTOMER_SSN, CUSTOMER_BALANCE);
-//                    System.out.println(CUSTOMER_NAME + " your JUNIOR account has been created.");
-//                    if(teller.checkUserAccount(CUSTOMER_SSN)) {
-//                        System.out.println("user with SSN" + CUSTOMER_SSN + " was found");
-//                        teller.displayAccountInformation(CUSTOMER_SSN);
-//                        System.out.println("We're doing a deposit now!!!!");
-//                        teller.depositToAccount(CUSTOMER_SSN, 500.50);
-//                        teller.withdrawFromAccount(CUSTOMER_SSN, 100.00);
-//                    }
-//                    else
-//                        System.out.println("didn't find you");
                 }
-
                 break;
             case TELLER_DEPOSIT_ACCOUNT:
                 Double deposit;
                 if(!customer.isMinor(CUSTOMER_DOB)) {
-                    if(teller.checkUserAccount(CUSTOMER_SSN)) {
+                    if(teller.isUserAccountInDB(CUSTOMER_SSN)) {
                         System.out.println("How much would you like to deposit?");
                         deposit = scanner.nextDouble();
                         teller.depositToAccount(CUSTOMER_SSN, deposit);
@@ -181,17 +176,25 @@ public class Main {
             case TELLER_WITHDRAW_ACCOUNT:
                 Double withdrawal;
                 if(!customer.isMinor(CUSTOMER_DOB)) {
-                    System.out.println("How much would like to withdraw?");
-                    withdrawal = scanner.nextDouble();
-                    teller.withdrawFromAccount(CUSTOMER_SSN, withdrawal);
-                    System.out.println("Withdrawal: $" + withdrawal + " don't spend it all in one place.");
+                    if (teller.isUserAccountInDB(CUSTOMER_SSN)) {
+                        System.out.println("How much would like to withdraw?");
+                        withdrawal = scanner.nextDouble();
+                        teller.withdrawFromAccount(CUSTOMER_SSN, withdrawal);
+                        System.out.println("Withdrawal: $" + withdrawal + " don't spend it all in one place.");
+                    }
+                    else
+                        System.out.println("Sorry I couldn't find your account in the system.");
                 }
                 else
                     System.out.println("Sorry your too young. Come back when you're older and have a JOB!");
                 break;
             case TELLER_CHECK_BALANCE_ACCOUNT:
-                if(!customer.isMinor(CUSTOMER_DOB)){
-                    teller.displayAccountInformation(CUSTOMER_SSN);
+                if(!customer.isMinor(CUSTOMER_DOB)) {
+                    if (teller.isUserAccountInDB(CUSTOMER_SSN)) {
+                        teller.displayAccountInformation(CUSTOMER_SSN);
+                    }
+                    else
+                        System.out.println("Sorry I couldn't find your account in the system.");
                 }
                 else
                     System.out.println("Sorry your too young. Come back when you're older and have a JOB!");

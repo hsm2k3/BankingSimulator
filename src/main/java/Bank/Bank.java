@@ -42,11 +42,8 @@ public class Bank {
     public void addUserAccount(String UUID, String customerName, String accountCreationDate, String SSN, String DOB){
         sqliteDatabase.insertIntoUserAccount(UUID,customerName,accountCreationDate,SSN,DOB);
     }
-    public boolean checkUserAccount(String SSN){
-        if(sqliteDatabase.checkUserAccount(SSN))
-            return true;
-        else
-            return false;
+    public boolean isUserAccountInDB(String SSN){
+        return sqliteDatabase.isUserAccountInDB(SSN);
     }
     public void displayAccountInformation(String SSN){
         sqliteDatabase.displayAccountInformation(SSN);

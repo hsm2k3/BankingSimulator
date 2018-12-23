@@ -42,12 +42,8 @@ public class Teller {
         return this.branchManager.withdrawalFromJuniorCheckingAccount(SSN, withdrawal);
     }
 
-    public boolean checkUserAccount(String SSN){
-        if(this.branchManager.checkUserAccount(SSN))
-            return true;
-        else
-            return false;
-    }
+    public boolean isUserAccountInDB(String SSN){
+        return this.branchManager.isUserAccountInDB(SSN);    }
 
     public void displayAccountInformation(String SSN){
         this.branchManager.displayAccountInformation(SSN);
