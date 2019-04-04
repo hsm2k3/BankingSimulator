@@ -66,10 +66,7 @@ public class Customer {
         DateTime currentDate = new DateTime(today);
         Period period = new Period(dateOfBirth, currentDate);
         //Basing availability of accounts on age
-        if ((period.getYears() < 18))
-            return this.isMinor = true;
-        else
-            return this.isMinor = false;
+       return (period.getYears() <= 18);
     }
 
 }

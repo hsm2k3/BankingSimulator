@@ -29,13 +29,13 @@ public class Teller {
     public void addUserAccount(String name, String SSN, String dob){
         this.branchManager.addUserAccount(this.uuid,name,SSN,dob);
     }
-    public void addToAccount(String name, String SSN, Double balance){
-        this.branchManager.addToAccount(this.uuid,name,SSN, balance);
+    public void addNewCheckingAccount(String name, String SSN, Double balance){
+        this.branchManager.addNewCheckingAccount(this.uuid,name,SSN, balance);
 
     }
 
     public boolean depositToAccount(String SSN, Double deposit){
-        return this.branchManager.depositToAccount(SSN,deposit);
+        return this.branchManager.depositToCheckingAccount(SSN,deposit);
     }
 
     public Boolean withdrawFromAccount(String SSN, Double withdrawal){

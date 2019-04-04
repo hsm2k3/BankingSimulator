@@ -23,21 +23,22 @@ public class Bank {
         if(sqliteDatabase.connect()) {
             connectedToDB = true;
         }
-        sqliteDatabase.createsNewAccountTable();
         sqliteDatabase.createsNewUserAccountsTable();
+        sqliteDatabase.createsNewCheckingAccountTable();
+        sqliteDatabase.createsNewSavingsAccountTable();
         return connectedToDB;
     }
 
 
-    public void addToAccount(String UUID, Double balance, String customerName, String SSN){
-        sqliteDatabase.insertIntoAccount(UUID, customerName,SSN, balance);
+    public void addNewCheckingAccount(String UUID, Double balance, String customerName, String SSN){
+        sqliteDatabase.insertIntoNewCheckingAccount(UUID, customerName,SSN, balance);
     }
-    public boolean depositToAccount(String SSN, Double deposit){
-        return sqliteDatabase.depositIntoAccount(SSN,deposit);
+    public boolean depositToCheckingAccount(String SSN, Double deposit){
+        return sqliteDatabase.depositIntoCheckingAccount(SSN,deposit);
     }
 
     public Boolean withdrawalFromJuniorCheckingAccount(String SSN, Double withdrawal){
-        return this.sqliteDatabase.withdrawFromAccount(SSN, withdrawal);
+        return this.sqliteDatabase.withdrawFromCheckingAccount(SSN, withdrawal);
     }
     public void addUserAccount(String UUID, String customerName, String accountCreationDate, String SSN, String DOB){
         sqliteDatabase.insertIntoUserAccount(UUID,customerName,accountCreationDate,SSN,DOB);

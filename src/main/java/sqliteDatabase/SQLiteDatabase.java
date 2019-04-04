@@ -25,10 +25,32 @@ public class SQLiteDatabase {
 
 
 
-    public static void createsNewAccountTable(){
+    public static void createsNewCheckingAccountTable(){
 
         //SQL statement for creating Checking Account table
-        String sql = "CREATE TABLE IF NOT EXISTS Account (\n "
+        String sql = "CREATE TABLE IF NOT EXISTS CheckingAccount (\n "
+                + "UUID TEXT NOT NULL UNIQUE, \n"
+                + "CustomerName TEXT NOT NULL,\n"
+                + "SSN TEXT NOT NULL,\n"
+                + "CustomerBalance REAL NOT NULL,\n"
+                + "PRIMARY KEY(UUID)\n"
+                + ");";
+
+        try (Connection conn = DriverManager.getConnection(url);
+             Statement stmt = conn.createStatement())
+        {
+            stmt.execute(sql);
+        }
+        catch (SQLException e)
+        {
+            System.out.println("Transaction recorded.");
+        }
+    }
+
+    public static void createsNewSavingsAccountTable(){
+
+        //SQL statement for creating Checking Account table
+        String sql = "CREATE TABLE IF NOT EXISTS SavingsAccount (\n "
                 + "UUID TEXT NOT NULL UNIQUE, \n"
                 + "CustomerName TEXT NOT NULL,\n"
                 + "SSN TEXT NOT NULL,\n"
@@ -73,8 +95,8 @@ public class SQLiteDatabase {
     }
 
 
-    public boolean depositIntoAccount(String SSN, Double deposit){
-        String sql = "SELECT * FROM Account WHERE SSN = " +SSN;
+    public boolean depositIntoCheckingAccount(String SSN, Double deposit){
+        String sql = "SELECT * FROM CheckingAccount WHERE SSN = " +SSN;
         String UUID = "";
         String customerName="";
         Double Balance = 0.0;
@@ -113,8 +135,8 @@ public class SQLiteDatabase {
         return depositWorked;
     }
 
-    public Boolean withdrawFromAccount(String SSN, Double withdrawal){
-        String sql = "SELECT * FROM Account WHERE SSN = " +SSN;
+    public Boolean withdrawFromCheckingAccount(String SSN, Double withdrawal){
+        String sql = "SELECT * FROM CheckingAccount WHERE SSN = " +SSN;
         String UUID = "";
         String customerName="";
         Double Balance = 0.0;
@@ -145,7 +167,7 @@ public class SQLiteDatabase {
                 pstmt.setString(2, customerName);
                 pstmt.setString(3, SSN);
                 pstmt.setDouble(4, Balance);
-                System.out.println("We're adding this " + Balance + " to your account");
+                System.out.println("We're remove this " + withdrawal + " from your account");
                 pstmt.executeUpdate();
             } catch (SQLException e) {
                 System.out.println("Transaction recorded.");
@@ -174,7 +196,7 @@ public class SQLiteDatabase {
         }
     }
 
-    public void insertIntoAccount(String ID, String customerName, String SSN, Double Balance){
+    public void insertIntoNewCheckingAccount(String ID, String customerName, String SSN, Double Balance){
         String sql = "INSERT INTO Account (UUID, CustomerName, SSN, CustomerBalance) VALUES (?,?,?,?)";
         try (Connection conn = DriverManager.getConnection(url);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {

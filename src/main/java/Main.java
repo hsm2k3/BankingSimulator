@@ -124,7 +124,7 @@ public class Main {
         do {
             System.out.println("Welcome, " + CUSTOMER_NAME + ", how may I help you today?");
             System.out.println("----------------------------------------");
-            System.out.println("1. Make a new account.");
+            System.out.println("1. Make a new checking account.");
             System.out.println("2. Deposit money into account.");
             System.out.println("3. Withdraw money from account.");
             System.out.println("4. Check account Balance.");
@@ -142,7 +142,7 @@ public class Main {
                 if(!customer.isMinor(CUSTOMER_DOB)) {
                     if (!teller.isUserAccountInDB(CUSTOMER_SSN)) {
                         teller.addUserAccount(CUSTOMER_NAME, CUSTOMER_SSN, CUSTOMER_DOB);
-                        teller.addToAccount(CUSTOMER_NAME, CUSTOMER_SSN, CUSTOMER_BALANCE);
+                        teller.addNewCheckingAccount(CUSTOMER_NAME, CUSTOMER_SSN, CUSTOMER_BALANCE);
                         System.out.println(CUSTOMER_NAME + " your account has been created.");
                         displayTellerMenu(scanner, teller, customer);
                     }
