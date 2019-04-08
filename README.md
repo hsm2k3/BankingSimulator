@@ -1,5 +1,5 @@
 # BankingSimulator
-Banking-Simulator
-Authors: 
-Alex Braverman
+Banking-Simulator<br/>
+Authors: <br/>
+Alex Braverman <br/>
 Muhammad Khalil
