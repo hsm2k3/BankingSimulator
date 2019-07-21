@@ -23,8 +23,10 @@ public class BranchManagerTest {
     }
 
     @Test
-    public void testIsBankOpen_Success()
+    public void testIsBankOpen_Success() throws Exception
     {
+        when(branchManager.isBankOpen()).thenReturn(true);
+//        boolean result = Whitebox.invokeMethod(branchManager , "isBankOpen", true);
         assertTrue(branchManager.isBankOpen());
     }
 
